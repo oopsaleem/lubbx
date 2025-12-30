@@ -1,0 +1,826 @@
+{
+	"admin": {
+		"menu": {
+			"organizations": "المنظمات",
+			"users": "المستخدمون"
+		},
+		"organizations": {
+			"backToList": "العودة إلى المنظمات",
+			"confirmDelete": {
+				"confirm": "حذف",
+				"message": "هل أنت متأكد من رغبتك في حذف هذه المنظمة؟ لا يمكن التراجع عن هذا الإجراء.",
+				"title": "حذف المنظمة"
+			},
+			"create": "إنشاء",
+			"delete": "حذف",
+			"deleteOrganization": {
+				"deleted": "تم حذف المنظمة بنجاح!",
+				"deleting": "جاري حذف المنظمة...",
+				"notDeleted": "تعذر حذف المنظمة. يُرجى المحاولة مرة أخرى."
+			},
+			"edit": "تعديل",
+			"form": {
+				"createTitle": "إنشاء منظمة",
+				"name": "اسم المنظمة",
+				"notifications": {
+					"error": "تعذر حفظ المنظمة. يُرجى المحاولة مرة أخرى لاحقًا.",
+					"success": "تم حفظ المنظمة."
+				},
+				"save": "حفظ",
+				"updateTitle": "تعديل المنظمة"
+			},
+			"loading": "جاري تحميل المنظمات...",
+			"membersCount": "{count} {count, plural, zero {عضو} one {عضو} two {عضوين} few {أعضاء} many {عضو} other {عضو}}",
+			"search": "البحث عن منظمة...",
+			"title": "إدارة المنظمات"
+		},
+		"title": "الإدارة",
+		"users": {
+			"confirmDelete": {
+				"confirm": "حذف",
+				"message": "هل أنت متأكد من رغبتك في حذف هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.",
+				"title": "حذف المستخدم"
+			},
+			"delete": "حذف",
+			"deleteUser": {
+				"deleted": "تم حذف المستخدم بنجاح!",
+				"deleting": "جاري حذف المستخدم...",
+				"notDeleted": "تعذر حذف المستخدم. يُرجى المحاولة مرة أخرى."
+			},
+			"emailVerified": {
+				"verified": "تم التحقق من البريد الإلكتروني",
+				"waiting": "بانتظار التحقق من البريد الإلكتروني"
+			},
+			"impersonate": "التظاهر بأنك",
+			"impersonation": {
+				"impersonating": "جاري التظاهر بأنك {name}..."
+			},
+			"loading": "جاري تحميل المستخدمين...",
+			"resendVerificationMail": {
+				"error": "تعذر إعادة إرسال بريد التحقق. يُرجى المحاولة مرة أخرى.",
+				"submitting": "جاري إعادة إرسال بريد التحقق...",
+				"success": "تم إرسال بريد التحقق.",
+				"title": "إعادة إرسال بريد التحقق"
+			},
+			"search": "البحث عن اسم أو بريد إلكتروني...",
+			"title": "إدارة المستخدمين",
+			"assignAdminRole": "تعيين صلاحية مدير",
+			"removeAdminRole": "إزالة صلاحية مدير"
+		},
+		"description": "إدارة تطبيقك."
+	},
+	"app": {
+		"menu": {
+			"accountSettings": "إعدادات الحساب",
+			"admin": "مدير",
+			"aiChatbot": "دردشة الذكاء الاصطناعي",
+			"organizationSettings": "إعدادات المنظمة",
+			"start": "بدء"
+		},
+		"userMenu": {
+			"accountSettings": "إعدادات الحساب",
+			"colorMode": "وضع الألوان",
+			"documentation": "التوثيق",
+			"home": "الرئيسية",
+			"logout": "تسجيل الخروج"
+		}
+	},
+	"auth": {
+		"errors": {
+			"invalidEmailOrPassword": "بيانات الدخول التي أدخلتها غير صحيحة. يُرجى التحقق منها والمحاولة مرة أخرى.",
+			"unknown": "حدث خطأ ما. يُرجى المحاولة مرة أخرى.",
+			"userNotFound": "هذا المستخدم غير موجود",
+			"failedToCreateUser": "تعذر إنشاء المستخدم. يُرجى المحاولة مرة أخرى.",
+			"failedToCreateSession": "تعذر إنشاء جلسة. يُرجى المحاولة مرة أخرى.",
+			"failedToUpdateUser": "تعذر تحديث المستخدم. يُرجى المحاولة مرة أخرى.",
+			"failedToGetSession": "تعذر الحصول على الجلسة.",
+			"invalidPassword": "كلمة المرور المدخلة غير صحيحة.",
+			"invalidEmail": "البريد الإلكتروني المدخل غير صالح.",
+			"invalidToken": "الرمز الذي أدخلته غير صالح أو منتهي الصلاحية.",
+			"credentialAccountNotFound": "الحساب غير موجود.",
+			"emailCanNotBeUpdated": "تعذر تحديث البريد الإلكتروني. يُرجى المحاولة مرة أخرى.",
+			"emailNotVerified": "يُرجى التحقق من بريدك الإلكتروني أولاً قبل تسجيل الدخول.",
+			"failedToGetUserInfo": "تعذر تحميل معلومات المستخدم.",
+			"idTokenNotSupported": "رمز الهوية غير مدعوم.",
+			"passwordTooLong": "كلمة المرور طويلة جدًا.",
+			"passwordTooShort": "كلمة المرور قصيرة جدًا.",
+			"providerNotFound": "مزود الخدمة هذا غير مدعوم.",
+			"socialAccountAlreadyLinked": "هذا الحساب مرتبط بالفعل بمستخدم.",
+			"userEmailNotFound": "البريد الإلكتروني غير موجود.",
+			"userAlreadyExists": "هذا المستخدم موجود بالفعل.",
+			"invalidInvitation": "الدعوة غير صالحة أو منتهية الصلاحية.",
+			"sessionExpired": "انتهت صلاحية الجلسة.",
+			"failedToUnlinkLastAccount": "فشل في فك ارتباط الحساب الأخير",
+			"accountNotFound": "الحساب غير موجود"
+		},
+		"forgotPassword": {
+			"backToSignin": "العودة لتسجيل الدخول",
+			"email": "البريد الإلكتروني",
+			"hints": {
+				"linkNotSent": {
+					"message": "نأسف، لكننا لم نتمكن من إرسال رابط إعادة تعيين كلمة المرور. يُرجى المحاولة لاحقًا.",
+					"title": "لم يتم إرسال الرابط"
+				},
+				"linkSent": {
+					"message": "لقد أرسلنا لك رابطًا للمتابعة. يُرجى التحقق من صندوق الوارد.",
+					"title": "تم إرسال الرابط"
+				}
+			},
+			"message": "يُرجى إدخال عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
+			"submit": "إرسال الرابط",
+			"title": "نسيت كلمة المرور؟"
+		},
+		"login": {
+			"continueWith": "أو المتابعة باستخدام",
+			"createAnAccount": "إنشاء حساب",
+			"dontHaveAnAccount": "أليس لديك حساب بعد؟",
+			"forgotPassword": "نسيت كلمة المرور؟",
+			"hints": {
+				"invalidCredentials": "البريد الإلكتروني أو كلمة المرور الذي أدخلته غير صحيح. يُرجى المحاولة مرة أخرى.",
+				"linkSent": {
+					"message": "لقد أرسلنا لك رابطًا للمتابعة. يُرجى التحقق من صندوق الوارد.",
+					"title": "تم إرسال الرابط"
+				}
+			},
+			"loginWithPasskey": "تسجيل الدخول باستخدام مفتاح المرور",
+			"modes": {
+				"magicLink": "الرابط السحري",
+				"password": "كلمة المرور"
+			},
+			"submit": "تسجيل الدخول",
+			"subtitle": "يُرجى إدخال بيانات اعتمادك لتسجيل الدخول.",
+			"title": "مرحبًا بعودتك",
+			"sendMagicLink": "إرسال الرابط السحري"
+		},
+		"resetPassword": {
+			"backToSignin": "العودة لتسجيل الدخول",
+			"hints": {
+				"error": "نأسف، لكننا لم نتمكن من إعادة تعيين كلمة المرور. يُرجى المحاولة مرة أخرى.",
+				"success": "تم إعادة تعيين كلمة المرور بنجاح."
+			},
+			"message": "يُرجى إدخال كلمة مرور جديدة.",
+			"newPassword": "كلمة المرور الجديدة",
+			"submit": "إعادة تعيين كلمة المرور",
+			"title": "إعادة تعيين كلمة المرور"
+		},
+		"signup": {
+			"alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+			"email": "البريد الإلكتروني",
+			"hints": {
+				"signupFailed": "نأسف، لكننا لم نتمكن من إنشاء حسابك. يُرجى المحاولة لاحقًا.",
+				"verifyEmail": "لقد أرسلنا لك رابطًا للتحقق من بريدك الإلكتروني. يُرجى التحقق من صندوق الوارد."
+			},
+			"message": "نحن سعداء لرغبتك في الانضمام إلينا. يُرجى تعبئة النموذج أدناه لإنشاء حسابك.",
+			"name": "الاسم",
+			"password": "كلمة المرور",
+			"signIn": "تسجيل الدخول",
+			"submit": "إنشاء حساب",
+			"title": "إنشاء حساب"
+		},
+		"verify": {
+			"title": "التحقق من حسابك",
+			"code": "كلمة المرور لمرة واحدة",
+			"submit": "تحقق",
+			"backToSignin": "العودة لتسجيل الدخول",
+			"message": "أدخل كلمة المرور لمرة واحدة من تطبيق المصادقة الخاص بك للمتابعة."
+		}
+	},
+	"blog": {
+		"description": "اقرأ آخر الأخبار من شركتنا",
+		"title": "مدونتي الرائعة",
+		"back": "العودة إلى المدونة"
+	},
+	"changelog": {
+		"description": "ابقَ على اطلاع بأحدث التغييرات في منتجنا.",
+		"title": "سجل التغييرات"
+	},
+	"common": {
+		"confirmation": {
+			"cancel": "إلغاء",
+			"confirm": "تأكيد"
+		},
+		"menu": {
+			"blog": "المدونة",
+			"changelog": "سجل التغييرات",
+			"contact": "اتصل بنا",
+			"dashboard": "لوحة التحكم",
+			"docs": "المستندات",
+			"faq": "الأسئلة الشائعة",
+			"login": "تسجيل الدخول",
+			"pricing": "التسعير"
+		},
+		"tableOfContents": {
+			"title": "في هذه الصفحة"
+		},
+		"actions": {
+			"continue": "متابعة",
+			"verify": "تحقق"
+		}
+	},
+	"contact": {
+		"description": "نحن هنا لمساعدتك. يُرجى استخدام النموذج أدناه للتواصل معنا.",
+		"form": {
+			"email": "البريد الإلكتروني",
+			"message": "الرسالة",
+			"name": "الاسم",
+			"notifications": {
+				"error": "نأسف، لكننا لم نتمكن من إرسال رسالتك. يُرجى المحاولة لاحقًا.",
+				"success": "تم إرسال رسالتك بنجاح. سنرد عليك في أقرب وقت ممكن."
+			},
+			"submit": "إرسال الرسالة"
+		},
+		"title": "اتصل بنا"
+	},
+	"documentation": {
+		"title": "التوثيق"
+	},
+	"faq": {
+		"description": "هل لديك أي أسئلة؟ نحن هنا لمساعدتك.",
+		"title": "الأسئلة الشائعة"
+	},
+	"mail": {
+		"common": {
+			"openLinkInBrowser": "إذا كنت ترغب في فتح الرابط في متصفح مختلف عن المتصفح الافتراضي لديك، انسخ والصق هذا الرابط:",
+			"otp": "كلمة المرور لمرة واحدة",
+			"useLink": "أو استخدم الرابط التالي:"
+		},
+		"emailVerification": {
+			"body": "مرحبًا،\n يُرجى النقر على الرابط أدناه للتحقق من عنوان البريد الإلكتروني الجديد.",
+			"confirmEmail": "التحقق من البريد الإلكتروني",
+			"subject": "التحقق من بريدك الإلكتروني"
+		},
+		"forgotPassword": {
+			"body": "مرحبًا،\n لقد طلبت إعادة تعيين كلمة المرور.\n\nانقر على الزر أدناه لإعادة تعيين كلمة المرور.",
+			"resetPassword": "إعادة تعيين كلمة المرور",
+			"subject": "إعادة تعيين كلمة المرور"
+		},
+		"magicLink": {
+			"body": "مرحبًا،\n لقد طلبت بريد إلكتروني لتسجيل الدخول إلى supastarter.\n\nانقر على الرابط أدناه لتسجيل الدخول.",
+			"login": "تسجيل الدخول",
+			"subject": "تسجيل الدخول إلى supastarter"
+		},
+		"newUser": {
+			"body": "مرحبًا،\n شكرًا لتسجيلك في supastarter.\n\nلبدء استخدام تطبيقنا، يُرجى تأكيد عنوان بريدك الإلكتروني بالنقر على الرابط أدناه.",
+			"confirmEmail": "تأكيد البريد الإلكتروني",
+			"subject": "تأكيد بريدك الإلكتروني"
+		},
+		"newsletterSignup": {
+			"body": "شكرًا لاشتراكك في نشرتنا الإخبارية لـ supastarter. سنبقيك على اطلاع بآخر الأخبار والتحديثات.",
+			"subject": "مرحبًا بك في نشرتنا الإخبارية"
+		},
+		"organizationInvitation": {
+			"body": "لقد تمت دعوتك للانضمام إلى المنظمة {organizationName}. انقر على الزر أدناه أو انسخ والصق الرابط في المتصفح الذي تختاره لقبول الدعوة والانضمام إلى المنظمة.",
+			"headline": "انضم إلى المنظمة {organizationName}",
+			"join": "الانضمام إلى المنظمة",
+			"subject": "لقد تمت دعوتك للانضمام إلى منظمة"
+		}
+	},
+	"newsletter": {
+		"email": "البريد الإلكتروني",
+		"hints": {
+			"error": {
+				"message": "تعذر الاشتراك في النشرة الإخبارية. يُرجى المحاولة لاحقًا."
+			},
+			"success": {
+				"message": "شكرًا لاشتراكك في نشرتنا الإخبارية. سنبقيك على اطلاع.",
+				"title": "تم الاشتراك"
+			}
+		},
+		"submit": "اشتراك",
+		"subtitle": "كن من أوائل من يحصل على إمكانية الوصول إلى supastarter.nextjs.",
+		"title": "احصل على وصول مبكر"
+	},
+	"onboarding": {
+		"account": {
+			"avatar": "الصورة الرمزية",
+			"avatarDescription": "انقر على الدائرة أو اسقط صورة عليها لتحميل صورتك الرمزية.",
+			"name": "الاسم"
+		},
+		"continue": "متابعة",
+		"message": "بضع خطوات سريعة لبدء استخدامك.",
+		"notifications": {
+			"accountSetupFailed": "نأسف، لكننا لم نتمكن من إعداد حسابك. يُرجى المحاولة لاحقًا."
+		},
+		"step": "الخطوة {step} من {total}",
+		"title": "إعداد حسابك"
+	},
+	"organizations": {
+		"createForm": {
+			"name": "اسم المنظمة",
+			"notifications": {
+				"error": "نأسف، لكننا لم نتمكن من إنشاء منظمتك. يُرجى المحاولة لاحقًا.",
+				"success": "تم إنشاء منظمتك. يمكنك الآن دعوة الأعضاء."
+			},
+			"submit": "إنشاء منظمة",
+			"subtitle": "أدخل اسمًا لمنظمتك للبدء. يمكنك تغيير الاسم لاحقًا في إعدادات المنظمة.",
+			"title": "إنشاء منظمة"
+		},
+		"invitationAlert": {
+			"description": "تحتاج إلى تسجيل الدخول أو إنشاء حساب للانضمام إلى المنظمة.",
+			"title": "لقد تمت دعوتك للانضمام إلى منظمة."
+		},
+		"invitationModal": {
+			"accept": "قبول",
+			"decline": "رفض",
+			"description": "لقد تمت دعوتك للانضمام إلى المنظمة {organizationName}. هل تريد قبول الدعوة والانضمام إلى المنظمة؟",
+			"title": "الانضمام إلى المنظمة"
+		},
+		"organizationSelect": {
+			"createNewOrganization": "إنشاء منظمة جديدة",
+			"organizations": "المنظمات",
+			"personalAccount": "الحساب الشخصي"
+		},
+		"organizationsGrid": {
+			"createNewOrganization": "إنشاء منظمة جديدة",
+			"title": "منظماتك"
+		},
+		"roles": {
+			"admin": "مدير",
+			"member": "عضو",
+			"owner": "مالك"
+		},
+		"settings": {
+			"changeName": {
+				"title": "اسم المنظمة"
+			},
+			"deleteOrganization": {
+				"confirmation": "هل أنت متأكد من رغبتك في حذف منظمتك؟",
+				"description": "حذف منظمتك بشكل دائم. بمجرد حذف منظمتك، لا يمكن التراجع عن ذلك. للتأكيد، يُرجى إدخال كلمة المرور أدناه:",
+				"submit": "حذف المنظمة",
+				"title": "حذف المنظمة"
+			},
+			"logo": {
+				"description": "قم بتحميل شعار لمنظمتك.",
+				"title": "شعار المنظمة"
+			},
+			"members": {
+				"activeMembers": "الأعضاء النشطون",
+				"description": "عرض جميع الأعضاء النشطين والدعوات المعلقة لمنظمتك.",
+				"invitations": {
+					"empty": "لم تدعُ أي أعضاء بعد.",
+					"expiresAt": "ينتهي في {date}",
+					"invitationStatus": {
+						"accepted": "مقبول",
+						"canceled": "ملغى",
+						"pending": "قيد الانتظار",
+						"rejected": "مرفوض"
+					},
+					"revoke": "سحب الدعوة",
+					"resend": "إعادة إرسال الدعوة"
+				},
+				"inviteMember": {
+					"description": "للدعوة عضو جديد، أرسل لهم دعوة.",
+					"email": "البريد الإلكتروني",
+					"notifications": {
+						"error": {
+							"description": "لم نتمكن من دعوة العضو. يُرجى المحاولة لاحقًا.",
+							"title": "تعذر دعوة العضو"
+						},
+						"success": {
+							"description": "تمت دعوة العضو.",
+							"title": "تمت دعوة العضو"
+						}
+					},
+					"role": "الدور",
+					"submit": "دعوة",
+					"title": "دعوة عضو"
+				},
+				"leaveOrganization": "مغادرة المنظمة",
+				"notifications": {
+					"removeMember": {
+						"error": {
+							"description": "تعذر إزالة العضو من منظمتك. يُرجى المحاولة مرة أخرى."
+						},
+						"loading": {
+							"description": "جاري إزالة العضو من المنظمة..."
+						},
+						"success": {
+							"description": "تمت إزالة العضو بنجاح من منظمتك."
+						}
+					},
+					"revokeInvitation": {
+						"error": {
+							"description": "تعذر سحب الدعوة. يُرجى المحاولة لاحقًا."
+						},
+						"loading": {
+							"description": "جاري سحب الدعوة..."
+						},
+						"success": {
+							"description": "تم سحب الدعوة."
+						}
+					},
+					"updateMembership": {
+						"error": {
+							"description": "تعذر تحديث عضوية المنظمة. يُرجى المحاولة مرة أخرى."
+						},
+						"loading": {
+							"description": "جاري تحديث العضوية..."
+						},
+						"success": {
+							"description": "تم تحديث العضوية بنجاح"
+						}
+					},
+					"resendInvitation": {
+						"loading": {
+							"description": "جاري إعادة إرسال الدعوة..."
+						},
+						"success": {
+							"description": "تم إرسال الدعوة"
+						},
+						"error": {
+							"description": "تعذر إرسال الدعوة. يُرجى المحاولة مرة أخرى."
+						}
+					}
+				},
+				"pendingInvitations": "الدعوات المعلقة",
+				"removeMember": "إزالة عضو",
+				"title": "الأعضاء"
+			},
+			"notifications": {
+				"organizationDeleted": "تم حذف منظمتك.",
+				"organizationNameNotUpdated": "لم نتمكن من تحديث اسم منظمتك. يُرجى المحاولة لاحقًا.",
+				"organizationNameUpdated": "تم تحديث اسم منظمتك.",
+				"organizationNotDeleted": "لم نتمكن من حذف منظمتك. يُرجى المحاولة لاحقًا."
+			},
+			"subtitle": "إدارة إعدادات المنظمة.",
+			"title": "المنظمة",
+			"dangerZone": {
+				"title": "منطقة الخطر"
+			}
+		},
+		"start": {
+			"subtitle": "مرحبًا بك في صفحة البداية لهذه المنظمة!"
+		}
+	},
+	"pricing": {
+		"choosePlan": "اختر الخطة",
+		"contactSales": "اتصل بالمبيعات",
+		"description": "اختر الخطة التي تناسبك أفضل.",
+		"getStarted": "ابدأ الآن",
+		"month": "{count, plural, zero {شهر} one {شهر} two {شهرين} few {أشهر} many {شهرًا} other {شهر}}",
+		"monthly": "شهري",
+		"products": {
+			"basic": {
+				"description": "مثالي للفرق الصغيرة.",
+				"features": {
+					"anotherFeature": "ميزة رائعة أخرى",
+					"limitedSupport": "دعم محدود"
+				},
+				"title": "أساسي"
+			},
+			"enterprise": {
+				"description": "خطة مخصصة تناسب متطلباتك",
+				"features": {
+					"enterpriseSupport": "دعم المؤسسات",
+					"unlimitedProjects": "مشاريع غير محدودة"
+				},
+				"title": "مؤسسة"
+			},
+			"free": {
+				"description": "ابدأ مجانًا",
+				"features": {
+					"anotherFeature": "ميزة رائعة أخرى",
+					"limitedSupport": "دعم محدود"
+				},
+				"title": "مجاني"
+			},
+			"lifetime": {
+				"description": "اشترِ مرة. استخدم للأبد.",
+				"features": {
+					"extendSupport": "دعم ممتد",
+					"noRecurringCosts": "لا توجد تكاليف متكررة"
+				},
+				"title": "مدى الحياة"
+			},
+			"pro": {
+				"description": "الأفضل للفرق",
+				"features": {
+					"anotherFeature": "ميزة رائعة أخرى",
+					"fiveMembers": "حتى 5 أعضاء",
+					"fullSupport": "دعم كامل"
+				},
+				"title": "احترافي"
+			}
+		},
+		"purchase": "شراء",
+		"recommended": "موصى به",
+		"subscribe": "اشتراك",
+		"title": "التسعير",
+		"trialPeriod": "فترة تجريبية مجانية {days} {days, plural, zero {يوم} one {يوم} two {يومين} few {أيام} many {يومًا} other {يوم}}",
+		"year": "{count, plural, zero {سنة} one {سنة} two {سنتين} few {سنوات} many {سنة} other {سنة}}",
+		"yearly": "سنوي",
+		"perSeat": "مقعد"
+	},
+	"settings": {
+		"account": {
+			"avatar": {
+				"description": "لتغيير صورتك الرمزية، انقر على الصورة في هذا المربع وحدد ملفًا من جهازك لتحميله.",
+				"notifications": {
+					"error": "تعذر تحديث الصورة الرمزية",
+					"success": "تم تحديث الصورة الرمزية بنجاح"
+				},
+				"title": "صورتك الرمزية"
+			},
+			"changeEmail": {
+				"description": "لتغيير بريدك الإلكتروني، أدخل البريد الإلكتروني الجديد واضغط على حفظ. ستحتاج إلى تأكيد البريد الإلكتروني الجديد قبل أن يصبح نشطًا.",
+				"notifications": {
+					"error": "تعذر تحديث البريد الإلكتروني",
+					"success": "تم تحديث البريد الإلكتروني بنجاح"
+				},
+				"title": "بريدك الإلكتروني"
+			},
+			"changeName": {
+				"notifications": {
+					"error": "تعذر تحديث الاسم",
+					"success": "تم تحديث الاسم بنجاح"
+				},
+				"title": "اسمك"
+			},
+			"deleteAccount": {
+				"confirmation": "هل أنت متأكد من رغبتك في حذف حسابك؟",
+				"description": "حذف حسابك بشكل دائم. بمجرد حذف حسابك، لا يمكن التراجع عن ذلك. للتأكيد، يُرجى إدخال كلمة المرور أدناه:",
+				"notifications": {
+					"error": "تعذر حذف الحساب",
+					"success": "تم حذف الحساب بنجاح"
+				},
+				"submit": "حذف الحساب",
+				"title": "حذف الحساب"
+			},
+			"language": {
+				"description": "لتغيير لغة التطبيق لحسابك، حدد لغة من القائمة وانقر على حفظ.",
+				"notifications": {
+					"error": "تعذر تحديث اللغة",
+					"success": "تم تحديث اللغة بنجاح"
+				},
+				"title": "لغتك"
+			},
+			"security": {
+				"activeSessions": {
+					"description": "هذه هي جميع الجلسات النشطة لحسابك. انقر على X لإنهاء جلسة محددة.",
+					"title": "الجلسات النشطة",
+					"notifications": {
+						"revokeSession": {
+							"success": "تم إلغاء الجلسة"
+						}
+					},
+					"currentSession": "الجلسة الحالية"
+				},
+				"changePassword": {
+					"currentPassword": "كلمة المرور الحالية",
+					"newPassword": "كلمة المرور الجديدة",
+					"notifications": {
+						"error": "تعذر تحديث كلمة المرور",
+						"success": "تم تحديث كلمة المرور بنجاح"
+					},
+					"title": "كلمة المرور الخاصة بك"
+				},
+				"connectedAccounts": {
+					"connect": "ربط",
+					"disconnect": "فصل",
+					"title": "الحسابات المتصلة"
+				},
+				"passkeys": {
+					"description": "استخدم مفاتيح المرور كبديل آمن لكلمات المرور.",
+					"notifications": {
+						"addPasskey": {
+							"error": {
+								"title": "تعذر إضافة مفتاح المرور"
+							},
+							"success": {
+								"title": "تمت إضافة مفتاح المرور"
+							}
+						},
+						"deletePasskey": {
+							"error": {
+								"title": "تعذر حذف مفتاح المرور"
+							},
+							"loading": {
+								"title": "جاري حذف مفتاح المرور..."
+							},
+							"success": {
+								"title": "تم حذف مفتاح المرور"
+							}
+						}
+					},
+					"title": "مفاتيح المرور"
+				},
+				"setPassword": {
+					"description": "لم تقم بتعيين كلمة مرور بعد. لتعيين واحدة، تحتاج إلى اتباع عملية إعادة تعيين كلمة المرور. انقر على الزر أدناه لإرسال بريد إلكتروني لإعادة تعيين كلمة المرور واتبع التعليمات في البريد الإلكتروني.",
+					"notifications": {
+						"error": "تعذر إرسال الرابط لتعيين كلمة المرور. يُرجى المحاولة مرة أخرى.",
+						"success": "تحقق من صندوق الوارد للحصول على الرابط لتعيين كلمة المرور الخاصة بك."
+					},
+					"submit": "تعيين كلمة المرور",
+					"title": "كلمة المرور الخاصة بك"
+				},
+				"title": "الأمان",
+				"twoFactor": {
+					"title": "المصادقة الثنائية",
+					"description": "أضف طبقة إضافية من الأمان لحسابك.",
+					"dialog": {
+						"password": {
+							"title": "التحقق بكلمة المرور",
+							"description": "يُرجى التحقق من حسابك بإدخال كلمة المرور:",
+							"label": "كلمة المرور الخاصة بك:"
+						},
+						"totpUrl": {
+							"description": "استخدم تطبيق المصادقة المفضل لديك وامسح رمز QR به أو أدخل الرمز السري أدناه يدويًا لإعداد المصادقة الثنائية.",
+							"code": "أدخل رمز مكون من 6 أرقام للتحقق من الإعداد:",
+							"title": "تمكين المصادقة الثنائية"
+						}
+					},
+					"enable": "تمكين المصادقة الثنائية",
+					"notifications": {
+						"verify": {
+							"success": {
+								"title": "تم تمكين المصادقة الثنائية بنجاح."
+							}
+						},
+						"enable": {
+							"error": {
+								"title": "تعذر التحقق من حسابك باستخدام كلمة المرور المقدمة. يُرجى المحاولة مرة أخرى."
+							}
+						},
+						"disable": {
+							"success": {
+								"title": "تم تعطيل المصادقة الثنائية بنجاح."
+							}
+						}
+					},
+					"disable": "تعطيل المصادقة الثنائية",
+					"enabled": "لديك المصادقة الثنائية ممكّنة لحسابك."
+				}
+			},
+			"subtitle": "إدارة إعدادات حسابك الشخصي.",
+			"title": "إعدادات الحساب"
+		},
+		"billing": {
+			"createCustomerPortal": {
+				"label": "إدارة الفواتير",
+				"notifications": {
+					"error": {
+						"title": "تعذر إنشاء جلسة بوابة العميل. يُرجى المحاولة مرة أخرى."
+					}
+				}
+			},
+			"activePlan": {
+				"status": {
+					"active": "نشط",
+					"canceled": "ملغى",
+					"expired": "منتهي الصلاحية",
+					"incomplete": "غير مكتمل",
+					"past_due": "متأخر",
+					"paused": "متوقف مؤقتًا",
+					"trialing": "تجريبي",
+					"unpaid": "غير مدفوع"
+				},
+				"title": "خطتك"
+			},
+			"changePlan": {
+				"description": "اختر خطة للاشتراك فيها.",
+				"title": "تغيير خطتك"
+			},
+			"title": "الفواتير"
+		},
+		"menu": {
+			"account": {
+				"billing": "الفواتير",
+				"dangerZone": "منطقة الخطر",
+				"general": "عام",
+				"security": "الأمان",
+				"title": "الحساب"
+			},
+			"organization": {
+				"billing": "الفواتير",
+				"general": "عام",
+				"members": "الأعضاء",
+				"title": "المنظمة",
+				"dangerZone": "منطقة الخطر"
+			}
+		},
+		"save": "حفظ"
+	},
+	"start": {
+		"subtitle": "شاهد أحدث إحصائيات عملك الرائع.",
+		"welcome": "مرحبًا {name}!"
+	},
+	"zod": {
+		"errors": {
+			"invalid_arguments": "وسائط الدالة غير صالحة",
+			"invalid_date": "تاريخ غير صالح",
+			"invalid_enum_value": "قيمة التعداد غير صالحة. المتوقع {- options}، المستلم '{received}'",
+			"invalid_intersection_types": "تعذر دمج نتائج التقاطع",
+			"invalid_literal": "قيمة حرفية غير صالحة، المتوقع {expected}",
+			"invalid_return_type": "نوع إرجاع الدالة غير صالح",
+			"invalid_string": {
+				"cuid": "{validation} غير صالح",
+				"datetime": "{validation} غير صالح",
+				"email": "{validation} غير صالح",
+				"endsWith": "إدخال غير صالح: يجب أن ينتهي بـ \"{endsWith}\"",
+				"regex": "غير صالح",
+				"startsWith": "إدخال غير صالح: يجب أن يبدأ بـ \"{startsWith}\"",
+				"url": "{validation} غير صالح",
+				"uuid": "{validation} غير صالح"
+			},
+			"invalid_type": "المتوقع {expected}، المستلم {received}",
+			"invalid_type_received_undefined": "مطلوب",
+			"invalid_union": "إدخال غير صالح",
+			"invalid_union_discriminator": "قيمة المميز غير صالحة. المتوقع {- options}",
+			"not_finite": "يجب أن يكون الرقم محدودًا",
+			"not_multiple_of": "يجب أن يكون الرقم مضاعفًا لـ {multipleOf}",
+			"too_big": {
+				"array": {
+					"exact": "يجب أن يحتوي المصفوفة على بالضبط {maximum} عنصر",
+					"inclusive": "يجب أن يحتوي المصفوفة على الأكثر {maximum} عنصر",
+					"not_inclusive": "يجب أن يحتوي المصفوفة على أقل من {maximum} عنصر"
+				},
+				"date": {
+					"exact": "يجب أن يكون التاريخ بالضبط {- maximum, datetime}",
+					"inclusive": "يجب أن يكون التاريخ أصغر من أو يساوي {- maximum, datetime}",
+					"not_inclusive": "يجب أن يكون التاريخ أصغر من {- maximum, datetime}"
+				},
+				"number": {
+					"exact": "يجب أن يكون الرقم بالضبط {maximum}",
+					"inclusive": "يجب أن يكون الرقم أقل من أو يساوي {maximum}",
+					"not_inclusive": "يجب أن يكون الرقم أقل من {maximum}"
+				},
+				"set": {
+					"exact": "إدخال غير صالح",
+					"inclusive": "إدخال غير صالح",
+					"not_inclusive": "إدخال غير صالح"
+				},
+				"string": {
+					"exact": "يجب أن تحتوي السلسلة على بالضبط {maximum} حرف",
+					"inclusive": "يجب أن تحتوي السلسلة على الأكثر {maximum} حرف",
+					"not_inclusive": "يجب أن تحتوي السلسلة على أقل من {maximum} حرف"
+				}
+			},
+			"too_small": {
+				"array": {
+					"exact": "يجب أن يحتوي المصفوفة على بالضبط {minimum} عنصر",
+					"inclusive": "يجب أن يحتوي المصفوفة على الأقل {minimum} عنصر",
+					"not_inclusive": "يجب أن يحتوي المصفوفة على أكثر من {minimum} عنصر"
+				},
+				"date": {
+					"exact": "يجب أن يكون التاريخ بالضبط {- minimum, datetime}",
+					"inclusive": "يجب أن يكون التاريخ أكبر من أو يساوي {- minimum, datetime}",
+					"not_inclusive": "يجب أن يكون التاريخ أكبر من {- minimum, datetime}"
+				},
+				"number": {
+					"exact": "يجب أن يكون الرقم بالضبط {minimum}",
+					"inclusive": "يجب أن يكون الرقم أكبر من أو يساوي {minimum}",
+					"not_inclusive": "يجب أن يكون الرقم أكبر من {minimum}"
+				},
+				"set": {
+					"exact": "إدخال غير صالح",
+					"inclusive": "إدخال غير صالح",
+					"not_inclusive": "إدخال غير صالح"
+				},
+				"string": {
+					"exact": "يجب أن تحتوي السلسلة على بالضبط {minimum} حرف",
+					"inclusive": "يجب أن تحتوي السلسلة على الأقل {minimum} حرف",
+					"not_inclusive": "يجب أن تحتوي السلسلة على أكثر من {minimum} حرف"
+				}
+			},
+			"unrecognized_keys": "مفاتيح غير معروفة في الكائن: {- keys}"
+		},
+		"types": {
+			"array": "مصفوفة",
+			"bigint": "عدد صحيح كبير",
+			"boolean": "منطقي",
+			"date": "تاريخ",
+			"float": "رقم عشري",
+			"function": "دالة",
+			"integer": "عدد صحيح",
+			"map": "خريطة",
+			"nan": "ليس رقمًا",
+			"never": "أبدًا",
+			"null": "لا شيء",
+			"number": "رقم",
+			"object": "كائن",
+			"promise": "وعد",
+			"set": "مجموعة",
+			"string": "سلسلة",
+			"symbol": "رمز",
+			"undefined": "غير معرف",
+			"unknown": "غير معروف",
+			"void": "فراغ"
+		},
+		"validations": {
+			"cuid": "معرف فريد مخصص",
+			"cuid2": "معرف فريد مخصص 2",
+			"datetime": "التاريخ والوقت",
+			"email": "البريد الإلكتروني",
+			"emoji": "الرموز التعبيرية",
+			"ip": "عنوان IP",
+			"regex": "تعبير نمطي",
+			"ulid": "معرف فريد عالمي معجمي",
+			"url": "رابط",
+			"uuid": "معرف فريد عالمي"
+		}
+	},
+	"choosePlan": {
+		"title": "اختر خطتك",
+		"description": "للمتابعة، يُرجى اختيار خطة."
+	}
+}

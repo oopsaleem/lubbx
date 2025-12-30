@@ -13,9 +13,9 @@ export const config = {
 				currency: "USD",
 				label: "English",
 			},
-			de: {
-				currency: "USD",
-				label: "Deutsch",
+			ar: {
+				currency: "SAR",
+				label: "عربي",
 			},
 		},
 		// The default locale is used if no locale is provided
