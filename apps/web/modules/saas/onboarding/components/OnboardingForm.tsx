@@ -50,12 +50,12 @@ export function OnboardingForm() {
 	return (
 		<div dir={locale === "ar" ? "rtl" : "ltr"}>
 			<h1 className="font-bold text-xl md:text-2xl">
-				{steps.length === 2
+				{onboardingStep === 1
 					? t("onboarding.step1.title")
 					: t("onboarding.step2.title")}
 			</h1>
 			<p className="mt-2 mb-6 text-foreground/60">
-				{steps.length === 2
+				{onboardingStep === 1
 					? t("onboarding.step1.message")
 					: t("onboarding.step2.message")}
 			</p>
