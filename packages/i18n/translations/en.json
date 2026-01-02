@@ -75,7 +75,8 @@
 			"admin": "Admin",
 			"aiChatbot": "AI Chatbot",
 			"organizationSettings": "Organization settings",
-			"start": "Start"
+			"start": "Start",
+			"aiDemo": "AI Demo"
 		},
 		"userMenu": {
 			"accountSettings": "Account settings",
@@ -297,12 +298,20 @@
 			"name": "Name"
 		},
 		"continue": "Continue",
-		"message": "Just a few quick steps to get you started.",
 		"notifications": {
 			"accountSetupFailed": "We are sorry, but we were unable to set up your account. Please try again later."
 		},
 		"step": "Step {step} / {total}",
-		"title": "Set up your account"
+		"start": "Start",
+		"title": "Set up your account",
+		"step1": {
+			"title": "Set up your account",
+			"message": "Just a few quick steps to get you started."
+		},
+		"step2": {
+			"title": "You're all set up!",
+			"message": "Now you can get started."
+		}
 	},
 	"organizations": {
 		"createForm": {

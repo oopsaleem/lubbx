@@ -75,7 +75,8 @@
 			"admin": "مدير",
 			"aiChatbot": "دردشة الذكاء الاصطناعي",
 			"organizationSettings": "إعدادات المنظمة",
-			"start": "بدء"
+			"start": "بدء",
+			"aiDemo": "AI نموذج"
 		},
 		"userMenu": {
 			"accountSettings": "إعدادات الحساب",
@@ -297,12 +298,20 @@
 			"name": "الاسم"
 		},
 		"continue": "متابعة",
-		"message": "بضع خطوات سريعة لبدء استخدامك.",
 		"notifications": {
 			"accountSetupFailed": "نأسف، لكننا لم نتمكن من إعداد حسابك. يُرجى المحاولة لاحقًا."
 		},
 		"step": "الخطوة {step} من {total}",
-		"title": "إعداد حسابك"
+		"start": "بدء",
+		"title": "إعداد حسابك",
+		"step1": {
+			"title": "إعداد حسابك",
+			"message": "بضع خطوات سريعة لبدء استخدامك."
+		},
+		"step2": {
+			"title": "كل شي جاهز!",
+			"message": "يمكنك البدء في استخدام النظام."
+		}
 	},
 	"organizations": {
 		"createForm": {

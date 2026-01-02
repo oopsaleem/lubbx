@@ -1,14 +1,16 @@
 "use client";
 import { authClient } from "@repo/auth/client";
+import { OnboardingStep2 } from "@saas/onboarding/components/OnboardingStep2";
 import { useRouter } from "@shared/hooks/router";
 import { clearCache } from "@shared/lib/cache";
 import { Progress } from "@ui/components/progress";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { withQuery } from "ufo";
 import { OnboardingStep1 } from "./OnboardingStep1";
 
 export function OnboardingForm() {
+	const locale = useLocale();
 	const t = useTranslations();
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -38,17 +40,24 @@ export function OnboardingForm() {
 
 	const steps = [
 		{
-			component: <OnboardingStep1 onCompleted={() => onCompleted()} />,
+			component: <OnboardingStep1 onCompleted={() => setStep(2)} />,
+		},
+		{
+			component: <OnboardingStep2 onCompleted={() => onCompleted()} />,
 		},
 	];
 
 	return (
-		<div>
+		<div dir={locale === "ar" ? "rtl" : "ltr"}>
 			<h1 className="font-bold text-xl md:text-2xl">
-				{t("onboarding.title")}
+				{steps.length === 2
+					? t("onboarding.step1.title")
+					: t("onboarding.step2.title")}
 			</h1>
 			<p className="mt-2 mb-6 text-foreground/60">
-				{t("onboarding.message")}
+				{steps.length === 2
+					? t("onboarding.step1.message")
+					: t("onboarding.step2.message")}
 			</p>
 
 			{steps.length > 1 && (
