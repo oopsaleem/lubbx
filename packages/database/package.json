@@ -25,6 +25,7 @@
 		"generate": "prisma generate --no-hints --schema=./prisma/schema.prisma",
 		"push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema=./prisma/schema.prisma",
 		"migrate": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
+		"migrate:init": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma --name ",
 		"studio": "dotenv -c -e ../../.env -- prisma studio --schema=./prisma/schema.prisma",
 		"type-check": "tsc --noEmit"
 	},

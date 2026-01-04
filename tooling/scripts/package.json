@@ -3,6 +3,7 @@
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
 		"@repo/auth": "workspace:*",
+		"@repo/mail": "workspace:*",
 		"@repo/utils": "workspace:*"
 	},
 	"devDependencies": {
@@ -17,6 +18,7 @@
 	"scripts": {
 		"create:user": "dotenv -c -e ../../.env -- tsx ./src/create-user.ts",
 		"seed:user": "dotenv -c -e ../../.env -- tsx ./src/seed-user.ts",
+		"test:mail": "dotenv -c -e ../../.env -- tsx ./src/test-mail.ts",
 		"type-check": "tsc --noEmit"
 	},
 	"version": "0.0.0"

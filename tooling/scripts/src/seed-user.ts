@@ -19,26 +19,31 @@ async function main() {
 		email: string;
 		name: string;
 		isAdmin: boolean;
+		onboardingComplete: boolean;
 	}[] = [
 		{
 			email: "admin@gmail.com",
-			name: "Ghamdan Admin",
+			name: "Admin",
 			isAdmin: true,
+			onboardingComplete: false,
 		},
 		{
 			email: "user1@gmail.com",
-			name: "user1",
+			name: "User No1",
 			isAdmin: false,
+			onboardingComplete: false,
 		},
 		{
 			email: "user2@gmail.com",
-			name: "user2",
+			name: "User No2",
 			isAdmin: false,
+			onboardingComplete: false,
 		},
 		{
 			email: "user3@gmail.com",
-			name: "user3",
+			name: "User No3",
 			isAdmin: false,
+			onboardingComplete: false,
 		},
 	];
 
@@ -46,6 +51,7 @@ async function main() {
 		const email = account.email;
 		const name = account.name;
 		const isAdmin = account.isAdmin;
+		const onboardingComplete = account.onboardingComplete;
 
 		// check if user exists
 		const user = await getUserByEmail(email);
@@ -60,7 +66,7 @@ async function main() {
 			name,
 			role: isAdmin ? "admin" : "user",
 			emailVerified: true,
-			onboardingComplete: true,
+			onboardingComplete,
 		});
 
 		if (!adminUser) {

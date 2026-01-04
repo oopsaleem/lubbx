@@ -31,6 +31,14 @@ export type Config = {
 		sessionCookieMaxAge: number;
 	};
 	mails: {
+		mailProvider:
+			| "nodemailer"
+			| "plunk"
+			| "mailgun"
+			| "resend"
+			| "postmark"
+			| "console"
+			| "custom";
 		from: string;
 	};
 	storage: {

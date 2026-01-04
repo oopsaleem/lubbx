@@ -36,7 +36,7 @@ export const config = {
 		// Should users be able to create new organizations? Otherwise only admin users can create them
 		enableUsersToCreateOrganizations: true,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
-		requireOrganization: false,
+		requireOrganization: true,
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
 		forbiddenOrganizationSlugs: [
 			"new-organization",
@@ -60,7 +60,7 @@ export const config = {
 		// Whether users should be able to sign in with a magic link
 		enableMagicLink: true,
 		// Whether users should be able to sign in with a social provider
-		enableSocialLogin: true,
+		enableSocialLogin: false,
 		// Whether users should be able to sign in with a passkey
 		enablePasskeys: true,
 		// Whether users should be able to sign in with a password
@@ -76,8 +76,9 @@ export const config = {
 	},
 	// Mails
 	mails: {
+		mailProvider: "nodemailer",
 		// the from address for mails
-		from: "noreply@supastarter.dev",
+		from: "u0317812360@gmail.com",
 	},
 	// Frontend
 	ui: {
@@ -109,7 +110,7 @@ export const config = {
 		// whether the contact form should be enabled
 		enabled: true,
 		// the email to which the contact form messages should be sent
-		to: "hello@your-domain.com",
+		to: "u0317812360@gmail.com",
 		// the subject of the email
 		subject: "Contact form message",
 	},

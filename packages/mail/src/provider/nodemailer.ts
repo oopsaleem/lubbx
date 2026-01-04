@@ -8,11 +8,15 @@ export const send: SendEmailHandler = async ({ to, subject, text, html }) => {
 	const transporter = nodemailer.createTransport({
 		host: process.env.MAIL_HOST as string,
 		port: Number.parseInt(process.env.MAIL_PORT as string, 10),
+		service: process.env.MAIL_SERVICE as string,
 		auth: {
 			user: process.env.MAIL_USER as string,
 			pass: process.env.MAIL_PASS as string,
 		},
 	});
+
+	// Verify connection first
+	await transporter.verify();
 
 	await transporter.sendMail({
 		to,

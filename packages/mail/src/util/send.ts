@@ -1,7 +1,7 @@
 import { config } from "@repo/config";
 import { logger } from "@repo/logs";
 import type { mailTemplates } from "../../emails";
-import { send } from "../provider";
+import * as providers from "../provider";
 import type { TemplateId } from "./templates";
 import { getTemplate } from "./templates";
 
@@ -46,13 +46,61 @@ export async function sendEmail<T extends TemplateId>(
 		html = params.html ?? "";
 	}
 
+	const mailProvider = config.mails.mailProvider;
+
 	try {
-		await send({
-			to,
-			subject,
-			text,
-			html,
-		});
+		if (mailProvider === "nodemailer") {
+			await providers.nodemailer({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "plunk") {
+			await providers.plunk({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "mailgun") {
+			await providers.mailgun({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "resend") {
+			await providers.resend({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "postmark") {
+			await providers.postmark({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "console") {
+			console.log({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else if (mailProvider === "custom") {
+			await providers.custom({
+				to,
+				subject,
+				text,
+				html,
+			});
+		} else {
+			throw new Error(`Unknown mail provider: ${mailProvider}`);
+		}
 		return true;
 	} catch (e) {
 		logger.error(e);
