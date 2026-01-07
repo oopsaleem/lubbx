@@ -1,104 +1,103 @@
-// test-llama.ts
-import { checkOllamaHealth, getAvailableModels, ollama } from "@repo/ai-llama";
+// test-llama.ts - Comprehensive test
+import {
+	checkOllamaHealth,
+	getAvailableModels,
+	models,
+	ollama,
+	prompts,
+} from "@repo/ai-llama";
 
-async function runTests() {
-	console.log("🚀 Testing Llama AI Package");
-	console.log("=".repeat(50));
+async function runComprehensiveTests() {
+	console.log("🚀 Comprehensive Llama AI Package Tests");
+	console.log("=".repeat(60));
 
-	// Check health
-	console.log("🔍 Checking Ollama connection...");
-	const isHealthy = await checkOllamaHealth();
+	// Health check
+	console.log("🔍 Health Check...");
+	if (!(await checkOllamaHealth())) {
+		console.error("❌ Ollama not available");
+		process.exit(1);
+	}
+	console.log("✅ Ollama is running\n");
 
-	if (!isHealthy) {
-		console.error("❌ Ollama is not accessible at http://localhost:11434");
-		console.log("\n💡 Make sure Ollama is running:");
-		console.log("   $ ollama serve");
-		return;
+	// Available models
+	console.log("📋 Available Models...");
+	const availableModels = await getAvailableModels();
+	console.log(`✅ Found ${availableModels.length} models\n`);
+
+	// Test each model shortcut
+	console.log("🧪 Testing Model Shortcuts...");
+	const modelTests = [
+		{ name: "llama3.2", test: models.llama },
+		{ name: "mistral", test: models.mistral },
+		{ name: "qwen", test: models.qwen },
+		{ name: "llama2", test: models.llama2 },
+	];
+
+	for (const modelTest of modelTests) {
+		try {
+			const response = await modelTest.test.generate(
+				'Say "Hello" in one word.',
+			);
+			console.log(`   ${modelTest.name}: ${response.response.trim()}`);
+		} catch (error: any) {
+			console.log(`   ${modelTest.name}: ❌ ${error.message}`);
+		}
+	}
+	console.log();
+
+	// Test prompts library
+	console.log("📚 Testing Prompts Library...");
+	const testPrompt = prompts.promptListProductNames("AI assistant");
+	console.log(`   Prompt: "${testPrompt.substring(0, 50)}..."`);
+
+	try {
+		const response = await models.llama.generate(testPrompt);
+		console.log(`   Response: ${response.response.substring(0, 100)}...\n`);
+	} catch (error: any) {
+		console.log(`   ❌ Prompt test failed: ${error.message}\n`);
 	}
 
-	console.log("✅ Ollama is running!");
-
-	// List models
-	console.log("\n📋 Checking available models...");
-	const models = await getAvailableModels();
-
-	if (models.length === 0) {
-		console.log("❌ No models found. Pull some models first:");
-		console.log("   $ ollama pull llama3.2:latest");
-		return;
+	// Test streaming
+	console.log("🌊 Testing Streaming...");
+	try {
+		let streamed = "";
+		console.log('   Streaming: "');
+		for await (const chunk of models.mistral.stream("Say the alphabet:")) {
+			process.stdout.write(chunk);
+			streamed += chunk;
+		}
+		console.log(`"\n   ✅ Streamed ${streamed.length} characters\n`);
+	} catch (error: any) {
+		console.log(`\n   ❌ Streaming failed: ${error.message}\n`);
 	}
 
-	console.log(`✅ Found ${models.length} model(s):`);
-	models.forEach((model, index) => {
-		console.log(`   ${index + 1}. ${model}`);
-	});
-
-	// Test basic generation with first model
-	const testModel = models[0];
-	console.log(`\n🧪 Testing generation with ${testModel}...`);
-
+	// Test custom configuration
+	console.log("🎛️ Testing Custom Configuration...");
 	try {
 		const response = await ollama.generate(
-			testModel,
-			'Say "Hello from Ollama!" in one sentence.',
+			"llama3.2:latest",
+			"Write a very short poem",
+			{ temperature: 0.9, maxTokens: 30 },
 		);
-
-		console.log("✅ Generation successful!");
-		console.log(`\n📝 Response: ${response.response}`);
-		console.log(
-			`⏱️  Tokens: ${response.prompt_eval_count} prompt, ${response.eval_count} completion`,
-		);
-		console.log(`⏱️  Duration: ${response.total_duration}ns`);
+		console.log(`   Creative mode response: ${response.response}\n`);
 	} catch (error: any) {
-		console.error("❌ Generation failed:", error.message);
-		return;
+		console.log(`   ❌ Custom config failed: ${error.message}\n`);
 	}
 
-	// Test streaming with first model
-	console.log(`\n🌊 Testing streaming with ${testModel}...`);
-
+	// Performance test
+	console.log("⚡ Performance Test...");
+	const startTime = Date.now();
 	try {
-		console.log("   Stream response:");
-		let streamedText = "";
-
-		for await (const chunk of ollama.generateStream(
-			testModel,
-			"Count from 1 to 5 with a short pause between each number:",
-		)) {
-			process.stdout.write(chunk);
-			streamedText += chunk;
-		}
-
-		console.log("\n✅ Streaming successful!");
-		console.log(`   Total streamed characters: ${streamedText.length}`);
+		await models.llama.generate("What is 2+2?");
+		const duration = Date.now() - startTime;
+		console.log(`   Response time: ${duration}ms\n`);
 	} catch (error: any) {
-		console.error("\n❌ Streaming failed:", error.message);
-		return;
+		console.log(`   ❌ Performance test failed: ${error.message}\n`);
 	}
 
-	console.log(`\n${"=".repeat(50)}`);
-	console.log("🎉 All tests passed! Your Llama AI package is working!");
-	console.log("\n💡 Usage examples:");
-	console.log(`
-// Basic generation
-import { ollama } from "@repo/ai-llama";
-const response = await ollama.generate('llama3.2:latest', 'Hello!');
-console.log(response.response);
-
-// Streaming
-for await (const chunk of ollama.generateStream('mistral:latest', 'Tell me a story')) {
-  process.stdout.write(chunk);
+	console.log("=".repeat(60));
+	console.log("🎉 Package is fully functional!");
+	console.log("\n💡 Ready to use in your projects!");
 }
 
-// Check health
-import { checkOllamaHealth } from "@repo/ai-llama";
-const isHealthy = await checkOllamaHealth();
-
-// List models
-import { getAvailableModels } from "@repo/ai-llama";
-const models = await getAvailableModels();
-  `);
-}
-
-// Run tests
-runTests().catch(console.error);
+runComprehensiveTests().catch(console.error);
