@@ -12,6 +12,7 @@ import {
 	SettingsIcon,
 	UserCog2Icon,
 	UserCogIcon,
+	WandIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -36,6 +37,11 @@ export function NavBar() {
 			href: basePath,
 			icon: HomeIcon,
 			isActive: pathname === basePath,
+		},
+		{
+			label: t("app.menu.aiDemo"),
+			href: "/app/ai-demo",
+			icon: WandIcon,
 		},
 		{
 			label: t("app.menu.aiChatbot"),

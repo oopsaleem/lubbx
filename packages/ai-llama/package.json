@@ -1,0 +1,42 @@
+{
+	"dependencies": {
+		"ai": "^4.3.9",
+		"@ai-sdk/react": "^1.2.9"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@repo/tsconfig": "workspace:*",
+		"@types/react": "19.1.2",
+		"typescript": "5.8.3"
+	},
+	"peerDependencies": {
+		"react": "^18 || ^19"
+	},
+	"scripts": {
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"type-check": "tsc --noEmit"
+	},
+	"name": "@repo/ai-llama",
+	"version": "0.1.0",
+	"description": "Local Llama AI integration for running models on Ollama (localhost:11434)",
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"exports": {
+		".": {
+			"import": "./index.ts",
+			"require": "./index.ts",
+			"types": "./index.ts"
+		},
+		"./client": {
+			"import": "./client.ts",
+			"require": "./client.ts",
+			"types": "./client.ts"
+		},
+		"./prompts": {
+			"import": "./prompts/index.ts",
+			"require": "./prompts/index.ts",
+			"types": "./prompts/index.ts"
+		}
+	}
+}

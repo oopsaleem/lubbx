@@ -4,6 +4,7 @@
 		"@repo/logs": "workspace:*",
 		"@repo/auth": "workspace:*",
 		"@repo/mail": "workspace:*",
+		"@repo/ai-llama": "workspace:*",
 		"@repo/utils": "workspace:*"
 	},
 	"devDependencies": {
@@ -19,6 +20,9 @@
 		"create:user": "dotenv -c -e ../../.env -- tsx ./src/create-user.ts",
 		"seed:user": "dotenv -c -e ../../.env -- tsx ./src/seed-user.ts",
 		"test:mail": "dotenv -c -e ../../.env -- tsx ./src/test-mail.ts",
+		"test:llama": "dotenv -c -e ../../.env -- tsx ./src/test-llama.ts",
+		"simple:test:llama": "dotenv -c -e ../../.env -- tsx ./src/simple-test-llama.ts",
+		"example:llama": "dotenv -c -e ../../.env -- tsx ./src/example-llama.ts",
 		"type-check": "tsc --noEmit"
 	},
 	"version": "0.0.0"
