@@ -42,7 +42,7 @@ async function exampleLlama() {
 		// 2. Using model shortcuts
 		console.log("2. Using Model Shortcuts:");
 		const mistralResponse = await models.mistral.generate(
-			"What is the capital of France?",
+			"What is the capital of Yemen?",
 		);
 		console.log(`${mistralResponse.response}\n`);
 
