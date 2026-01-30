@@ -48,14 +48,11 @@ model User {
     isActive    Boolean          @default(true)
     lastLogin   DateTime?
     permissions UserPermission[]
-    farm        Farm?            @relation(fields: [farmId], references: [id])
-    farmId      String?
     employees   Employee[]
     activities  ActivityLog[]
 
     @@unique([email])
     @@unique([username])
-    @@index([farmId])
     @@index([role])
     @@index([isActive])
     @@map("user")
@@ -148,6 +145,7 @@ model Organization {
     createdAt          DateTime
     metadata           String?
     paymentsCustomerId String?
+    farm               Farm?
     members            Member[]
     invitations        Invitation[]
     purchases          Purchase[]
@@ -251,15 +249,16 @@ model UserPermission {
 
 // ==================== المزرعة الأساسية ====================
 model Farm {
-    id          String  @id @default(cuid())
-    name        String  @unique
-    ownerName   String
-    location    String?
-    area        Float?
-    description String?
+    id             String       @id @default(cuid())
+    name           String       @unique
+    ownerName      String
+    location       String?
+    area           Float?
+    description    String?
+    organizationId String       @unique
+    organization   Organization @relation(fields: [organizationId], references: [id])
 
     // العلاقات
-    users         User[]
     livestock     Livestock[]
     pens          Pen[]
     healthRecords HealthRecord[]
@@ -279,6 +278,7 @@ model Farm {
 
     @@index([name])
     @@index([ownerName])
+    @@index([organizationId])
 }
 
 // ==================== إدارة المواشي ====================

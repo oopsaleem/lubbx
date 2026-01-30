@@ -2,14 +2,27 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    open-pull-requests-limit: 2
+    open-pull-requests-limit: 20
     schedule:
       interval: "daily"
-    ignore:
-      - dependency-name: "cropperjs"
-        versions: [">1.6.2"]
     groups:
-      production-dependencies:
-        dependency-type: "production"
-      development-dependencies:
-        dependency-type: "development"
+      content-collections:
+        patterns:
+          - "@content-collections/*"
+      prisma:
+        patterns:
+          - "@prisma/*"
+          - "prisma"
+      radix-ui:
+        patterns:
+          - "@radix-ui/*"
+      next-intl:
+        patterns:
+          - "next-intl"
+          - "use-intl"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
