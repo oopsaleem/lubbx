@@ -5,6 +5,7 @@ import { authClient } from "@repo/auth/client";
 import { OrganizationRoleSelect } from "@saas/organizations/components/OrganizationRoleSelect";
 import { fullOrganizationQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
 import {
@@ -36,9 +37,15 @@ export function InviteMemberForm({
 }) {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
+	const { zodErrorMap } = useFormErrors();
+
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			email: "",
 			role: "member",

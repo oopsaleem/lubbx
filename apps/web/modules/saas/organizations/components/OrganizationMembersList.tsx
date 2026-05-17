@@ -58,11 +58,15 @@ export function OrganizationMembersList({
 	) => {
 		toast.promise(
 			async () => {
-				await authClient.organization.updateMemberRole({
-					memberId,
-					role,
-					organizationId,
-				});
+				const { error } =
+					await authClient.organization.updateMemberRole({
+						memberId,
+						role,
+						organizationId,
+					});
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t(
@@ -77,9 +81,19 @@ export function OrganizationMembersList({
 						"organizations.settings.members.notifications.updateMembership.success.description",
 					);
 				},
-				error: t(
-					"organizations.settings.members.notifications.updateMembership.error.description",
-				),
+				error: (error) => {
+					if (
+						error.code ===
+						"YOU_ARE_NOT_ALLOWED_TO_UPDATE_THIS_MEMBER"
+					) {
+						return t(
+							"organizations.settings.members.notifications.updateMembership.error.YOU_ARE_NOT_ALLOWED_TO_UPDATE_THIS_MEMBER",
+						);
+					}
+					return t(
+						"organizations.settings.members.notifications.updateMembership.error.description",
+					);
+				},
 			},
 		);
 	};
@@ -87,10 +101,14 @@ export function OrganizationMembersList({
 	const removeMember = async (memberId: string) => {
 		toast.promise(
 			async () => {
-				await authClient.organization.removeMember({
+				const { error } = await authClient.organization.removeMember({
 					memberIdOrEmail: memberId,
 					organizationId,
 				});
+
+				if (error) {
+					throw error;
+				}
 			},
 			{
 				loading: t(
@@ -105,9 +123,13 @@ export function OrganizationMembersList({
 						"organizations.settings.members.notifications.removeMember.success.description",
 					);
 				},
-				error: t(
-					"organizations.settings.members.notifications.removeMember.error.description",
-				),
+				error: (error) => {
+					console.log("error: ", error);
+
+					return t(
+						"organizations.settings.members.notifications.removeMember.error.description",
+					);
+				},
 			},
 		);
 	};
@@ -155,7 +177,8 @@ export function OrganizationMembersList({
 									}
 									disabled={
 										!userIsOrganizationAdmin ||
-										row.original.role === "owner"
+										(row.original.role === "owner" &&
+											row.original.userId === user?.id)
 									}
 								/>
 								<DropdownMenu>

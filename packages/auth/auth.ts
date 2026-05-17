@@ -6,6 +6,7 @@ import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { getBaseUrl } from "@repo/utils";
 import { betterAuth } from "better-auth";
+import { APIError } from "better-auth/api";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import {
 	admin,
@@ -20,6 +21,7 @@ import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
 import { updateSeatsInOrganizationSubscription } from "./lib/organization";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
+import { passwordSchema } from "./validation";
 
 const getLocaleFromRequest = (request?: Request) => {
 	const cookies = parseCookies(request?.headers.get("cookie") ?? "");
@@ -77,6 +79,24 @@ export const auth = betterAuth({
 				}
 
 				await updateSeatsInOrganizationSubscription(organizationId);
+			}
+		}),
+		before: createAuthMiddleware(async (ctx) => {
+			if (
+				ctx.path.startsWith("/sign-up/email") ||
+				ctx.path.startsWith("/reset-password") ||
+				ctx.path.startsWith("/change-password")
+			) {
+				const password = ctx.body.password || ctx.body.newPassword;
+
+				const { error } = passwordSchema.safeParse(password);
+
+				if (error) {
+					throw new APIError("BAD_REQUEST", {
+						code: "password_requirements",
+						message: error.message,
+					});
+				}
 			}
 		}),
 	},

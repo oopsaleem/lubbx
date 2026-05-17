@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import {
@@ -20,15 +21,35 @@ import { z } from "zod";
 
 const formSchema = z.object({
 	currentPassword: z.string().min(1),
-	newPassword: z.string().min(8),
+	newPassword: z
+		.string()
+		.min(1)
+		.max(50)
+		.refine((val) => /[A-Z]/.test(val), {
+			params: { i18n: "require_capital_letter" },
+		})
+		.refine((val) => /[a-z]/.test(val), {
+			params: { i18n: "require_lowercase_letter" },
+		})
+		.refine((val) => /[0-9]/.test(val), {
+			params: { i18n: "require_number" },
+		})
+		.refine((val) => /[^A-Za-z0-9]/.test(val), {
+			params: { i18n: "require_special_character" },
+		}),
 });
 
 export function ChangePasswordForm() {
 	const t = useTranslations();
 	const router = useRouter();
+	const { zodErrorMap } = useFormErrors();
 
 	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			currentPassword: "",
 			newPassword: "",
@@ -42,10 +63,15 @@ export function ChangePasswordForm() {
 		});
 
 		if (error) {
+			
 			toast.error(
-				t(
-					"settings.account.security.changePassword.notifications.error",
-				),
+				error.code === "INVALID_PASSWORD"
+					? t(
+							"settings.account.security.changePassword.notifications.INVALID_PASSWORD",
+						)
+					: t(
+							"settings.account.security.changePassword.notifications.error",
+						),
 			);
 
 			return;

@@ -19,6 +19,7 @@ import { organizationsRouter } from "./routes/organizations/router";
 import { paymentsRouter } from "./routes/payments/router";
 import { uploadsRouter } from "./routes/uploads";
 import { webhooksRouter } from "./routes/webhooks";
+import { postsRouter } from "./routes/posts/router";
 
 export const app = new Hono().basePath("/api");
 
@@ -29,6 +30,7 @@ const appRouter = app
 	.route("/", authRouter)
 	.route("/", webhooksRouter)
 	.route("/", aiRouter)
+	.route("/", postsRouter)
 	.route("/", uploadsRouter)
 	.route("/", paymentsRouter)
 	.route("/", contactRouter)

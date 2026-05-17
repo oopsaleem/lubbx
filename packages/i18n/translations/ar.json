@@ -420,6 +420,7 @@
 					},
 					"updateMembership": {
 						"error": {
+							"YOU_ARE_NOT_ALLOWED_TO_UPDATE_THIS_MEMBER": "لست مخولا بتعديل هذا العضو.",
 							"description": "تعذر تحديث عضوية المنظمة. يُرجى المحاولة مرة أخرى."
 						},
 						"loading": {
@@ -578,6 +579,7 @@
 					"currentPassword": "كلمة المرور الحالية",
 					"newPassword": "كلمة المرور الجديدة",
 					"notifications": {
+						"INVALID_PASSWORD": "كلمة المرور غير صالحة",
 						"error": "تعذر تحديث كلمة المرور",
 						"success": "تم تحديث كلمة المرور بنجاح"
 					},
@@ -715,6 +717,13 @@
 	},
 	"zod": {
 		"errors": {
+			"custom": {
+				"require_capital_letter": "كملمة المرور يجب أن تحتوي على حرف كبير",
+				"require_lowercase_letter": "كلمة المرور يجب أن تحتوي على حرف صغير",
+				"require_number": "كلمة المرور يجب أن تحتوي على رقم",
+				"require_special_character": "كلمة المرور يجب أن تحتوي على رمز خاص"
+			},
+			"invalid_password": "كلمة المرور غير صالحة",
 			"invalid_arguments": "وسائط الدالة غير صالحة",
 			"invalid_date": "تاريخ غير صالح",
 			"invalid_enum_value": "قيمة التعداد غير صالحة. المتوقع {- options}، المستلم '{received}'",

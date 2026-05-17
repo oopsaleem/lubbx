@@ -40,7 +40,22 @@ import { SocialSigninButton } from "./SocialSigninButton";
 
 const formSchema = z.object({
 	email: z.string().email(),
-	password: z.string().min(1),
+	password: z
+		.string()
+		.min(1)
+		.max(50)
+		.refine((val) => /[A-Z]/.test(val), {
+			params: { i18n: "require_capital_letter" },
+		})
+		.refine((val) => /[a-z]/.test(val), {
+			params: { i18n: "require_lowercase_letter" },
+		})
+		.refine((val) => /[0-9]/.test(val), {
+			params: { i18n: "require_number" },
+		})
+		.refine((val) => /[^A-Za-z0-9]/.test(val), {
+			params: { i18n: "require_special_character" },
+		}),
 	name: z.string().min(1),
 });
 
@@ -62,6 +77,8 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 		resolver: zodResolver(formSchema, {
 			errorMap: zodErrorMap,
 		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		values: {
 			name: "",
 			email: prefillEmail ?? email ?? "",

@@ -1,7 +1,7 @@
 import type { Config } from "./types";
 
 export const config = {
-	appName: "supastarter for Next.js Demo",
+	appName: "inoffice.online",
 	// Internationalization
 	i18n: {
 		// Whether internationalization should be enabled (if disabled, you still need to define the locale you want to use below and set it as the default locale)
@@ -30,13 +30,13 @@ export const config = {
 		// Whether organizations are enabled in general
 		enable: true,
 		// Whether billing for organizations should be enabled (below you can enable it for users instead)
-		enableBilling: true,
+		enableBilling: false,
 		// Whether the organization should be hidden from the user (use this for multi-tenant applications)
 		hideOrganization: false,
 		// Should users be able to create new organizations? Otherwise only admin users can create them
-		enableUsersToCreateOrganizations: true,
+		enableUsersToCreateOrganizations: false,
 		// Whether users should be required to be in an organization. This will redirect users to the organization page after sign in
-		requireOrganization: true,
+		requireOrganization: false,
 		// Define forbidden organization slugs. Make sure to add all paths that you define as a route after /app/... to avoid routing issues
 		forbiddenOrganizationSlugs: [
 			"new-organization",

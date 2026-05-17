@@ -41,6 +41,7 @@ import {
 import { useSession } from "../hooks/use-session";
 import { LoginModeSwitch } from "./LoginModeSwitch";
 import { SocialSigninButton } from "./SocialSigninButton";
+import { useFormErrors } from "@shared/hooks/form-errors";
 
 const formSchema = z.union([
 	z.object({
@@ -68,9 +69,14 @@ export function LoginForm() {
 	const invitationId = searchParams.get("invitationId");
 	const email = searchParams.get("email");
 	const redirectTo = searchParams.get("redirectTo");
+	const { zodErrorMap } = useFormErrors();
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			email: email ?? "",
 			password: "",

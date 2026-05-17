@@ -63,7 +63,6 @@ CREATE TABLE "user" (
     "twoFactorEnabled" BOOLEAN,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "lastLogin" TIMESTAMP(3),
-    "farmId" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -209,6 +208,19 @@ CREATE TABLE "ai_chat" (
 );
 
 -- CreateTable
+CREATE TABLE "Post" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "authorId" TEXT NOT NULL,
+    "organizationId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "UserPermission" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -222,17 +234,16 @@ CREATE TABLE "UserPermission" (
 );
 
 -- CreateTable
-CREATE TABLE "Farm" (
+CREATE TABLE "farm" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "ownerName" TEXT NOT NULL,
+    "ownerName" TEXT,
     "location" TEXT,
-    "area" DOUBLE PRECISION,
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Farm_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "farm_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -546,9 +557,6 @@ CREATE TABLE "ScheduledReport" (
 );
 
 -- CreateIndex
-CREATE INDEX "user_farmId_idx" ON "user"("farmId");
-
--- CreateIndex
 CREATE INDEX "user_role_idx" ON "user"("role");
 
 -- CreateIndex
@@ -585,13 +593,13 @@ CREATE INDEX "UserPermission_module_idx" ON "UserPermission"("module");
 CREATE UNIQUE INDEX "UserPermission_userId_module_key" ON "UserPermission"("userId", "module");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Farm_name_key" ON "Farm"("name");
+CREATE UNIQUE INDEX "farm_name_key" ON "farm"("name");
 
 -- CreateIndex
-CREATE INDEX "Farm_name_idx" ON "Farm"("name");
+CREATE INDEX "farm_name_idx" ON "farm"("name");
 
 -- CreateIndex
-CREATE INDEX "Farm_ownerName_idx" ON "Farm"("ownerName");
+CREATE INDEX "farm_ownerName_idx" ON "farm"("ownerName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Livestock_tagNumber_key" ON "Livestock"("tagNumber");
@@ -813,9 +821,6 @@ CREATE INDEX "ScheduledReport_nextSend_idx" ON "ScheduledReport"("nextSend");
 CREATE INDEX "ScheduledReport_isActive_idx" ON "ScheduledReport"("isActive");
 
 -- AddForeignKey
-ALTER TABLE "user" ADD CONSTRAINT "user_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -852,28 +857,37 @@ ALTER TABLE "ai_chat" ADD CONSTRAINT "ai_chat_organizationId_fkey" FOREIGN KEY (
 ALTER TABLE "ai_chat" ADD CONSTRAINT "ai_chat_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Post" ADD CONSTRAINT "Post_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "UserPermission" ADD CONSTRAINT "UserPermission_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "farm" ADD CONSTRAINT "farm_id_fkey" FOREIGN KEY ("id") REFERENCES "organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Livestock" ADD CONSTRAINT "Livestock_penId_fkey" FOREIGN KEY ("penId") REFERENCES "Pen"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Livestock" ADD CONSTRAINT "Livestock_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Livestock" ADD CONSTRAINT "Livestock_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pen" ADD CONSTRAINT "Pen_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Pen" ADD CONSTRAINT "Pen_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "HealthRecord" ADD CONSTRAINT "HealthRecord_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "HealthRecord" ADD CONSTRAINT "HealthRecord_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "HealthRecord" ADD CONSTRAINT "HealthRecord_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Vaccination" ADD CONSTRAINT "Vaccination_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Feed" ADD CONSTRAINT "Feed_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Feed" ADD CONSTRAINT "Feed_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FeedRecord" ADD CONSTRAINT "FeedRecord_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -882,19 +896,19 @@ ALTER TABLE "FeedRecord" ADD CONSTRAINT "FeedRecord_livestockId_fkey" FOREIGN KE
 ALTER TABLE "FeedRecord" ADD CONSTRAINT "FeedRecord_feedId_fkey" FOREIGN KEY ("feedId") REFERENCES "Feed"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Expense" ADD CONSTRAINT "Expense_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Expense" ADD CONSTRAINT "Expense_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Expense" ADD CONSTRAINT "Expense_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "Employee"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Income" ADD CONSTRAINT "Income_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Income" ADD CONSTRAINT "Income_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "LivestockTransaction" ADD CONSTRAINT "LivestockTransaction_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Employee" ADD CONSTRAINT "Employee_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Employee" ADD CONSTRAINT "Employee_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Employee" ADD CONSTRAINT "Employee_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -903,7 +917,7 @@ ALTER TABLE "Employee" ADD CONSTRAINT "Employee_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "SalaryPayment" ADD CONSTRAINT "SalaryPayment_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "Employee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Equipment" ADD CONSTRAINT "Equipment_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Equipment" ADD CONSTRAINT "Equipment_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "MaintenanceRecord" ADD CONSTRAINT "MaintenanceRecord_equipmentId_fkey" FOREIGN KEY ("equipmentId") REFERENCES "Equipment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -912,7 +926,7 @@ ALTER TABLE "MaintenanceRecord" ADD CONSTRAINT "MaintenanceRecord_equipmentId_fk
 ALTER TABLE "DailyProduction" ADD CONSTRAINT "DailyProduction_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "DailyProduction" ADD CONSTRAINT "DailyProduction_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "DailyProduction" ADD CONSTRAINT "DailyProduction_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BirthRecord" ADD CONSTRAINT "BirthRecord_motherId_fkey" FOREIGN KEY ("motherId") REFERENCES "Livestock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -921,7 +935,7 @@ ALTER TABLE "BirthRecord" ADD CONSTRAINT "BirthRecord_motherId_fkey" FOREIGN KEY
 ALTER TABLE "BirthRecord" ADD CONSTRAINT "BirthRecord_calfId_fkey" FOREIGN KEY ("calfId") REFERENCES "Livestock"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BirthRecord" ADD CONSTRAINT "BirthRecord_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BirthRecord" ADD CONSTRAINT "BirthRecord_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PregnancyRecord" ADD CONSTRAINT "PregnancyRecord_livestockId_fkey" FOREIGN KEY ("livestockId") REFERENCES "Livestock"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -930,10 +944,10 @@ ALTER TABLE "PregnancyRecord" ADD CONSTRAINT "PregnancyRecord_livestockId_fkey" 
 ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "SystemSettings" ADD CONSTRAINT "SystemSettings_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "SystemSettings" ADD CONSTRAINT "SystemSettings_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ScheduledReport" ADD CONSTRAINT "ScheduledReport_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "Farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ScheduledReport" ADD CONSTRAINT "ScheduledReport_farmId_fkey" FOREIGN KEY ("farmId") REFERENCES "farm"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

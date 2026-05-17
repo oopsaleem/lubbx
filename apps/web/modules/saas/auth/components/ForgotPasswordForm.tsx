@@ -20,6 +20,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useFormErrors } from "@shared/hooks/form-errors";
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -30,9 +31,14 @@ type FormValues = z.infer<typeof formSchema>;
 export function ForgotPasswordForm() {
 	const t = useTranslations();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
+	const { zodErrorMap } = useFormErrors();
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			email: "",
 		},

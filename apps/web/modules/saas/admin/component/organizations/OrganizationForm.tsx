@@ -11,6 +11,7 @@ import {
 	useFullOrganizationQuery,
 	useUpdateOrganizationMutation,
 } from "@saas/organizations/lib/api";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
@@ -48,9 +49,14 @@ export function OrganizationForm({
 	const updateOrganizationMutation = useUpdateOrganizationMutation();
 	const createOrganizationMutation = useCreateOrganizationMutation();
 	const queryClient = useQueryClient();
+	const { zodErrorMap } = useFormErrors();
 
 	const form = useForm<OrganizationFormValues>({
-		resolver: zodResolver(organizationFormSchema),
+		resolver: zodResolver(organizationFormSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			name: organization?.name ?? "",
 		},

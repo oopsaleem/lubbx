@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
+import { useFormErrors } from "@shared/hooks/form-errors";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
 import { useTranslations } from "next-intl";
@@ -20,9 +21,15 @@ type FormSchema = z.infer<typeof formSchema>;
 export function ChangeEmailForm() {
 	const { user, reloadSession } = useSession();
 	const t = useTranslations();
+	const { zodErrorMap } = useFormErrors();
+
 
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(formSchema),
+		resolver: zodResolver(formSchema, {
+			errorMap: zodErrorMap,
+		}),
+		mode: "onChange",
+		reValidateMode: "onChange",
 		defaultValues: {
 			email: user?.email ?? "",
 		},

@@ -420,6 +420,7 @@
 					},
 					"updateMembership": {
 						"error": {
+							"YOU_ARE_NOT_ALLOWED_TO_UPDATE_THIS_MEMBER": "You are not allowed to update this member.",
 							"description": "Could not update organization membership. Please try again."
 						},
 						"loading": {
@@ -578,6 +579,7 @@
 					"currentPassword": "Current password",
 					"newPassword": "New password",
 					"notifications": {
+						"INVALID_PASSWORD": "Invalid password",
 						"error": "Could not update password",
 						"success": "Password was updated successfully"
 					},
@@ -715,6 +717,13 @@
 	},
 	"zod": {
 		"errors": {
+			"custom": {
+				"require_capital_letter": "Password must contain at least one capital letter.",
+				"require_lowercase_letter": "Password must contain at least one lowercase letter.",
+				"require_number": "Password must contain at least one number.",
+				"require_special_character": "Password must contain at least one special character."
+			},
+			"invalid_password": "Invalid password",
 			"invalid_arguments": "Invalid function arguments",
 			"invalid_date": "Invalid date",
 			"invalid_enum_value": "Invalid enum value. Expected {- options}, received '{received}'",

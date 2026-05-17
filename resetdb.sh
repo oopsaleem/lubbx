@@ -1,6 +1,7 @@
 docker compose down
 docker volume rm farm_db_gf
-docker volume rm farm_minio_data
+# docker volume rm farm_minio_data
+
 docker compose up -d
 
 rm -rf ./packages/database/prisma/migrations/
