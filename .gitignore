@@ -2,6 +2,10 @@
 
 # ai
 .opencode/
+.agents/
+.junie/
+.windsurf/
+
 
 # dependencies
 node_modules

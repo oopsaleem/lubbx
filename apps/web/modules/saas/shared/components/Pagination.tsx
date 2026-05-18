@@ -27,7 +27,7 @@ const Pagination = ({
 					disabled={currentPage === 1}
 					onClick={() => onChangeCurrentPage(currentPage - 1)}
 				>
-					<ChevronLeftIcon />
+					<ChevronLeftIcon className="rtl:rotate-180" />
 				</Button>
 				<span className="text-gray-500 text-sm">
 					{currentPage * itemsPerPage - itemsPerPage + 1} -{" "}
@@ -42,7 +42,7 @@ const Pagination = ({
 					disabled={currentPage === numberOfPages}
 					onClick={() => onChangeCurrentPage(currentPage + 1)}
 				>
-					<ChevronRightIcon />
+					<ChevronRightIcon className="rtl:rotate-180" />
 				</Button>
 			</div>
 		</div>

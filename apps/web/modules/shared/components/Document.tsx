@@ -6,6 +6,8 @@ import { ConsentProvider } from "@shared/components/ConsentProvider";
 import { Toaster } from "@ui/components/toast";
 import { cn } from "@ui/lib";
 import { GeistSans } from "geist/font/sans";
+import { Noto_Sans_Arabic } from "next/font/google";
+import { DirectionProviderWrapper } from "@shared/components/DirectionProviderWrapper";
 import { Provider as JotaiProvider } from "jotai";
 import { ThemeProvider } from "next-themes";
 import { cookies } from "next/headers";
@@ -13,45 +15,58 @@ import NextTopLoader from "nextjs-toploader";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { PropsWithChildren } from "react";
 
+const notoSansArabic = Noto_Sans_Arabic({
+	variable: "--font-noto-sans-arabic",
+	subsets: ["arabic"],
+	display: "swap",
+});
+
 export async function Document({
 	children,
 	locale,
 }: PropsWithChildren<{ locale: string }>) {
 	const cookieStore = await cookies();
 	const consentCookie = cookieStore.get("consent");
+	const direction = locale === "ar" ? "rtl" : "ltr";
 
 	return (
 		<html
 			lang={locale}
+			dir={direction}
 			suppressHydrationWarning
-			className={GeistSans.variable}
+			className={cn(
+				GeistSans.variable,
+				direction === "rtl" && notoSansArabic.variable,
+			)}
 		>
 			<body
 				className={cn(
 					"min-h-screen bg-background text-foreground antialiased",
 				)}
 			>
-				<NuqsAdapter>
-					<ConsentProvider
-						initialConsent={consentCookie?.value === "true"}
-					>
-						<NextTopLoader color="var(--color-primary)" />
-						<ThemeProvider
-							attribute="class"
-							disableTransitionOnChange
-							enableSystem
-							defaultTheme={config.ui.defaultTheme}
-							themes={config.ui.enabledThemes}
+				<DirectionProviderWrapper direction={direction}>
+					<NuqsAdapter>
+						<ConsentProvider
+							initialConsent={consentCookie?.value === "true"}
 						>
-							<ApiClientProvider>
-								<JotaiProvider>{children}</JotaiProvider>
-							</ApiClientProvider>
-						</ThemeProvider>
-						<Toaster position="top-right" />
-						<ConsentBanner />
-						<AnalyticsScript />
-					</ConsentProvider>
-				</NuqsAdapter>
+							<NextTopLoader color="var(--color-primary)" />
+							<ThemeProvider
+								attribute="class"
+								disableTransitionOnChange
+								enableSystem
+								defaultTheme={config.ui.defaultTheme}
+								themes={config.ui.enabledThemes}
+							>
+								<ApiClientProvider>
+									<JotaiProvider>{children}</JotaiProvider>
+								</ApiClientProvider>
+							</ThemeProvider>
+							<Toaster position="top-right" />
+							<ConsentBanner />
+							<AnalyticsScript />
+						</ConsentProvider>
+					</NuqsAdapter>
+				</DirectionProviderWrapper>
 			</body>
 		</html>
 	);

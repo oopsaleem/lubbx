@@ -230,7 +230,7 @@ export function TwoFactorBlock() {
 									}
 								>
 									{t("common.actions.continue")}
-									<ArrowRightIcon className="ml-1.5 size-4" />
+									<ArrowRightIcon className="ml-1.5 size-4 rtl:rotate-180" />
 								</Button>
 							</div>
 						</form>

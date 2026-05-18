@@ -136,7 +136,7 @@ export function ResetPasswordForm() {
 
 			<div className="mt-6 text-center text-sm">
 				<Link href="/auth/login">
-					<ArrowLeftIcon className="mr-1 inline size-4 align-middle" />
+					<ArrowLeftIcon className="mr-1 inline size-4 align-middle rtl:rotate-180" />
 					{t("auth.resetPassword.backToSignin")}
 				</Link>
 			</div>

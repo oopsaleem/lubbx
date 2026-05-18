@@ -291,7 +291,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 					)}
 				>
 					{t("auth.signup.signIn")}
-					<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+					<ArrowRightIcon className="ml-1 inline size-4 align-middle rtl:rotate-180" />
 				</Link>
 			</div>
 		</div>

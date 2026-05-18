@@ -10,10 +10,9 @@ import { type PropsWithChildren, Suspense } from "react";
 export function AuthWrapper({
 	children,
 	contentClass,
-	locale
 }: PropsWithChildren<{ contentClass?: string; locale?: string }>) {
 	return (
-		<div dir={'ar' === locale ? 'rtl' : 'ltr'} className="flex min-h-screen w-full py-6">
+		<div className="flex min-h-screen w-full py-6">
 			<div className="flex w-full flex-col items-center justify-between gap-8">
 				<div className="container">
 					<div className="flex items-center justify-between">

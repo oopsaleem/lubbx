@@ -35,7 +35,7 @@ export function OrganizationsGrid() {
 							<span className="block font-medium">
 								{organization.name}
 							</span>
-							<ChevronRightIcon className="size-4" />
+							<ChevronRightIcon className="size-4 rtl:rotate-180" />
 						</span>
 					</Card>
 				))}

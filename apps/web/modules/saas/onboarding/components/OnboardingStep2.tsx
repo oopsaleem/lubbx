@@ -50,7 +50,7 @@ export function OnboardingStep2({ onCompleted }: { onCompleted: () => void }) {
 				{/* forms fields here */}
 				<Button type="submit" loading={form.formState.isSubmitting}>
 					{t("onboarding.start")}
-					<ArrowRightIcon className="ml-2 size-4" />
+					<ArrowRightIcon className="ml-2 size-4 rtl:rotate-180" />
 				</Button>
 			</form>
 		</Form>

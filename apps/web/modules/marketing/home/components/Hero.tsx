@@ -36,7 +36,7 @@ export function Hero() {
 					<Button size="lg" variant="primary" asChild>
 						<Link href="/auth/login">
 							Get started
-							<ArrowRightIcon className="ml-2 size-4" />
+							<ArrowRightIcon className="ml-2 size-4 rtl:rotate-180" />
 						</Link>
 					</Button>
 					<Button variant="light" size="lg" asChild>

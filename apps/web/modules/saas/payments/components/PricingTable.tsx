@@ -285,7 +285,7 @@ export function PricingTable({
 												{userId || organizationId
 													? t("pricing.choosePlan")
 													: t("pricing.getStarted")}
-												<ArrowRightIcon className="ml-2 size-4" />
+												<ArrowRightIcon className="ml-2 size-4 rtl:rotate-180" />
 											</Button>
 										)}
 									</div>

@@ -48,7 +48,7 @@ export function OnboardingForm() {
 	];
 
 	return (
-		<div dir={locale === "ar" ? "rtl" : "ltr"}>
+		<>
 			<h1 className="font-bold text-xl md:text-2xl">
 				{onboardingStep === 1
 					? t("onboarding.step1.title")
@@ -76,6 +76,6 @@ export function OnboardingForm() {
 			)}
 
 			{steps[onboardingStep - 1].component}
-		</div>
+		</>
 	);
 }

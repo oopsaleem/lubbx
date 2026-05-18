@@ -352,7 +352,7 @@ export function LoginForm() {
 								)}
 							>
 								{t("auth.login.createAnAccount")}
-								<ArrowRightIcon className="ml-1 inline size-4 align-middle" />
+								<ArrowRightIcon className="ml-1 inline size-4 align-middle rtl:rotate-180" />
 							</Link>
 						</div>
 					)}
