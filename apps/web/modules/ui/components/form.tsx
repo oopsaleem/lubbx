@@ -76,7 +76,7 @@ const FormItem = React.forwardRef<
 		<FormItemContext.Provider value={{ id }}>
 			<div
 				ref={ref}
-				className={cn("space-y-1.5", className)}
+				className={cn("flex flex-col gap-1.5", className)}
 				{...props}
 			/>
 		</FormItemContext.Provider>

@@ -9,13 +9,16 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { HardDriveIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
+import {
+	type Theme,
+	useTheme,
+} from "@shared/components/ThemeProvider";
 import { useState } from "react";
 import { useIsClient } from "usehooks-ts";
 
 export function ColorModeToggle() {
 	const { resolvedTheme, setTheme, theme } = useTheme();
-	const [value, setValue] = useState<string>(theme ?? "system");
+	const [value, setValue] = useState<Theme>(theme ?? "system");
 	const isClient = useIsClient();
 
 	const colorModeOptions = [
@@ -60,9 +63,9 @@ export function ColorModeToggle() {
 			<DropdownMenuContent>
 				<DropdownMenuRadioGroup
 					value={value}
-					onValueChange={(value) => {
-						setTheme(value);
-						setValue(value);
+					onValueChange={(value: string) => {
+						setTheme(value as Theme);
+						setValue(value as Theme);
 					}}
 				>
 					{colorModeOptions.map((option) => (

@@ -24,7 +24,13 @@
 	"pnpm": {
 		"overrides": {
 			"@types/react": "19.0.0",
-			"@types/react-dom": "19.0.0"
+			"@types/react-dom": "19.0.0",
+			"zod": "3.24.3"
+		},
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"zod": "3"
+			}
 		}
 	}
 }

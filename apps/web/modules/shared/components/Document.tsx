@@ -9,7 +9,10 @@ import { GeistSans } from "geist/font/sans";
 import { Noto_Sans_Arabic } from "next/font/google";
 import { DirectionProviderWrapper } from "@shared/components/DirectionProviderWrapper";
 import { Provider as JotaiProvider } from "jotai";
-import { ThemeProvider } from "next-themes";
+import {
+	ThemeProvider,
+	ThemeScript,
+} from "@shared/components/ThemeProvider";
 import { cookies } from "next/headers";
 import NextTopLoader from "nextjs-toploader";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -49,19 +52,18 @@ export async function Document({
 						<ConsentProvider
 							initialConsent={consentCookie?.value === "true"}
 						>
+							<ThemeScript />
 							<NextTopLoader color="var(--color-primary)" />
 							<ThemeProvider
-								attribute="class"
-								disableTransitionOnChange
-								enableSystem
 								defaultTheme={config.ui.defaultTheme}
-								themes={config.ui.enabledThemes}
 							>
 								<ApiClientProvider>
-									<JotaiProvider>{children}</JotaiProvider>
+									<JotaiProvider>
+										{children}
+										<Toaster position={direction === "rtl" ? "top-left" : "top-right"} />
+									</JotaiProvider>
 								</ApiClientProvider>
 							</ThemeProvider>
-							<Toaster position="top-right" />
 							<ConsentBanner />
 							<AnalyticsScript />
 						</ConsentProvider>

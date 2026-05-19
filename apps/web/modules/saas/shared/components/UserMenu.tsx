@@ -5,7 +5,6 @@ import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { clearCache } from "@shared/lib/cache";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -30,7 +29,10 @@ import {
 	SunIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
+import {
+	type Theme,
+	useTheme,
+} from "@shared/components/ThemeProvider";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -38,7 +40,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 	const t = useTranslations();
 	const { user } = useSession();
 	const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
-	const [theme, setTheme] = useState<string>(currentTheme ?? "system");
+	const [theme, setTheme] = useState(currentTheme ?? "system");
 
 	const colorModeOptions = [
 		{
@@ -61,8 +63,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 	const onLogout = () => {
 		authClient.signOut({
 			fetchOptions: {
-				onSuccess: async () => {
-					await clearCache();
+				onSuccess: () => {
 					window.location.href = new URL(
 						config.auth.redirectAfterLogout,
 						window.location.origin,
@@ -124,9 +125,9 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 						<DropdownMenuSubContent>
 							<DropdownMenuRadioGroup
 								value={theme}
-								onValueChange={(value) => {
-									setTheme(value);
-									setCurrentTheme(value);
+								onValueChange={(value: string) => {
+									setTheme(value as Theme);
+									setCurrentTheme(value as Theme);
 								}}
 							>
 								{colorModeOptions.map((option) => (

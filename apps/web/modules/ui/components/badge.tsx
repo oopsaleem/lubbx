@@ -17,10 +17,10 @@ export const badge = cva(
 	{
 		variants: {
 			status: {
-				success: ["bg-emerald-500/10", "text-emerald-500"],
+				success: ["bg-success/10", "text-success"],
 				info: ["bg-primary/10", "text-primary"],
-				warning: ["bg-amber-500/10", "text-amber-500"],
-				error: ["bg-rose-500/10", "text-rose-500"],
+				warning: ["bg-highlight/10", "text-highlight"],
+				error: ["bg-destructive/10", "text-destructive"],
 			},
 		},
 		defaultVariants: {

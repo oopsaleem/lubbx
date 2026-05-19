@@ -42,9 +42,6 @@ const nextConfig: NextConfig = {
 	// experimental: {
 	// 	authInterrupts: true,
 	// },
-	eslint: {
-		ignoreDuringBuilds: true,
-	},
 };
 
 export default withContentCollections(withNextIntl(nextConfig));
