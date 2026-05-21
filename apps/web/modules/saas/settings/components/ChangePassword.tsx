@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { Button } from "@ui/components/button";
 import {
@@ -42,12 +41,8 @@ const formSchema = z.object({
 export function ChangePasswordForm() {
 	const t = useTranslations();
 	const router = useRouter();
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {

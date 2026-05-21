@@ -106,7 +106,7 @@ export function ActiveOrganizationProvider({
 		}
 	}, [activeOrganization]);
 
-	const activeOrganizationUserRole = activeOrganization?.members.find(
+	const activeOrganizationUserRole = activeOrganization?.members?.find(
 		(member) => member.userId === session?.userId,
 	)?.role;
 

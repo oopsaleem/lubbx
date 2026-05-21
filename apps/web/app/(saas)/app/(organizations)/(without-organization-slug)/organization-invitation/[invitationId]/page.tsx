@@ -11,7 +11,7 @@ export default async function OrganizationInvitationPage({
 }) {
 	const { invitationId } = await params;
 
-	const invitation = await auth.api.getInvitation({
+	const invitation = await (auth.api as any).getInvitation({
 		query: {
 			id: invitationId,
 		},

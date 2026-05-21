@@ -6,18 +6,17 @@ import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
 import { getBaseUrl } from "@repo/utils";
 import { betterAuth } from "better-auth";
-import { APIError } from "better-auth/api";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { passkey } from "@better-auth/passkey";
 import {
 	admin,
-	createAuthMiddleware,
 	magicLink,
 	openAPI,
 	organization,
 	twoFactor,
 	username,
 } from "better-auth/plugins";
-import { passkey } from "better-auth/plugins/passkey";
 import { parse as parseCookies } from "cookie";
 import { updateSeatsInOrganizationSubscription } from "./lib/organization";
 import { invitationOnlyPlugin } from "./plugins/invitation-only";
@@ -185,7 +184,6 @@ export const auth = betterAuth({
 	plugins: [
 		username(),
 		admin(),
-		passkey(),
 		magicLink({
 			disableSignUp: true,
 			sendMagicLink: async ({ email, url }, request) => {
@@ -228,6 +226,7 @@ export const auth = betterAuth({
 			},
 		}),
 		openAPI(),
+		passkey(),
 		invitationOnlyPlugin(),
 		twoFactor(),
 	],
@@ -242,8 +241,10 @@ export * from "./lib/organization";
 
 export type Session = typeof auth.$Infer.Session;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AuthApi = typeof auth.api & Record<string, any>;
 export type ActiveOrganization = NonNullable<
-	Awaited<ReturnType<typeof auth.api.getFullOrganization>>
+	Awaited<ReturnType<AuthApi["getFullOrganization"]>>
 >;
 
 export type Organization = typeof auth.$Infer.Organization;

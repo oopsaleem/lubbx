@@ -102,12 +102,12 @@ export function OrganizationInvitationsList({
 			accessorKey: "email",
 			accessorFn: (row) => row.email,
 			cell: ({ row }) => {
-				const InvitationStatusIcon = {
+				const InvitationStatusIcon = ({
 					pending: ClockIcon,
 					accepted: CheckIcon,
 					rejected: XIcon,
 					canceled: XIcon,
-				}[row.original.status];
+				} as Record<string, React.ComponentType>)[row.original.status as string];
 				return (
 					<div className="leading-normal">
 						<strong

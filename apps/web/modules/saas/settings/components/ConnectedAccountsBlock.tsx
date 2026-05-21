@@ -17,7 +17,7 @@ export function ConnectedAccountsBlock() {
 	const { data, isPending } = useUserAccountsQuery();
 
 	const isProviderLinked = (provider: OAuthProvider) =>
-		data?.some((account) => account.provider === provider);
+		data?.some((account: any) => account.providerId === provider);
 
 	const linkProvider = (provider: OAuthProvider) => {
 		const callbackURL = window.location.href;

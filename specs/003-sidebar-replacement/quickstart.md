@@ -1,83 +1,156 @@
-# Quickstart: Sidebar Navigation
+# Quickstart: Sidebar Navigation Replacement
 
 ## Prerequisites
 
-- Node.js + pnpm installed
-- Project initialized (`pnpm install` completed)
-- On branch `003-sidebar-replacement`
+- Node.js 20+, pnpm
+- Feature branch `003-sidebar-replacement` checked out
+- shadcn sidebar not yet installed
 
-## Step 1: Install shadcn sidebar component
+## Setup
 
-```sh
+```bash
+# 1. Install the shadcn sidebar component
 pnpm dlx shadcn@latest add sidebar
+
+# 2. Verify sidebar CSS variables were added to globals.css
 ```
 
-This creates `apps/web/modules/ui/components/sidebar.tsx` with all the sidebar primitives.
+## Implementation Steps
 
-## Step 2: Add sidebar CSS variables
+### Step 1: Install shadcn sidebar + Add CSS variables
 
-Add the sidebar theme variables to `apps/web/app/globals.css`:
+Run the CLI command above. This creates `apps/web/modules/ui/components/sidebar.tsx` and updates `apps/web/app/globals.css` with sidebar theme variables.
 
-```css
-@layer base {
-  :root {
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-  .dark {
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-```
-
-## Step 3: Create AppSidebar component
+### Step 2: Create AppSidebar component
 
 Create `apps/web/modules/saas/shared/components/AppSidebar.tsx`:
 
-- Import sidebar primitives from `@ui/components/sidebar`
-- Import Logo, UserMenu, OrganizationSelect from existing paths
-- Define menu items as a constant or hook (extracted from old NavBar)
-- Render using the shadcn sidebar composition (SidebarHeader → SidebarContent with SidebarGroups → SidebarFooter)
-- Pass `dir` prop based on locale for RTL support
+```tsx
+"use client";
 
-## Step 4: Integrate SidebarProvider into layout
+// Import shadcn sidebar components from the installed CLI output
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+} from "@ui/components/sidebar";
 
-In `apps/web/app/(saas)/app/layout.tsx`:
-- Wrap the return tree with `<SidebarProvider>` and `<SidebarInset>` using the shadcn sidebar pattern
-- Render `<AppSidebar>` inside the provider
+// Use same menu item structure from old NavBar
+// Reference: apps/web/modules/saas/shared/components/NavBar.tsx
+```
 
-## Step 5: Update AppWrapper
+Key implementation details:
+- Use `useSession()` from `@saas/auth/hooks/use-session` for user data
+- Use `useActiveOrganization()` from `@saas/organizations/hooks/use-active-organization` for org context
+- Use `usePathname()` from `next/navigation` for active state
+- Use `useTranslations()` from `next-intl` for i18n labels
+- Import `OrganzationSelect` from `@saas/organizations/components/OrganizationSelect` for org switching
+- Import `UserMenu` from `@saas/shared/components/UserMenu` for user menu
+- Import `Logo` from `@shared/components/Logo` for branding
+- Import icons from `lucide-react` (same set as NavBar)
 
-In `apps/web/modules/saas/shared/components/AppWrapper.tsx`:
-- Remove the `<NavBar />` invocation
-- Remove the `md:ml-[280px]` style (sidebar handles its own margin via SidebarInset)
+### Step 3: Modify AppWrapper
 
-## Step 6: Clean up
+Replace the old NavBar layout in `apps/web/modules/saas/shared/components/AppWrapper.tsx` with:
 
-- Delete `apps/web/modules/saas/shared/components/NavBar.tsx`
-- Remove `useSidebarLayout` from config definition
-- Update any imports referencing NavBar
+```tsx
+"use client";
+
+import { AppSidebar } from "@saas/shared/components/AppSidebar";
+import { SidebarInset, SidebarProvider } from "@ui/components/sidebar";
+import type { PropsWithChildren } from "react";
+
+export function AppWrapper({ children }: PropsWithChildren) {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <main>{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+```
+
+### Step 4: Update without-org-slug layout
+
+Update `apps/web/app/(saas)/app/(organizations)/(without-organization-slug)/layout.tsx` to use `AppWrapper` instead of `AuthWrapper`:
+
+```tsx
+import { AppWrapper } from "@saas/shared/components/AppWrapper";
+import type { PropsWithChildren } from "react";
+
+export default function WithoutOrganizationSlugLayout({
+  children,
+}: PropsWithChildren) {
+  return <AppWrapper>{children}</AppWrapper>;
+}
+```
+
+### Step 5: Remove old NavBar + config
+
+1. Delete `apps/web/modules/saas/shared/components/NavBar.tsx`
+2. Remove `useSidebarLayout` from `config/types.ts`
+3. Remove `useSidebarLayout` from `config/index.ts` defaults
+4. Clean up any remaining `md:ml-[280px]` references
 
 ## Verification
 
-1. `pnpm dev` — app starts without errors
-2. Navigate to any authenticated page — sidebar appears on the left (LTR) or right (RTL)
-3. Click menu items — correct pages load, active state highlights properly
-4. Click collapse trigger — sidebar transitions to icon-only mode
-5. Press Cmd+B — sidebar toggles
-6. Switch to Arabic locale — sidebar mirrors to the right side
-7. Resize to mobile — sidebar becomes an overlay drawer
-8. Verify admin users see Admin menu, regular users do not
+### User Story 1 — Navigation
+
+1. Start dev server: `pnpm dev`
+2. Log in as a regular user
+3. Verify sidebar renders with: Dashboard, AI Demo, AI Chatbot, Account Settings
+4. Click each item — correct page loads, active state highlights
+5. Log in as admin — verify Admin link appears
+6. Navigate to an org route — verify Organization Settings appears
+
+### User Story 2 — Collapse/Expand
+
+1. Click sidebar collapse trigger — sidebar transitions to icon-only
+2. Click expand trigger — returns to full width
+3. Navigate between pages — collapsed state preserved
+4. Press Cmd+B (Mac) / Ctrl+B (Windows) — sidebar toggles
+
+### User Story 3 — Mobile Overlay
+
+1. Resize browser to <768px viewport width
+2. Click menu trigger — sidebar appears as overlay
+3. Tap outside — overlay closes
+
+### User Story 4 — RTL
+
+1. Switch locale to Arabic
+2. Verify sidebar appears on the right side
+3. Verify icons and chevrons are mirrored (rtl:rotate-180 classes)
+4. Collapse/expand works correctly in RTL
+
+### Cleanup Verification
+
+1. `useSidebarLayout` no longer exists in config types or defaults
+2. `NavBar.tsx` file deleted
+3. No `md:ml-[280px]` classes remain in the app
+4. `pnpm build` passes with no broken imports
+
+## Files to Modify
+
+| File | Action |
+|------|--------|
+| `apps/web/modules/ui/components/sidebar.tsx` | Create (via CLI) |
+| `apps/web/app/globals.css` | Modify (via CLI + review) |
+| `apps/web/modules/saas/shared/components/AppSidebar.tsx` | Create |
+| `apps/web/modules/saas/shared/components/AppWrapper.tsx` | Modify |
+| `apps/web/app/(saas)/app/(organizations)/(without-organization-slug)/layout.tsx` | Modify |
+| `apps/web/modules/saas/shared/components/NavBar.tsx` | Delete |
+| `config/types.ts` | Modify |
+| `config/index.ts` | Modify |

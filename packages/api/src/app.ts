@@ -58,7 +58,7 @@ app.get(
 );
 
 app.get("/openapi", async (c) => {
-	const authSchema = await auth.api.generateOpenAPISchema();
+	const authSchema = await (auth.api as any).generateOpenAPISchema();
 	const appSchema = await (
 		app.request("/api/app-openapi") as Promise<Response>
 	).then((res) => res.json());

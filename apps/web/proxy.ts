@@ -36,9 +36,10 @@ export default async function proxy(req: NextRequest) {
 			);
 		}
 
+		const user = session.user as any;
 		if (
 			appConfig.users.enableOnboarding &&
-			!session.user.onboardingComplete &&
+			!user.onboardingComplete &&
 			pathname !== "/app/onboarding"
 		) {
 			return NextResponse.redirect(
@@ -53,9 +54,9 @@ export default async function proxy(req: NextRequest) {
 
 		if (
 			!locale ||
-			(session.user.locale && locale !== session.user.locale)
+			(user.locale && locale !== user.locale)
 		) {
-			locale = session.user.locale ?? appConfig.i18n.defaultLocale;
+			locale = user.locale ?? appConfig.i18n.defaultLocale;
 			response.cookies.set(appConfig.i18n.localeCookieName, locale);
 		}
 

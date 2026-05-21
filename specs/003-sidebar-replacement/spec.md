@@ -11,6 +11,12 @@
 
 - Q: Should the `useSidebarLayout` config option remain as a toggle between top-nav and sidebar, or should the sidebar replace the NavBar entirely? → A: Replace entirely — remove the old NavBar, remove `useSidebarLayout` config, always show the sidebar.
 
+### Session 2026-05-21
+
+- Q: How should the organization/workspace selector appear in the sidebar? → A: Current org name displayed in the SidebarHeader; org-switching dropdown placed in the SidebarFooter account menu alongside account settings.
+- Q: Should the sidebar support any RTL locale dynamically or only Arabic? → A: Arabic only — the sidebar only needs to handle `ar` as the RTL locale. Hebrew or other RTL locales are out of scope.
+- Q: Should RTL-aware wrapper components be created under `@/styles/base-nova/ui-rtl/`, or use standard shadcn with CSS RTL? → A: Standard shadcn components installed via CLI; RTL handled via Tailwind `rtl:` variants, Radix `dir` prop, and CSS — no custom ui-rtl wrappers.
+
 ## User Scenarios & Testing
 
 ### User Story 1 - Navigate application via sidebar (Priority: P1)
@@ -100,7 +106,7 @@ The sidebar correctly positions itself on the right side when the locale is Arab
 - **FR-010**: Sidebar MUST position on the right side when locale is RTL (Arabic) and on the left side when locale is LTR
 - **FR-011**: Sidebar MUST include branding/logo at the top in a sticky header area
 - **FR-012**: Sidebar MUST include user account menu at the bottom in a sticky footer area
-- **FR-013**: Sidebar MUST include an organization/workspace selector when organizations feature is enabled
+- **FR-013**: Sidebar MUST display the current organization name in the SidebarHeader and MUST include an org-switching dropdown in the SidebarFooter account menu when organizations feature is enabled
 - **FR-014**: Sidebar groups MUST support labels and optional collapsible group sections
 - **FR-015**: Sidebar MUST use the application's existing theme (light/dark) consistently
 - **FR-016**: Old NavBar component and its `useSidebarLayout` config option MUST be removed as part of this feature
@@ -129,3 +135,5 @@ The sidebar correctly positions itself on the right side when the locale is Arab
 - Existing menu items, their ordering, and conditional visibility rules (admin role, organization context) will be preserved
 - The sidebar will use the application's existing CSS theme variables for colors and spacing
 - Icons for menu items will remain consistent with the current set (lucide-react icons)
+- Arabic (`ar`) is the only RTL locale target; other RTL locales (e.g., Hebrew) are out of scope for this feature
+- Standard shadcn sidebar component will be installed via CLI; RTL will be handled via Tailwind `rtl:` variants, Radix `dir` prop, and CSS — no custom ui-rtl wrapper components

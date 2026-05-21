@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatarUpload } from "@saas/settings/components/UserAvatarUpload";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { Button } from "@ui/components/button";
 import {
 	Form,
@@ -31,12 +30,8 @@ type FormValues = z.infer<typeof formSchema>;
 export function OnboardingStep1({ onCompleted }: { onCompleted: () => void }) {
 	const t = useTranslations();
 	const { user } = useSession();
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {

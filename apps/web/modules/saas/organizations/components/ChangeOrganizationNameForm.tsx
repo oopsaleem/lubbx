@@ -4,7 +4,6 @@ import { authClient } from "@repo/auth/client";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { organizationListQueryKey } from "@saas/organizations/lib/api";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/components/button";
@@ -25,12 +24,8 @@ export function ChangeOrganizationNameForm() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const { activeOrganization } = useActiveOrganization();
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {

@@ -5,7 +5,6 @@ import { authClient } from "@repo/auth/client";
 import { config } from "@repo/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -64,7 +63,6 @@ type FormValues = z.infer<typeof formSchema>;
 export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const t = useTranslations();
 	const router = useRouter();
-	const { zodErrorMap } = useFormErrors();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const searchParams = useSearchParams();
 
@@ -74,9 +72,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 	const redirectTo = searchParams.get("redirectTo");
 
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		values: {

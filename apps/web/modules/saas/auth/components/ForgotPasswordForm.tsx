@@ -20,7 +20,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useFormErrors } from "@shared/hooks/form-errors";
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -31,12 +30,8 @@ type FormValues = z.infer<typeof formSchema>;
 export function ForgotPasswordForm() {
 	const t = useTranslations();
 	const { getAuthErrorMessage } = useAuthErrorMessages();
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {
@@ -51,7 +46,7 @@ export function ForgotPasswordForm() {
 				window.location.origin,
 			).toString();
 
-			const { error } = await authClient.forgetPassword({
+			const { error } = await (authClient as any).forgetPassword({
 				email,
 				redirectTo,
 			});
@@ -60,12 +55,12 @@ export function ForgotPasswordForm() {
 				throw error;
 			}
 		} catch (e) {
+			const errorCode =
+				e && typeof e === "object" && "code" in e
+					? String(e.code)
+					: undefined;
 			form.setError("root", {
-				message: getAuthErrorMessage(
-					e && typeof e === "object" && "code" in e
-						? (e.code as string)
-						: undefined,
-				),
+				message: getAuthErrorMessage(errorCode as string | undefined),
 			});
 		}
 	});

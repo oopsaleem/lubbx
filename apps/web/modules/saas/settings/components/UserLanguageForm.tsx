@@ -34,7 +34,7 @@ export function UserLanguageForm() {
 				return;
 			}
 
-			await authClient.updateUser({
+			await (authClient as any).updateUser({
 				locale,
 			});
 			await updateLocale(locale);

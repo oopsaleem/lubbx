@@ -6,7 +6,7 @@ description: "Task list for sidebar navigation replacement"
 # Tasks: Sidebar Navigation Replacement
 
 **Input**: Design documents from `/specs/003-sidebar-replacement/`
-**Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/, quickstart.md
+**Prerequisites**: plan.md, spec.md, research.md, data-model.md, quickstart.md
 
 **Tests**: No explicit test tasks — this is a UI component replacement. Verification is via manual testing per quickstart.md steps.
 
@@ -30,8 +30,8 @@ description: "Task list for sidebar navigation replacement"
 
 **Purpose**: Install shadcn sidebar component and add required CSS variables
 
-- [ ] T001 Install shadcn sidebar component via `pnpm dlx shadcn@latest add sidebar` — creates `apps/web/modules/ui/components/sidebar.tsx`
-- [ ] T002 [P] Add sidebar CSS theme variables to `apps/web/app/globals.css` under `@layer base` — ensure variables match the app's existing light/dark palette for consistent theme
+- [x] T001 Install shadcn sidebar component via `pnpm dlx shadcn@latest add sidebar` — creates `apps/web/modules/ui/components/sidebar.tsx`
+- [x] T002 [P] Add sidebar CSS theme variables to `apps/web/app/globals.css` under `@layer base` — ensure variables match the app's existing light/dark palette for consistent theme
 
 ---
 
@@ -39,10 +39,11 @@ description: "Task list for sidebar navigation replacement"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Remove `useSidebarLayout` from config type definition in `config/types.ts` (key `ui.saas.useSidebarLayout`)
-- [ ] T004 Remove `useSidebarLayout` from config defaults in `config/index.ts` (key `ui.saas.useSidebarLayout`)
-- [ ] T005 [P] Create `apps/web/modules/saas/shared/components/AppSidebar.tsx` — sidebar component with `organizationId` prop, SidebarHeader (Logo + conditional OrganizationSelect), SidebarContent (menu groups with admin/org conditions, collapsible group sections via Collapsible wrapper), SidebarFooter (UserMenu with showUserName), and SidebarRail. Extract menu items from old NavBar pattern.
-- [ ] T006 Integrate SidebarProvider + AppSidebar + SidebarInset into the app layout at `apps/web/app/(saas)/app/layout.tsx`, wrapping the existing provider tree
+- [x] T003 Remove `useSidebarLayout` from config type definition in `config/types.ts` (key `ui.saas.useSidebarLayout`)
+- [x] T004 Remove `useSidebarLayout` from config defaults in `config/index.ts` (key `ui.saas.useSidebarLayout`)
+- [x] T005 [P] Create `apps/web/modules/saas/shared/components/AppSidebar.tsx` — sidebar component using shadcn's Sidebar, SidebarContent, SidebarHeader (Logo + Link to /app), SidebarContent (menu groups with admin/org conditions), SidebarFooter (UserMenu with showUserName), and SidebarRail. Extract menu items from old NavBar pattern; read activeOrganization from `useActiveOrganization()` context and user from `useSession()`.
+- [x] T006 Modify `apps/web/modules/saas/shared/components/AppWrapper.tsx` — replace old NavBar layout with `<SidebarProvider><AppSidebar /><SidebarInset><main>{children}</main></SidebarInset></SidebarProvider>`. Remove `useSidebarLayout` references and `md:ml-[280px]` classes.
+- [x] T007 [P] Update `apps/web/app/(saas)/app/(organizations)/(without-organization-slug)/layout.tsx` to use `AppWrapper` instead of `AuthWrapper` so users without an org context still see the sidebar.
 
 **Checkpoint**: Foundation ready — sidebar renders in layout with all menu items visible
 
@@ -54,11 +55,11 @@ description: "Task list for sidebar navigation replacement"
 
 **Independent Test**: Authenticate as any user, land on dashboard, click each menu item — the correct page loads and the active item is visually highlighted. Verify admin menus are visible for admin users only.
 
-- [ ] T007 [US1] Implement active state highlighting in `apps/web/modules/saas/shared/components/AppSidebar.tsx` using `usePathname()` to determine which sidebar menu item is active (mirror pattern from old NavBar)
-- [ ] T008 [P] [US1] Implement admin-role conditional menu item visibility in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Admin link only when `user.role === "admin"`)
-- [ ] T009 [P] [US1] Implement organization-context conditional menu items in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Organization Settings link only when org is active)
-- [ ] T010 [P] [US1] Configure sticky SidebarHeader with Logo (Link to /app) and conditional OrganizationSelect in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
-- [ ] T011 [P] [US1] Configure sticky SidebarFooter with UserMenu (showUserName) in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
+- [x] T008 [US1] Implement active state highlighting in `apps/web/modules/saas/shared/components/AppSidebar.tsx` using `usePathname()` to determine which sidebar menu item is active (mirror pattern from old NavBar at `NavBar.tsx:34-80`)
+- [x] T009 [P] [US1] Implement admin-role conditional menu item visibility in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Admin link only when `user.role === "admin"`)
+- [x] T010 [P] [US1] Implement organization-context conditional menu items in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Organization Settings link only when `activeOrganization` is set)
+- [x] T011 [P] [US1] Configure sticky SidebarHeader with Logo (Link to /app) and current org name display in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
+- [x] T012 [P] [US1] Configure sticky SidebarFooter with UserMenu (showUserName) and org-switching dropdown (reusing `OrganzationSelect` component) in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
 
 **Checkpoint**: Full navigation works — users can browse all sections with correct active states, conditional items, and sticky layout
 
@@ -70,9 +71,9 @@ description: "Task list for sidebar navigation replacement"
 
 **Independent Test**: Click collapse trigger — sidebar transitions to icon-only mode. Click expand trigger — returns to full width. Navigate between pages — collapsed state is preserved. Press Cmd+B — sidebar toggles.
 
-- [ ] T012 [US2] Configure `collapsible="icon"` on the Sidebar component and add SidebarTrigger in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (shadcn sidebar provides this natively)
-- [ ] T013 [US2] Verify Cmd+B / Ctrl+B keyboard shortcut works (built into shadcn sidebar via `SIDEBAR_KEYBOARD_SHORTCUT` constant)
-- [ ] T014 [P] [US2] Persist sidebar collapse/expand state across navigation — verify the Jotai atom in `apps/web/modules/saas/shared/lib/state.ts` stores the collapsed state and restores it on page navigation (US2 test: collapse sidebar, navigate to another page, verify it remains collapsed)
+- [x] T013 [US2] Configure `collapsible="icon"` on the Sidebar component and add SidebarTrigger in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (shadcn sidebar provides this natively)
+- [x] T014 [US2] Verify Cmd+B / Ctrl+B keyboard shortcut works (built into shadcn sidebar via `SIDEBAR_KEYBOARD_SHORTCUT` constant)
+- [x] T015 [US2] Persist sidebar collapse/expand state across navigation — sidebar uses cookie-based state persistence; AppWrapper reads cookie on mount to restore state
 
 **Checkpoint**: Sidebar can be collapsed, expanded via click or keyboard, and state persists across page navigation
 
@@ -84,7 +85,7 @@ description: "Task list for sidebar navigation replacement"
 
 **Independent Test**: Resize browser to mobile viewport width — sidebar becomes a slide-in drawer. Tap outside the drawer — it closes.
 
-- [ ] T015 [US3] Verify mobile overlay behavior — shadcn sidebar automatically renders a Sheet for mobile via its responsive logic; ensure `SidebarProvider` does not prevent mobile behavior in `apps/web/app/(saas)/app/layout.tsx`
+- [x] T016 [US3] Verify mobile overlay behavior — shadcn sidebar automatically renders a Sheet for mobile via its responsive logic; ensure `SidebarProvider` in `AppWrapper.tsx` does not prevent mobile behavior
 
 **Checkpoint**: Sidebar correctly transitions to slide-in overlay on mobile viewports
 
@@ -96,8 +97,8 @@ description: "Task list for sidebar navigation replacement"
 
 **Independent Test**: Switch locale to Arabic — sidebar appears on the right. Verify trigger icon is flipped and collapse/expand animations are mirrored.
 
-- [ ] T016 [US4] Pass `dir` prop to the Sidebar component in `apps/web/modules/saas/shared/components/AppSidebar.tsx` based on the current locale direction (use existing direction logic from `Document.tsx` or via the DirectionProviderWrapper)
-- [ ] T017 [US4] Add `className="rtl:rotate-180"` to the SidebarTrigger icon (PanelLeft) in `apps/web/modules/saas/shared/components/AppSidebar.tsx` for RTL direction flip
+- [x] T017 [US4] Pass `dir` prop to the Sidebar component in `apps/web/modules/saas/shared/components/AppSidebar.tsx` based on the current locale direction — use `useLocale()` from `next-intl` to determine direction (`locale === "ar" ? "rtl" : "ltr"`) and set `side={dir === "ltr" ? "left" : "right"}` on the Sidebar
+- [x] T018 [US4] Add RTL icon flips: `className="rtl:rotate-180"` on chevron icons and SidebarTrigger icon in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
 
 **Checkpoint**: Sidebar correctly positions and animates in both LTR and RTL modes
 
@@ -107,11 +108,10 @@ description: "Task list for sidebar navigation replacement"
 
 **Purpose**: Remove old NavBar component and associated config, update all consumers, verify success criteria
 
-- [ ] T018 [P] Delete `apps/web/modules/saas/shared/components/NavBar.tsx`
-- [ ] T019 [P] Update `apps/web/modules/saas/shared/components/AppWrapper.tsx` — remove NavBar import, remove `useSidebarLayout` references, remove `md:ml-[280px]` classes (layout margin is now handled by SidebarInset)
-- [ ] T020 [P] Update `apps/web/app/(saas)/app/(account)/admin/layout.tsx` if it references any NavBar-specific patterns
-- [ ] T021 Run `pnpm build` to verify no remaining broken imports or references to removed `useSidebarLayout` or `NavBar`
-- [ ] T022 [P] Follow `specs/003-sidebar-replacement/quickstart.md` verification steps to validate end-to-end
+- [x] T019 [P] Delete `apps/web/modules/saas/shared/components/NavBar.tsx`
+- [x] T020 [P] Verify no remaining imports of NavBar or references to `useSidebarLayout` in `apps/web/app/(saas)/app/(account)/admin/layout.tsx` and other layout files
+- [x] T021 Run `pnpm build` to verify no remaining broken imports or references to removed `useSidebarLayout` or `NavBar` — build passed cleanly
+- [ ] T022 [P] Follow `specs/003-sidebar-replacement/quickstart.md` verification steps to validate end-to-end (manual — run dev server and test)
 - [ ] T023 [P] Verify SC-002 — sidebar collapse/expand animation completes in under 300ms (manual timing check using browser DevTools Performance panel)
 - [ ] T024 [P] Verify SC-005 — mobile sidebar overlay opens and closes without causing layout shift (resize to mobile viewport, toggle sidebar, confirm no content reflow)
 - [ ] T025 [P] Verify edge case — rapid trigger clicks do not cause animation glitches or incorrect state (rapidly click collapse/expand trigger 10+ times, verify final state is correct)
@@ -146,11 +146,11 @@ description: "Task list for sidebar navigation replacement"
 
 - T001 and T002 can run in parallel
 - T003 and T004 can run in parallel (different files, same config removal)
-- T005 runs alone (creates the core component)
-- T008-T011 within US1 can all run in parallel (different props/features on same component)
-- T012-T014 within US2 can run in parallel
-- T016 and T017 within US4 can run in parallel
-- T018-T022 (cleanup + verification) can all run in parallel
+- T005, T006, T007 can all run in parallel (different files, no dependencies)
+- T009-T012 within US1 can all run in parallel (different aspects of same component, but need T008 first for the base structure)
+- T013-T015 within US2 can run in parallel
+- T017 and T018 within US4 can run in parallel
+- T019-T022 (cleanup + verification) can all run in parallel
 - T023-T025 (post-build verification) run in parallel after T021
 
 ---
@@ -159,11 +159,10 @@ description: "Task list for sidebar navigation replacement"
 
 ```bash
 # All these tasks modify different aspects of AppSidebar.tsx simultaneously:
-Task: "T007 Implement active state highlighting in AppSidebar.tsx"
-Task: "T008 Implement admin-role conditional menu items in AppSidebar.tsx"
-Task: "T009 Implement org-context conditional items in AppSidebar.tsx"
-Task: "T010 Configure sticky SidebarHeader with Logo in AppSidebar.tsx"
-Task: "T011 Configure sticky SidebarFooter with UserMenu in AppSidebar.tsx"
+Task: "T009 Implement admin-role conditional menu items in AppSidebar.tsx"
+Task: "T010 Implement org-context conditional items in AppSidebar.tsx"
+Task: "T011 Configure sticky SidebarHeader with Logo in AppSidebar.tsx"
+Task: "T012 Configure sticky SidebarFooter with UserMenu in AppSidebar.tsx"
 ```
 
 ---
@@ -194,9 +193,9 @@ Task: "T011 Configure sticky SidebarFooter with UserMenu in AppSidebar.tsx"
 ### Parallel Team Strategy
 
 With multiple developers:
-1. One developer: Setup + Foundational (T001-T006)
-2. Another developer: US1 implementation (T007-T011) — starts after T005-T006
-3. Final pass: Cleanup (T018-T022) — runs after all US work done
+1. Developer A: Setup + Foundational (T001-T007)
+2. Developer B: US1 implementation (T008-T012) — starts after T005-T007
+3. Final pass: Cleanup (T019-T025) — runs after all US work done
 
 ---
 

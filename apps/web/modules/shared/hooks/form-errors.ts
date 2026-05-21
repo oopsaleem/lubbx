@@ -1,6 +1,5 @@
 import { type TranslationValues, useTranslations } from "next-intl";
-import { ZodIssueCode, ZodParsedType, defaultErrorMap } from "zod";
-import type { ZodErrorMap } from "zod";
+import { ZodIssueCode } from "zod";
 
 /**
  * This error map is a modified version of the on used by zod-i18n
@@ -63,13 +62,12 @@ export function useFormErrors() {
 
 	type TranslationKey = Parameters<typeof t>[0];
 
-	const zodErrorMap: ZodErrorMap = (issue, ctx) => {
-		let message: string;
-		message = defaultErrorMap(issue, ctx).message;
+	const zodErrorMap = (issue: { code: string; received?: string; expected?: string; keys?: string[]; options?: string[]; validation?: string | { startsWith?: string; endsWith?: string }; type?: string; minimum?: number | bigint; maximum?: number | bigint; exact?: boolean; inclusive?: boolean; params?: Record<string, unknown> }): string | undefined => {
+		let message = "";
 
 		switch (issue.code) {
 			case ZodIssueCode.invalid_type:
-				if (issue.received === ZodParsedType.undefined) {
+				if (issue.received === "undefined") {
 					message = t("zod.errors.invalid_type_received_undefined");
 				} else {
 					message = t("zod.errors.invalid_type", {
@@ -82,57 +80,36 @@ export function useFormErrors() {
 					});
 				}
 				break;
-			case ZodIssueCode.invalid_literal:
-				message = t("zod.errors.invalid_literal", {
-					expected: JSON.stringify(
-						issue.expected,
-						jsonStringifyReplacer,
-					),
-				});
-				break;
-			case ZodIssueCode.unrecognized_keys:
+			case ZodIssueCode.unrecognized_keys: {
+				const keys = issue.keys ?? [];
 				message = t("zod.errors.unrecognized_keys", {
-					keys: joinValues(issue.keys, ", "),
-					count: issue.keys.length,
+					keys: joinValues(keys, ", "),
+					count: keys.length,
 				});
 				break;
+			}
 			case ZodIssueCode.invalid_union:
 				message = t("zod.errors.invalid_union");
 				break;
-			case ZodIssueCode.invalid_union_discriminator:
-				message = t("zod.errors.invalid_union_discriminator", {
-					options: joinValues(issue.options),
+			case ZodIssueCode.invalid_value:
+				message = t("zod.errors.invalid_value", {
+					received: issue.received ?? "undefined",
 				});
 				break;
-			case ZodIssueCode.invalid_enum_value:
-				message = t("zod.errors.invalid_enum_value", {
-					options: joinValues(issue.options),
-					received: issue.received,
-				});
-				break;
-			case ZodIssueCode.invalid_arguments:
-				message = t("zod.errors.invalid_arguments");
-				break;
-			case ZodIssueCode.invalid_return_type:
-				message = t("zod.errors.invalid_return_type");
-				break;
-			case ZodIssueCode.invalid_date:
-				message = t("zod.errors.invalid_date");
-				break;
-			case ZodIssueCode.invalid_string:
+			case ZodIssueCode.invalid_format:
 				if (typeof issue.validation === "object") {
 					if ("startsWith" in issue.validation) {
-						message = t("zod.errors.invalid_string.startsWith", {
-							startsWith: issue.validation.startsWith,
+						message = t("zod.errors.invalid_format.startsWith", {
+							startsWith: issue.validation.startsWith ?? "",
 						});
 					} else if ("endsWith" in issue.validation) {
-						message = t("zod.errors.invalid_string.endsWith", {
-							endsWith: issue.validation.endsWith,
+						message = t("zod.errors.invalid_format.endsWith", {
+							endsWith: issue.validation.endsWith ?? "",
 						});
 					}
 				} else {
 					message = t(
-						`zod.errors.invalid_string.${issue.validation}` as TranslationKey,
+						`zod.errors.invalid_format.${issue.validation}` as TranslationKey,
 						{
 							validation: t(
 								`zod.validations.${issue.validation}` as TranslationKey,
@@ -142,10 +119,11 @@ export function useFormErrors() {
 				}
 				break;
 			case ZodIssueCode.too_small: {
+				const minVal = issue.minimum;
 				const minimum =
 					issue.type === "date"
-						? new Date(issue.minimum as number)
-						: (issue.minimum as number);
+						? new Date(Number(minVal))
+						: Number(minVal ?? 0);
 				message = t(
 					`zod.errors.too_small.${issue.type}.${
 						issue.exact
@@ -156,16 +134,17 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						minimum,
-						count: typeof minimum === "number" ? minimum : "",
+						count: minimum,
 					},
 				);
 				break;
 			}
 			case ZodIssueCode.too_big: {
+				const maxVal = issue.maximum;
 				const maximum =
 					issue.type === "date"
-						? new Date(issue.maximum as number)
-						: (issue.maximum as number);
+						? new Date(Number(maxVal))
+						: Number(maxVal ?? 0);
 				message = t(
 					`zod.errors.too_big.${issue.type}.${
 						issue.exact
@@ -176,7 +155,7 @@ export function useFormErrors() {
 					}` as TranslationKey,
 					{
 						maximum,
-						count: typeof maximum === "number" ? maximum : "",
+						count: maximum,
 					},
 				);
 				break;
@@ -193,19 +172,13 @@ export function useFormErrors() {
 				);
 				break;
 			}
-			case ZodIssueCode.invalid_intersection_types:
-				message = t("zod.errors.invalid_intersection_types");
-				break;
 			case ZodIssueCode.not_multiple_of:
 				message = t("zod.errors.not_multiple_of");
-				break;
-			case ZodIssueCode.not_finite:
-				message = t("zod.errors.not_finite");
 				break;
 			default:
 		}
 
-		return { message };
+		return message;
 	};
 
 	return {

@@ -23,7 +23,7 @@ export default async function OnboardingPage() {
 		return redirect("/auth/login");
 	}
 
-	if (!config.users.enableOnboarding || session.user.onboardingComplete) {
+	if (!config.users.enableOnboarding || (session.user as any).onboardingComplete) {
 		return redirect("/app");
 	}
 

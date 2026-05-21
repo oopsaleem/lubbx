@@ -140,7 +140,7 @@ export function TwoFactorBlock() {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (user?.twoFactorEnabled) {
+		if ((user as any)?.twoFactorEnabled) {
 			disableTwoFactorMutation.mutate();
 			return;
 		}
@@ -153,7 +153,7 @@ export function TwoFactorBlock() {
 		verifyTwoFactorMutation.mutate();
 	};
 
-	if (!accounts?.some((account) => account.provider === "credential")) {
+	if (!accounts?.some((account: any) => account.providerId === "credential")) {
 		return null;
 	}
 
@@ -162,7 +162,7 @@ export function TwoFactorBlock() {
 			title={t("settings.account.security.twoFactor.title")}
 			description={t("settings.account.security.twoFactor.description")}
 		>
-			{user?.twoFactorEnabled ? (
+			{(user as any)?.twoFactorEnabled ? (
 				<div className="flex items-start flex-col gap-4">
 					<div className="flex items-center gap-1.5">
 						<ShieldCheckIcon className="size-6 text-green-500" />

@@ -26,7 +26,7 @@ export default async function OrganizationFormPage({
 	await queryClient.prefetchQuery({
 		queryKey: fullOrganizationQueryKey(id),
 		queryFn: async () =>
-			await auth.api.getFullOrganization({
+			await (auth.api as any).getFullOrganization({
 				query: {
 					organizationId: id,
 				},

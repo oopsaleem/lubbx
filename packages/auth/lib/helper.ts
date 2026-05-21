@@ -7,7 +7,7 @@ export function isOrganizationAdmin(
 		role?: string | null;
 	} | null,
 ) {
-	const userOrganizationRole = organization?.members.find(
+	const userOrganizationRole = organization?.members?.find(
 		(member) => member.userId === user?.id,
 	)?.role;
 

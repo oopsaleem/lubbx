@@ -24,7 +24,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useFormErrors } from "@shared/hooks/form-errors";
 
 const formSchema = z.object({
 	password: z.string().min(8),
@@ -39,12 +38,8 @@ export function ResetPasswordForm() {
 	const { getAuthErrorMessage } = useAuthErrorMessages();
 	const searchParams = useSearchParams();
 	const token = searchParams.get("token");
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {

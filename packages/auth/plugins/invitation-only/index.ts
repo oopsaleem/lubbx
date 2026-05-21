@@ -1,8 +1,7 @@
 import { config } from "@repo/config";
 import { getPendingInvitationByEmail } from "@repo/database";
 import type { BetterAuthPlugin } from "better-auth";
-import { APIError } from "better-auth/api";
-import { createAuthMiddleware } from "better-auth/plugins";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 
 export const invitationOnlyPlugin = () =>
 	({

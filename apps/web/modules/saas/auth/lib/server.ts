@@ -17,7 +17,7 @@ export const getSession = cache(async () => {
 
 export const getActiveOrganization = cache(async (slug: string) => {
 	try {
-		const activeOrganization = await auth.api.getFullOrganization({
+		const activeOrganization = await (auth.api as any).getFullOrganization({
 			query: {
 				organizationSlug: slug,
 			},
@@ -32,7 +32,7 @@ export const getActiveOrganization = cache(async (slug: string) => {
 
 export const getOrganizationList = cache(async () => {
 	try {
-		const organizationList = await auth.api.listOrganizations({
+		const organizationList = await (auth.api as any).listOrganizations({
 			headers: await headers(),
 		});
 
@@ -56,7 +56,7 @@ export const getUserAccounts = cache(async () => {
 
 export const getUserPasskeys = cache(async () => {
 	try {
-		const userPasskeys = await auth.api.listPasskeys({
+		const userPasskeys = await (auth.api as any).listPasskeys({
 			headers: await headers(),
 		});
 

@@ -124,6 +124,7 @@ model Passkey {
     backedUp     Boolean
     transports   String?
     createdAt    DateTime?
+    aaguid       String?
 
     @@map("passkey")
 }
@@ -134,7 +135,8 @@ model TwoFactor {
     backupCodes String
     userId      String
     user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+    verified    Boolean
+    
     @@map("twoFactor")
 }
 

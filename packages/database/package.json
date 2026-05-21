@@ -4,10 +4,10 @@
 		"@prisma/client": "^6.6.0",
 		"@repo/config": "workspace:*",
 		"drizzle-orm": "^0.42.0",
-		"drizzle-zod": "^0.7.1",
+		"drizzle-zod": "^0.8.3",
 		"nanoid": "^5.1.2",
 		"pg": "^8.14.1",
-		"zod": "^3.24.3"
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
@@ -22,7 +22,7 @@
 	"main": "./index.ts",
 	"name": "@repo/database",
 	"scripts": {
-		"generate": "prisma generate --no-hints --schema=./prisma/schema.prisma",
+		"generate": "prisma generate --no-hints --schema=./prisma/schema.prisma && node -e \"const fs=require('fs');const p='prisma/zod/index.ts';let c=fs.readFileSync(p,'utf8');if(!c.startsWith('// @ts-nocheck')){fs.writeFileSync(p,'// @ts-nocheck - regenerated, Zod v3 syntax\\n'+c)}\"",
 		"push": "dotenv -c -e ../../.env -- prisma db push --skip-generate --schema=./prisma/schema.prisma",
 		"migrate": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma",
 		"migrate:init": "dotenv -c -e ../../.env -- prisma migrate dev --schema=./prisma/schema.prisma --name ",

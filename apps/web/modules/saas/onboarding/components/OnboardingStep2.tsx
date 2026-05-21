@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { Button } from "@ui/components/button";
 import { Form } from "@ui/components/form";
 import { ArrowRightIcon } from "lucide-react";
@@ -18,12 +17,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function OnboardingStep2({ onCompleted }: { onCompleted: () => void }) {
 	const t = useTranslations();
-	const { zodErrorMap } = useFormErrors();
-	
 	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {

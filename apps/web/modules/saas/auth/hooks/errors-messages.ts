@@ -1,10 +1,9 @@
-import type { AuthClientErrorCodes } from "@repo/auth/client";
 import { useTranslations } from "next-intl";
 
 export function useAuthErrorMessages() {
 	const t = useTranslations();
 
-	const authErrorMessages: Partial<AuthClientErrorCodes> = {
+	const authErrorMessages: Partial<Record<string, string>> = {
 		INVALID_EMAIL_OR_PASSWORD: t("auth.errors.invalidEmailOrPassword"),
 		USER_NOT_FOUND: t("auth.errors.userNotFound"),
 		FAILED_TO_CREATE_USER: t("auth.errors.failedToCreateUser"),
@@ -37,11 +36,11 @@ export function useAuthErrorMessages() {
 		ACCOUNT_NOT_FOUND: t("auth.errors.accountNotFound"),
 	};
 
-	const getAuthErrorMessage = (errorCode: string | undefined) => {
+	const getAuthErrorMessage = (errorCode: string | undefined): string => {
 		return (
 			authErrorMessages[errorCode as keyof typeof authErrorMessages] ||
 			t("auth.errors.unknown")
-		);
+		) as string;
 	};
 
 	return {

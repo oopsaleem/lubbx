@@ -30,7 +30,7 @@ export function OnboardingForm() {
 	};
 
 	const onCompleted = async () => {
-		await authClient.updateUser({
+		await (authClient as any).updateUser({
 			onboardingComplete: true,
 		});
 

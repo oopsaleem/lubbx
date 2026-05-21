@@ -6,7 +6,6 @@ import {
 	type ContactFormValues,
 	contactFormSchema,
 } from "@repo/api/src/routes/contact/types";
-import { useFormErrors } from "@shared/hooks/form-errors";
 import { Alert, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -26,12 +25,8 @@ import { useForm } from "react-hook-form";
 export function ContactForm() {
 	const t = useTranslations();
 	const contactFormMutation = useContactFormMutation();
-	const { zodErrorMap } = useFormErrors();
-
 	const form = useForm<ContactFormValues>({
-		resolver: zodResolver(contactFormSchema, {
-			errorMap: zodErrorMap,
-		}),
+		resolver: zodResolver(contactFormSchema),
 		mode: "onChange",
 		reValidateMode: "onChange",
 		defaultValues: {
