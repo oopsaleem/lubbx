@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@ui/components/button";
+import { buttonVariants } from "@ui/components/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -45,19 +45,16 @@ export function ColorModeToggle() {
 
 	return (
 		<DropdownMenu modal={false}>
-			<DropdownMenuTrigger asChild>
-				<Button
-					variant="ghost"
-					size="icon"
-					data-test="color-mode-toggle"
-					aria-label="Color mode"
-				>
-					{resolvedTheme === "light" ? (
-						<SunIcon className="size-4" />
-					) : (
-						<MoonIcon className="size-4" />
-					)}
-				</Button>
+			<DropdownMenuTrigger
+				className={buttonVariants({ variant: "ghost", size: "icon" })}
+				data-test="color-mode-toggle"
+				aria-label="Color mode"
+			>
+				{resolvedTheme === "light" ? (
+					<SunIcon className="size-4" />
+				) : (
+					<MoonIcon className="size-4" />
+				)}
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent>

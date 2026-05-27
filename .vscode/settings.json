@@ -29,6 +29,6 @@
 	"[prisma]": {
 		"editor.defaultFormatter": "Prisma.prisma"
 	},
-	"editor.fontFamily": "'CaskaydiaCove Nerd Font Mono', Menlo, Monaco, 'Courier New', monospace",
+	"editor.fontFamily": "'IBM Plex Mono', 'CaskaydiaCove Nerd Font Mono', Menlo, Monaco, 'Courier New', monospace",
 	"prisma.pinToPrisma6": true
 }

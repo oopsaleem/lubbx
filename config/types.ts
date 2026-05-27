@@ -51,7 +51,6 @@ export type Config = {
 		defaultTheme: Config["ui"]["enabledThemes"][number];
 		saas: {
 			enabled: boolean;
-			useSidebarLayout: boolean;
 		};
 		marketing: {
 			enabled: boolean;

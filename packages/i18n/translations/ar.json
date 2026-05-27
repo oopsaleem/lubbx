@@ -1,4 +1,38 @@
 {
+	"SidebarRtl": {
+		"teamName": "شركة أكمي",
+		"teamPlan": "المؤسسة",
+		"platform": "المنصة",
+		"projects": "المشاريع",
+		"viewProject": "عرض المشروع",
+		"shareProject": "مشاركة المشروع",
+		"deleteProject": "حذف المشروع",
+		"more": "المزيد",
+		"upgradeToPro": "ترقية إلى Pro",
+		"account": "الحساب",
+		"billing": "الفوترة",
+		"notifications": "الإشعارات",
+		"logOut": "تسجيل الخروج",
+		"playground": "ملعب",
+		"history": "السجل",
+		"starred": "المميز",
+		"settings": "الإعدادات",
+		"models": "النماذج",
+		"genesis": "جينيسيس",
+		"explorer": "إكسبلورر",
+		"quantum": "كوانتوم",
+		"documentation": "التوثيق",
+		"introduction": "مقدمة",
+		"getStarted": "ابدأ",
+		"tutorials": "الدروس",
+		"changelog": "سجل التغييرات",
+		"general": "عام",
+		"team": "الفريق",
+		"limits": "الحدود",
+		"designEngineering": "هندسة التصميم",
+		"salesMarketing": "المبيعات والتسويق",
+		"travel": "السفر"
+	},
 	"admin": {
 		"menu": {
 			"organizations": "المنظمات",
@@ -70,13 +104,17 @@
 		"description": "إدارة تطبيقك."
 	},
 	"app": {
+		"teamName": "شركة أكمي",
+		"teamPlan": "المؤسسة",
 		"menu": {
 			"accountSettings": "إعدادات الحساب",
 			"admin": "مدير",
 			"aiChatbot": "دردشة الذكاء الاصطناعي",
 			"organizationSettings": "إعدادات المنظمة",
 			"start": "بدء",
-			"aiDemo": "AI نموذج"
+			"aiDemo": "AI نموذج",
+			"platform": "المنصة",
+			"account": "الحساب"
 		},
 		"userMenu": {
 			"accountSettings": "إعدادات الحساب",

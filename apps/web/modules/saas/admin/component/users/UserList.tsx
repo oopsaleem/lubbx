@@ -14,7 +14,7 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { Button } from "@ui/components/button";
+import { buttonVariants } from "@ui/components/button";
 import { Card } from "@ui/components/card";
 import {
 	DropdownMenu,
@@ -205,10 +205,10 @@ export function UserList() {
 					return (
 						<div className="flex flex-row justify-end gap-2">
 							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button size="icon" variant="ghost">
-										<MoreVerticalIcon className="size-4" />
-									</Button>
+								<DropdownMenuTrigger
+									className={buttonVariants({ size: "icon", variant: "ghost" })}
+								>
+									<MoreVerticalIcon className="size-4" />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
 									<DropdownMenuItem

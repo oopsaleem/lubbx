@@ -59,7 +59,7 @@ description: "Task list for sidebar navigation replacement"
 - [x] T009 [P] [US1] Implement admin-role conditional menu item visibility in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Admin link only when `user.role === "admin"`)
 - [x] T010 [P] [US1] Implement organization-context conditional menu items in `apps/web/modules/saas/shared/components/AppSidebar.tsx` (show Organization Settings link only when `activeOrganization` is set)
 - [x] T011 [P] [US1] Configure sticky SidebarHeader with Logo (Link to /app) and current org name display in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
-- [x] T012 [P] [US1] Configure sticky SidebarFooter with UserMenu (showUserName) and org-switching dropdown (reusing `OrganzationSelect` component) in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
+- [x] T012 [P] [US1] Configure sticky SidebarFooter with UserMenu (showUserName) and org-switching dropdown (reusing `OrganizationSelect` component) in `apps/web/modules/saas/shared/components/AppSidebar.tsx`
 
 **Checkpoint**: Full navigation works — users can browse all sections with correct active states, conditional items, and sticky layout
 

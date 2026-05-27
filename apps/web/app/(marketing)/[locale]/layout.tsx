@@ -2,7 +2,9 @@ import { Footer } from "@marketing/shared/components/Footer";
 import { NavBar } from "@marketing/shared/components/NavBar";
 import { config } from "@repo/config";
 import { SessionProvider } from "@saas/auth/components/SessionProvider";
+import { DirectionProviderWrapper } from "@shared/components/DirectionProviderWrapper";
 import { Document } from "@shared/components/Document";
+import { DirectionProvider } from "@ui/components/direction";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -20,8 +22,11 @@ export default async function MarketingLayout({
 	params,
 }: PropsWithChildren<{ params: Promise<{ locale: string }> }>) {
 	const { locale } = await params;
+	const direction = locale === "ar" ? "rtl" : "ltr";
 
 	setRequestLocale(locale);
+
+
 
 	if (!locales.includes(locale as any)) {
 		notFound();
@@ -30,24 +35,28 @@ export default async function MarketingLayout({
 	const messages = await getMessages();
 
 	return (
-		<Document locale={locale}>
-			<RootProvider
-				i18n={{ locale }}
-				search={{
-					enabled: true,
-					options: {
-						api: "/api/docs-search",
-					},
-				}}
-			>
-				<NextIntlClientProvider locale={locale} messages={messages}>
-					<SessionProvider>
-						<NavBar />
-						<main className="min-h-screen">{children}</main>
-						<Footer />
-					</SessionProvider>
-				</NextIntlClientProvider>
-			</RootProvider>
-		</Document>
+		<DirectionProvider dir={direction}>
+			{/* <DirectionProviderWrapper direction={direction}> */}
+			<Document locale={locale}>
+				<RootProvider
+					i18n={{ locale }}
+					search={{
+						enabled: true,
+						options: {
+							api: "/api/docs-search",
+						},
+					}}
+				>
+					<NextIntlClientProvider locale={locale} messages={messages}>
+						<SessionProvider>
+							<NavBar />
+							<main className="min-h-screen">{children}</main>
+							<Footer />
+						</SessionProvider>
+					</NextIntlClientProvider>
+				</RootProvider>
+			</Document>
+			{/* </DirectionProviderWrapper> */}
+		</DirectionProvider>
 	);
 }

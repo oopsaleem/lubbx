@@ -54,7 +54,7 @@ Key implementation details:
 - Use `useActiveOrganization()` from `@saas/organizations/hooks/use-active-organization` for org context
 - Use `usePathname()` from `next/navigation` for active state
 - Use `useTranslations()` from `next-intl` for i18n labels
-- Import `OrganzationSelect` from `@saas/organizations/components/OrganizationSelect` for org switching
+- Import `OrganizationSelect` from `@saas/organizations/components/OrganizationSelect` for org switching
 - Import `UserMenu` from `@saas/shared/components/UserMenu` for user menu
 - Import `Logo` from `@shared/components/Logo` for branding
 - Import icons from `lucide-react` (same set as NavBar)

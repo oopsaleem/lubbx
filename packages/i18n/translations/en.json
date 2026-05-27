@@ -1,4 +1,38 @@
 {
+	"SidebarRtl": {
+		"teamName": "Acme Inc",
+		"teamPlan": "Enterprise",
+		"platform": "Platform",
+		"projects": "Projects",
+		"viewProject": "View Project",
+		"shareProject": "Share Project",
+		"deleteProject": "Delete Project",
+		"more": "More",
+		"upgradeToPro": "Upgrade to Pro",
+		"account": "Account",
+		"billing": "Billing",
+		"notifications": "Notifications",
+		"logOut": "Log out",
+		"playground": "Playground",
+		"history": "History",
+		"starred": "Starred",
+		"settings": "Settings",
+		"models": "Models",
+		"genesis": "Genesis",
+		"explorer": "Explorer",
+		"quantum": "Quantum",
+		"documentation": "Documentation",
+		"introduction": "Introduction",
+		"getStarted": "Get Started",
+		"tutorials": "Tutorials",
+		"changelog": "Changelog",
+		"general": "General",
+		"team": "Team",
+		"limits": "Limits",
+		"designEngineering": "Design Engineering",
+		"salesMarketing": "Sales & Marketing",
+		"travel": "Travel"
+	},
 	"admin": {
 		"menu": {
 			"organizations": "Organizations",
@@ -70,13 +104,17 @@
 		"description": "Manage your application."
 	},
 	"app": {
+		"teamName": "Acme Inc",
+		"teamPlan": "Enterprise",
 		"menu": {
 			"accountSettings": "Account settings",
 			"admin": "Admin",
 			"aiChatbot": "AI Chatbot",
 			"organizationSettings": "Organization settings",
 			"start": "Start",
-			"aiDemo": "AI Demo"
+			"aiDemo": "AI Demo",
+			"platform": "Platform",
+			"account": "Account"
 		},
 		"userMenu": {
 			"accountSettings": "Account settings",
@@ -313,7 +351,7 @@
 			"message": "Now you can get started."
 		}
 	},
-	"organizations": {
+	"organizations": {		
 		"createForm": {
 			"name": "Organization name",
 			"notifications": {

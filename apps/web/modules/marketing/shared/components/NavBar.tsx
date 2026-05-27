@@ -15,13 +15,15 @@ import {
 } from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import NextLink from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
 export function NavBar() {
 	const t = useTranslations();
+	const locale = useLocale();
+	const dir = locale === "ar" ? "rtl" : "ltr";
 	const { user } = useSession();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const localePathname = useLocalePathname();
@@ -152,7 +154,14 @@ export function NavBar() {
 									<MenuIcon className="size-4" />
 								</Button>
 							</SheetTrigger>
-							<SheetContent className="w-[280px]" side="right">
+							<SheetContent
+								className="w-[280px]"
+								side="right"
+								dir={dir}
+								data-sidebar="sidebar"
+								data-slot="sidebar"
+								data-mobile="true"
+							>
 								<SheetTitle />
 								<div className="flex flex-col items-start justify-center">
 									{menuItems.map((menuItem) => (

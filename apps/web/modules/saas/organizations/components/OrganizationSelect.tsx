@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { OrganizationLogo } from "./OrganizationLogo";
 
-export function OrganzationSelect({ className }: { className?: string }) {
+export function OrganizationSelect({ className }: { className?: string }) {
 	const t = useTranslations();
 	const { user } = useSession();
 	const router = useRouter();
@@ -79,64 +79,68 @@ export function OrganzationSelect({ className }: { className?: string }) {
 				<DropdownMenuContent className="w-full">
 					{!config.organizations.requireOrganization && (
 						<>
-							<DropdownMenuRadioGroup
-								value={activeOrganization?.id ?? user.id}
-								onValueChange={(value: string) => {
-									if (value === user.id) {
-										router.replace("/app");
-									}
-								}}
-							>
+							<DropdownMenuGroup>
 								<DropdownMenuLabel className="text-foreground/60 text-xs">
 									{t(
 										"organizations.organizationSelect.personalAccount",
 									)}
 								</DropdownMenuLabel>
-								<DropdownMenuRadioItem
-									value={user.id}
-									className="flex cursor-pointer items-center justify-center gap-2 pl-3"
+								<DropdownMenuRadioGroup
+									value={activeOrganization?.id ?? user.id}
+									onValueChange={(value: string) => {
+										if (value === user.id) {
+											router.replace("/app");
+										}
+									}}
 								>
-									<div className="flex flex-1 items-center justify-start gap-2">
-										<UserAvatar
-											className="size-8"
-											name={user.name ?? ""}
-											avatarUrl={user.image}
-										/>
-										{user.name}
-									</div>
-								</DropdownMenuRadioItem>
-							</DropdownMenuRadioGroup>
+									<DropdownMenuRadioItem
+										value={user.id}
+										className="flex cursor-pointer items-center justify-center gap-2 pl-3"
+									>
+										<div className="flex flex-1 items-center justify-start gap-2">
+											<UserAvatar
+												className="size-8"
+												name={user.name ?? ""}
+												avatarUrl={user.image}
+											/>
+											{user.name}
+										</div>
+									</DropdownMenuRadioItem>
+								</DropdownMenuRadioGroup>
+							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 						</>
 					)}
-					<DropdownMenuRadioGroup
-						value={activeOrganization?.slug}
-						onValueChange={(organizationSlug: string) =>
-							setActiveOrganization(organizationSlug)
-						}
-					>
+					<DropdownMenuGroup>
 						<DropdownMenuLabel className="text-foreground/60 text-xs">
 							{t(
 								"organizations.organizationSelect.organizations",
 							)}
 						</DropdownMenuLabel>
-						{allOrganizations?.map((organization) => (
-							<DropdownMenuRadioItem
-								key={organization.slug}
-								value={organization.slug}
-								className="flex cursor-pointer items-center justify-center gap-2 pl-3"
-							>
-								<div className="flex flex-1 items-center justify-start gap-2">
-									<OrganizationLogo
-										className="size-8"
-										name={organization.name}
-										logoUrl={organization.logo}
-									/>
-									{organization.name}
-								</div>
-							</DropdownMenuRadioItem>
-						))}
-					</DropdownMenuRadioGroup>
+						<DropdownMenuRadioGroup
+							value={activeOrganization?.slug}
+							onValueChange={(organizationSlug: string) =>
+								setActiveOrganization(organizationSlug)
+							}
+						>
+							{allOrganizations?.map((organization) => (
+								<DropdownMenuRadioItem
+									key={organization.slug}
+									value={organization.slug}
+									className="flex cursor-pointer items-center justify-center gap-2 pl-3"
+								>
+									<div className="flex flex-1 items-center justify-start gap-2">
+										<OrganizationLogo
+											className="size-8"
+											name={organization.name}
+											logoUrl={organization.logo}
+										/>
+										{organization.name}
+									</div>
+								</DropdownMenuRadioItem>
+							))}
+						</DropdownMenuRadioGroup>
+					</DropdownMenuGroup>
 
 					{config.organizations.enableUsersToCreateOrganizations && (
 						<DropdownMenuGroup>

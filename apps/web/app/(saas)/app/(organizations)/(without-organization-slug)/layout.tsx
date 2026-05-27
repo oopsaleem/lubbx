@@ -1,8 +1,8 @@
-import { AuthWrapper } from "@saas/shared/components/AuthWrapper";
+import { AppWrapper } from "@saas/shared/components/AppWrapper";
 import type { PropsWithChildren } from "react";
 
 export default function WithoutOrganizationSlugLayout({
 	children,
 }: PropsWithChildren) {
-	return <AuthWrapper>{children}</AuthWrapper>;
+	return <AppWrapper>{children}</AppWrapper>;
 }

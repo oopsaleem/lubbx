@@ -4,6 +4,8 @@
 @import "@repo/tailwind-config/theme.css";
 @import "@repo/tailwind-config/tailwind-animate.css";
 
+@custom-variant dark (&:is(.dark *));
+
 @source "../node_modules/fumadocs-ui/dist/**/*.js";
 
 @variant dark (&:where(.dark, .dark *));
@@ -39,4 +41,9 @@ div[role="tablist"].bg-secondary {
 
 input[cmdk-input] {
 	@apply border-none focus-visible:ring-0;
+}
+
+
+span.rounded-full {
+	border: 1px solid var(--sidebar-ring);
 }

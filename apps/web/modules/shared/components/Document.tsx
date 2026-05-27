@@ -43,6 +43,7 @@ export async function Document({
 			)}
 		>
 			<body
+				suppressHydrationWarning
 				className={cn(
 					"min-h-screen bg-background text-foreground antialiased",
 				)}

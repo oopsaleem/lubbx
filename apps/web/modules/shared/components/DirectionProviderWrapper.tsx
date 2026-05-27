@@ -1,6 +1,6 @@
 "use client";
 
-import { DirectionProvider } from "@radix-ui/react-direction";
+import { DirectionProvider } from "@ui/components/direction";
 import type { PropsWithChildren } from "react";
 
 export function DirectionProviderWrapper({

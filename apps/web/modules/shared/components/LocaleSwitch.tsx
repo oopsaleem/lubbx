@@ -4,7 +4,7 @@ import { updateLocale } from "@i18n/lib/update-locale";
 import { useLocalePathname, useLocaleRouter } from "@i18n/routing";
 import { config } from "@repo/config";
 import type { Locale } from "@repo/i18n";
-import { Button } from "@ui/components/button";
+import { buttonVariants } from "@ui/components/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -33,10 +33,11 @@ export function LocaleSwitch({
 
 	return (
 		<DropdownMenu modal={false}>
-			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" size="icon" aria-label="Language">
-					<LanguagesIcon className="size-4" />
-				</Button>
+			<DropdownMenuTrigger
+				className={buttonVariants({ variant: "ghost", size: "icon" })}
+				aria-label="Language"
+			>
+				<LanguagesIcon className="size-4" />
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent>

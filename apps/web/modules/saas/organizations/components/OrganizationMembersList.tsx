@@ -23,7 +23,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { Button } from "@ui/components/button";
+import { buttonVariants } from "@ui/components/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -182,10 +182,10 @@ export function OrganizationMembersList({
 									}
 								/>
 								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
-										<Button size="icon" variant="ghost">
-											<MoreVerticalIcon className="size-4" />
-										</Button>
+									<DropdownMenuTrigger
+										className={buttonVariants({ size: "icon", variant: "ghost" })}
+									>
+										<MoreVerticalIcon className="size-4" />
 									</DropdownMenuTrigger>
 									<DropdownMenuContent>
 										{row.original.userId !== user?.id && (
