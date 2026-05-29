@@ -15,26 +15,30 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function Layout({ children }: PropsWithChildren) {
-	const session = await getSession();
-
 	const queryClient = getServerQueryClient();
+
+	const [session, orgList, purchases] = await Promise.all([
+		getSession(),
+		config.organizations.enable ? getOrganizationList() : Promise.resolve(undefined),
+		config.users.enableBilling ? getPurchases() : Promise.resolve(undefined),
+	]);
 
 	await queryClient.prefetchQuery({
 		queryKey: sessionQueryKey,
 		queryFn: () => session,
 	});
 
-	if (config.organizations.enable) {
+	if (config.organizations.enable && orgList) {
 		await queryClient.prefetchQuery({
 			queryKey: organizationListQueryKey,
-			queryFn: getOrganizationList,
+			queryFn: () => orgList,
 		});
 	}
 
-	if (config.users.enableBilling) {
+	if (config.users.enableBilling && purchases) {
 		await queryClient.prefetchQuery({
 			queryKey: purchasesQueryKey(),
-			queryFn: () => getPurchases(),
+			queryFn: () => purchases,
 		});
 	}
 

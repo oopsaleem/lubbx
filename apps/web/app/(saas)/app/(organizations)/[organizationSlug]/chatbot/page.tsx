@@ -1,9 +1,13 @@
-import { AiChat } from "@saas/ai/components/AiChat";
 import { aiChatListQueryKey, aiChatQueryKey } from "@saas/ai/lib/api";
 import { getActiveOrganization } from "@saas/auth/lib/server";
 import { PageHeader } from "@saas/shared/components/PageHeader";
 import { getServerApiClient, getServerQueryClient } from "@shared/lib/server";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
+
+const AiChat = dynamic(() => import("@saas/ai/components/AiChat"), {
+	ssr: false,
+});
 
 export default async function AiDemoPage({
 	params,

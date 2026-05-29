@@ -40,9 +40,29 @@ import {
 	useTheme,
 } from "@shared/components/ThemeProvider";
 import Link from "next/link";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 
-export function UserMenu({ showUserName }: { showUserName?: boolean }) {
+const colorModeOptions = [
+	{
+		value: "system",
+		label: "System",
+		icon: HardDriveIcon,
+	},
+	{
+		value: "light",
+		label: "Light",
+		icon: SunIcon,
+	},
+	{
+		value: "dark",
+		label: "Dark",
+		icon: MoonIcon,
+	},
+];
+
+export const UserMenu = memo(function UserMenu({
+	showUserName,
+}: { showUserName?: boolean }) {
 	const t = useTranslations();
 	const { user } = useSession();
 	const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
@@ -51,25 +71,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 	const locale = useLocale();
 	const dir = locale === "ar" ? "rtl" : "ltr";
 
-	const colorModeOptions = [
-		{
-			value: "system",
-			label: "System",
-			icon: HardDriveIcon,
-		},
-		{
-			value: "light",
-			label: "Light",
-			icon: SunIcon,
-		},
-		{
-			value: "dark",
-			label: "Dark",
-			icon: MoonIcon,
-		},
-	];
-
-	const onLogout = () => {
+	const onLogout = useCallback(() => {
 		authClient.signOut({
 			fetchOptions: {
 				onSuccess: () => {
@@ -80,7 +82,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 				},
 			},
 		});
-	};
+	}, []);
 
 	if (!user) {
 		return null;
@@ -271,4 +273,4 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
-}
+});

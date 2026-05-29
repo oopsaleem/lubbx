@@ -10,7 +10,12 @@ import {
 	WandIcon,
 } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
-import { type JSXElementConstructor, type ReactNode, useState } from "react";
+import {
+	memo,
+	type JSXElementConstructor,
+	type ReactNode,
+	useState,
+} from "react";
 import heroImage from "../../../../public/images/hero.svg";
 
 export const featureTabs: Array<{
@@ -128,7 +133,7 @@ export const featureTabs: Array<{
 	},
 ];
 
-export function Features() {
+export const Features = memo(function Features() {
 	const [selectedTab, setSelectedTab] = useState(featureTabs[0].id);
 	return (
 		<section id="features" className="scroll-my-20 pt-12 lg:pt-16">
@@ -278,4 +283,4 @@ export function Features() {
 			</div>
 		</section>
 	);
-}
+});

@@ -6,10 +6,15 @@ import { useSession } from "@saas/auth/hooks/use-session";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
 import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuid } from "uuid";
-import { CropImageDialog } from "./CropImageDialog";
+
+const CropImageDialog = dynamic(
+	() => import("./CropImageDialog").then((mod) => mod.CropImageDialog),
+	{ ssr: false },
+);
 
 export function UserAvatarUpload({
 	onSuccess,

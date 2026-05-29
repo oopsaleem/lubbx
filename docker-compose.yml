@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    container_name: gf
+    container_name: supa-new
     restart: always
     ports:
       - 2027:5432
@@ -10,12 +10,12 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: password
     volumes:
-      - db_gf:/var/lib/postgresql/data
+      - db-supa-new:/var/lib/postgresql/data
 
   minio:
    image: minio/minio
    restart: always
-   container_name: gf-minio
+   container_name: supa-new-minio
    environment:
        MINIO_ROOT_USER: minioadmin
        MINIO_ROOT_PASSWORD: minioadmin
@@ -32,5 +32,5 @@ services:
        retries: 3
 
 volumes:
-  db_gf:
+  db-supa-new:
   minio_data:

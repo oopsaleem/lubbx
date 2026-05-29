@@ -55,19 +55,17 @@ export function AiChat({ organizationId }: { organizationId?: string }) {
 	}, [createChatMutation]);
 
 	useEffect(() => {
-		(async () => {
-			if (chatId || chatsStatus !== "success") {
-				return;
-			}
+		if (chatId || chatsStatus !== "success") {
+			return;
+		}
 
-			if (chats?.length) {
-				setChatId(chats[0].id);
-			} else {
-				await createNewChat();
-				setMessages([]);
-			}
-		})();
-	}, [chatsStatus]);
+		if (chats?.length) {
+			setChatId(chats[0].id);
+		} else {
+			createNewChat();
+			setMessages([]);
+		}
+	}, [chatId, chats, chatsStatus, createNewChat, setMessages]);
 
 	const hasChat =
 		chatsStatus === "success" && !!chats?.length && !!currentChat?.id;

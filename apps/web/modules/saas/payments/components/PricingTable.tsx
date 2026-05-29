@@ -17,11 +17,11 @@ import {
 	StarIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 
 const plans = config.payments.plans as Config["payments"]["plans"];
 
-export function PricingTable({
+export const PricingTable = memo(function PricingTable({
 	className,
 	userId,
 	organizationId,
@@ -42,7 +42,7 @@ export function PricingTable({
 
 	const createCheckoutLinkMutation = useCreateCheckoutLinkMutation();
 
-	const onSelectPlan = async (planId: PlanId, productId?: string) => {
+	const onSelectPlan = useCallback(async (planId: PlanId, productId?: string) => {
 		if (!(userId || organizationId)) {
 			router.push("/auth/signup");
 		}
@@ -74,15 +74,24 @@ export function PricingTable({
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [userId, organizationId, createCheckoutLinkMutation, router]);
 
-	const filteredPlans = Object.entries(plans).filter(
-		([planId]) =>
-			planId !== activePlanId && (!activePlanId || planId !== "free"),
+	const filteredPlans = useMemo(
+		() =>
+			Object.entries(plans).filter(
+				([planId]) =>
+					planId !== activePlanId &&
+					(!activePlanId || planId !== "free"),
+			),
+		[activePlanId],
 	);
 
-	const hasSubscriptions = filteredPlans.some(([_, plan]) =>
-		plan.prices?.some((price) => price.type === "recurring"),
+	const hasSubscriptions = useMemo(
+		() =>
+			filteredPlans.some(([_, plan]) =>
+				plan.prices?.some((price) => price.type === "recurring"),
+			),
+		[filteredPlans],
 	);
 
 	return (
@@ -296,4 +305,4 @@ export function PricingTable({
 			</div>
 		</div>
 	);
-}
+});

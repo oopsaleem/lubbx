@@ -17,10 +17,10 @@ import { cn } from "@ui/lib";
 import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import NextLink from "next/link";
-import { Suspense, useEffect, useState } from "react";
+import { memo, Suspense, useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
-export function NavBar() {
+export const NavBar = memo(function NavBar() {
 	const t = useTranslations();
 	const locale = useLocale();
 	const dir = locale === "ar" ? "rtl" : "ltr";
@@ -222,4 +222,4 @@ export function NavBar() {
 			</div>
 		</nav>
 	);
-}
+});

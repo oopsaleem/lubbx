@@ -28,8 +28,9 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { memo } from "react";
 
-export function AppSidebar() {
+export const AppSidebar = memo(function AppSidebar() {
 	const t = useTranslations();
 	const locale = useLocale();
 	const dir = locale === "ar" ? "rtl" : "ltr";
@@ -171,4 +172,4 @@ export function AppSidebar() {
 			</Sidebar>
 		</>
 	);
-}
+});
