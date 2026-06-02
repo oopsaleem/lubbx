@@ -102,12 +102,14 @@ export function OrganizationInvitationsList({
 			accessorKey: "email",
 			accessorFn: (row) => row.email,
 			cell: ({ row }) => {
-				const InvitationStatusIcon = ({
-					pending: ClockIcon,
-					accepted: CheckIcon,
-					rejected: XIcon,
-					canceled: XIcon,
-				} as Record<string, React.ComponentType>)[row.original.status as string];
+				const InvitationStatusIcon = (
+					{
+						pending: ClockIcon,
+						accepted: CheckIcon,
+						rejected: XIcon,
+						canceled: XIcon,
+					} as Record<string, React.ComponentType>
+				)[row.original.status as string];
 				return (
 					<div className="leading-normal">
 						<strong
@@ -164,7 +166,10 @@ export function OrganizationInvitationsList({
 						{canUserEditInvitations && (
 							<DropdownMenu>
 								<DropdownMenuTrigger
-									className={buttonVariants({ size: "icon", variant: "ghost" })}
+									className={buttonVariants({
+										size: "icon",
+										variant: "ghost",
+									})}
 								>
 									<MoreVerticalIcon className="size-4" />
 								</DropdownMenuTrigger>

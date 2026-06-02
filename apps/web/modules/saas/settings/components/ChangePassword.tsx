@@ -58,7 +58,6 @@ export function ChangePasswordForm() {
 		});
 
 		if (error) {
-			
 			toast.error(
 				error.code === "INVALID_PASSWORD"
 					? t(

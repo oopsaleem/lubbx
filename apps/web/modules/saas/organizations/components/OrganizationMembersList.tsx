@@ -183,7 +183,10 @@ export function OrganizationMembersList({
 								/>
 								<DropdownMenu>
 									<DropdownMenuTrigger
-										className={buttonVariants({ size: "icon", variant: "ghost" })}
+										className={buttonVariants({
+											size: "icon",
+											variant: "ghost",
+										})}
 									>
 										<MoreVerticalIcon className="size-4" />
 									</DropdownMenuTrigger>

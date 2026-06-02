@@ -44,6 +44,11 @@ export type Config = {
 	storage: {
 		bucketNames: {
 			avatars: string;
+			panoramas: string;
+			models: string;
+			floorPlans: string;
+			gallery: string;
+			featured: string;
 		};
 	};
 	ui: {

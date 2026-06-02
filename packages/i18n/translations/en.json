@@ -112,6 +112,7 @@
 			"aiChatbot": "AI Chatbot",
 			"organizationSettings": "Organization settings",
 			"start": "Start",
+			"projects": "Projects",
 			"aiDemo": "AI Demo",
 			"platform": "Platform",
 			"account": "Account"
@@ -351,7 +352,7 @@
 			"message": "Now you can get started."
 		}
 	},
-	"organizations": {		
+	"organizations": {
 		"createForm": {
 			"name": "Organization name",
 			"notifications": {
@@ -878,5 +879,104 @@
 	"choosePlan": {
 		"title": "Choose your plan",
 		"description": "To continue, please select a plan."
+	},
+	"projects": {
+		"title": "Projects",
+		"subtitle": "Manage your real estate projects",
+		"new": {
+			"title": "New Project",
+			"subtitle": "Create a new real estate project"
+		},
+		"detail": {
+			"title": "Project Details",
+			"subtitle": "View and manage your project"
+		},
+		"edit": {
+			"title": "Edit Project",
+			"subtitle": "Update your project details"
+		},
+		"form": {
+			"title": "Project Title",
+			"description": "Description",
+			"address": "Address",
+			"price": "Price",
+			"create": "Create Project",
+			"update": "Update Project"
+		},
+		"empty": {
+			"title": "No projects yet",
+			"cta": "Create your first project"
+		},
+		"counts": {
+			"rooms": "rooms",
+			"media": "media files",
+			"tours": "virtual tours"
+		},
+		"actions": {
+			"publish": "Publish",
+			"unpublish": "Unpublish",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"rooms": {
+			"title": "Rooms",
+			"addPlaceholder": "Enter room name...",
+			"add": "Add Room",
+			"empty": "No rooms added yet"
+		},
+		"media": {
+			"upload": "Upload Media",
+			"selectFiles": "Select files or drag and drop",
+			"uploaded": "Uploaded",
+			"clear": "Clear",
+			"allFiles": "All files",
+			"empty": {
+				"title": "No media files",
+				"description": "Upload panoramas, 3D models, floor plans, or images"
+			}
+		},
+		"tours": {
+			"title": "Virtual Tours",
+			"add": "Add Tour",
+			"empty": "No tours created yet",
+			"editor": "Tour Editor",
+			"edit": "Edit",
+			"preview": "Preview",
+			"scenes": "Scenes",
+			"noScenes": "No scenes added",
+			"hotspots": "Hotspots",
+			"noHotspots": "No hotspots configured",
+			"hotspot": "Hotspot",
+			"labelEn": "Label (English)",
+			"labelAr": "Label (Arabic)",
+			"noPanorama": "No panorama assigned",
+			"panoramaPlaceholder": "Click to assign a panorama",
+			"editMode": "Edit Mode"
+		}
+	},
+	"viewer": {
+		"tabs": {
+			"tour": "Virtual Tour",
+			"model3d": "3D Model",
+			"floorPlan": "Floor Plan",
+			"gallery": "Gallery"
+		},
+		"empty": {
+			"title": "No media available",
+			"description": "This project has no media content yet"
+		},
+		"gallery": {
+			"unavailable": "Gallery is not available"
+		},
+		"floorplan": {
+			"unavailable": "Floor plan is not available"
+		},
+		"model": {
+			"unavailable": "3D model is not available",
+			"loading": "Loading 3D model..."
+		},
+		"tour": {
+			"loading": "Loading virtual tour..."
+		}
 	}
 }

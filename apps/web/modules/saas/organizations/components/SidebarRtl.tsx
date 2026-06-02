@@ -23,11 +23,7 @@ import {
 	Trash2,
 } from "lucide-react";
 
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-} from "@ui/components/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import {
 	Collapsible,
 	CollapsibleContent,

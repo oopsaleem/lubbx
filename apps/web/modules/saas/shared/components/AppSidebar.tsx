@@ -19,6 +19,7 @@ import {
 } from "@ui/components/sidebar";
 import {
 	BotMessageSquareIcon,
+	Building2Icon,
 	HomeIcon,
 	SettingsIcon,
 	UserCog2Icon,
@@ -49,6 +50,18 @@ export const AppSidebar = memo(function AppSidebar() {
 			icon: HomeIcon,
 			isActive: pathname === basePath,
 		},
+		...(activeOrganization
+			? [
+					{
+						label: t("app.menu.projects"),
+						href: `${basePath}/projects`,
+						icon: Building2Icon,
+						isActive:
+							pathname.startsWith(`${basePath}/projects/`) ||
+							pathname === `${basePath}/projects`,
+					},
+				]
+			: []),
 		{
 			label: t("app.menu.aiDemo"),
 			href: "/app/ai-demo",

@@ -10,6 +10,14 @@ import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { adminMiddleware } from "../../middleware/admin";
 
+function serializeOrganization(org: Record<string, unknown>) {
+	return {
+		...org,
+		storageLimitBytes: Number(org.storageLimitBytes),
+		storageUsedBytes: Number(org.storageUsedBytes),
+	};
+}
+
 export const organizationRouter = new Hono()
 	.basePath("/organizations")
 	.use(adminMiddleware)
@@ -38,7 +46,10 @@ export const organizationRouter = new Hono()
 
 			const total = await countAllOrganizations();
 
-			return c.json({ organizations, total });
+			return c.json({
+				organizations: organizations.map(serializeOrganization),
+				total,
+			});
 		},
 	)
 	.get("/:id", async (c) => {
@@ -50,5 +61,7 @@ export const organizationRouter = new Hono()
 			throw new HTTPException(404);
 		}
 
-		return c.json(organization);
+		return c.json(
+			serializeOrganization(organization as Record<string, unknown>),
+		);
 	});

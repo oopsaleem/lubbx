@@ -1,11 +1,11 @@
 "use client";
 
-import Script from "next/script";
 import {
 	type ReactNode,
 	createContext,
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 	useCallback,
 	useMemo,
@@ -43,18 +43,6 @@ function getStoredTheme(): Theme {
 	return (localStorage.getItem(THEME_STORAGE_KEY) as Theme) ?? "system";
 }
 
-const scriptContent = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}")||"system";var e=t==="system"?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":t;document.documentElement.classList.remove("light","dark");document.documentElement.classList.add(e)}catch(e){}})()`;
-
-export function ThemeScript() {
-	return (
-		<Script
-			id="theme-init"
-			strategy="beforeInteractive"
-			dangerouslySetInnerHTML={{ __html: scriptContent }}
-		/>
-	);
-}
-
 export function ThemeProvider({
 	children,
 	defaultTheme = "system",
@@ -67,15 +55,36 @@ export function ThemeProvider({
 	const [theme, setThemeState] = useState<Theme>(defaultTheme);
 	const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
 	const [mounted, setMounted] = useState(false);
+	const resolvedRef = useRef(resolvedTheme);
+	resolvedRef.current = resolvedTheme;
 
 	useEffect(() => {
 		const stored = getStoredTheme();
-		const initial = enableSystem ? stored : (stored === "system" ? defaultTheme : stored);
+		const initial = enableSystem
+			? stored
+			: stored === "system"
+				? defaultTheme
+				: stored;
 		setThemeState(initial);
-		setResolvedTheme(getResolvedTheme(initial));
-		applyThemeClass(getResolvedTheme(initial));
+		const resolved = getResolvedTheme(initial);
+		setResolvedTheme(resolved);
+		applyThemeClass(resolved);
 		setMounted(true);
 	}, [defaultTheme, enableSystem]);
+
+	useEffect(() => {
+		const observer = new MutationObserver(() => {
+			const expected = resolvedRef.current;
+			if (!document.documentElement.classList.contains(expected)) {
+				applyThemeClass(expected);
+			}
+		});
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["class"],
+		});
+		return () => observer.disconnect();
+	}, []);
 
 	useEffect(() => {
 		if (!enableSystem) return;
@@ -110,9 +119,7 @@ export function ThemeProvider({
 	);
 
 	return (
-		<ThemeContext.Provider value={value}>
-			{children}
-		</ThemeContext.Provider>
+		<ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 	);
 }
 

@@ -37,10 +37,9 @@ export function useAuthErrorMessages() {
 	};
 
 	const getAuthErrorMessage = (errorCode: string | undefined): string => {
-		return (
-			authErrorMessages[errorCode as keyof typeof authErrorMessages] ||
-			t("auth.errors.unknown")
-		) as string;
+		return (authErrorMessages[
+			errorCode as keyof typeof authErrorMessages
+		] || t("auth.errors.unknown")) as string;
 	};
 
 	return {

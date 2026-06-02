@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
     provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-openssl-3.0.x"] // Safe for Ubuntu 22.04/24.04
 }
 
 generator zod {
@@ -45,8 +46,12 @@ model User {
     twofactors         TwoFactor[]
     aiChats            AiChat[]
 
-    isActive    Boolean          @default(true)
-    lastLogin   DateTime?
+    isActive          Boolean          @default(true)
+    lastLogin         DateTime?
+    createdProjects   Project[]
+    uploadedMedia     MediaFile[]
+    createdTours      VirtualTour[]
+    projectMemberships ProjectMember[]
 
     @@unique([email])
     @@unique([username])
@@ -137,17 +142,23 @@ model TwoFactor {
 }
 
 model Organization {
-    id                 String       @id @default(cuid())
+    id                 String           @id @default(cuid())
     name               String
     slug               String?
     logo               String?
     createdAt          DateTime
     metadata           String?
     paymentsCustomerId String?
+    plan               OrganizationPlan @default(FREE)
+    storageUsedBytes   BigInt           @default(0)
+    storageLimitBytes  BigInt           @default(3221225472)
+    billingPeriod      BillingPeriod    @default(MONTHLY)
+    stripeCustomerId   String?
     members            Member[]
     invitations        Invitation[]
     purchases          Purchase[]
     aiChats            AiChat[]
+    projects           Project[]
 
     @@unique([slug])
     @@map("organization")
@@ -185,6 +196,44 @@ enum PurchaseType {
     ONE_TIME
 }
 
+enum OrganizationPlan {
+    FREE
+    FLEX
+    PRO
+}
+
+enum BillingPeriod {
+    MONTHLY
+    YEARLY
+}
+
+enum ProjectStatus {
+    DRAFT
+    PUBLISHED
+}
+
+enum MediaType {
+    PANORAMA
+    MODEL_3D
+    FLOOR_PLAN
+    GALLERY_IMAGE
+}
+
+enum ProjectMemberRole {
+    EDITOR
+    VIEWER
+}
+
+enum ProjectMemberStatus {
+    PENDING
+    ACCEPTED
+}
+
+enum AnalyticsEventType {
+    VIEW
+    SHARE
+}
+
 model Purchase {
     id             String        @id @default(cuid())
     organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
@@ -216,4 +265,133 @@ model AiChat {
     updatedAt      DateTime      @updatedAt
 
     @@map("ai_chat")
+}
+
+model Project {
+    id               String        @id @default(uuid())
+    organizationId   String
+    organization     Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+    createdById      String
+    createdBy        User          @relation(fields: [createdById], references: [id], onDelete: Cascade)
+    title            String
+    description      String?
+    address          String?
+    price            Decimal?
+    status           ProjectStatus @default(DRAFT)
+    featuredImageKey String?
+    createdAt        DateTime      @default(now())
+    updatedAt        DateTime      @updatedAt
+
+    rooms           Room[]
+    mediaFiles      MediaFile[]
+    virtualTours    VirtualTour[]
+    projectMembers  ProjectMember[]
+    analyticsEvents AnalyticsEvent[]
+
+    @@index([organizationId, status])
+    @@index([organizationId, createdAt])
+    @@map("project")
+}
+
+model Room {
+    id        String   @id @default(uuid())
+    projectId String
+    project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    name      String
+    sortOrder Int      @default(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    mediaFiles MediaFile[]
+
+    @@index([projectId, sortOrder])
+    @@map("room")
+}
+
+model MediaFile {
+    id           String    @id @default(uuid())
+    projectId    String
+    project      Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    roomId       String?
+    room         Room?     @relation(fields: [roomId], references: [id])
+    uploadedById String
+    uploadedBy   User      @relation(fields: [uploadedById], references: [id])
+    filename     String
+    s3Key        String    @unique
+    type         MediaType
+    size         BigInt
+    mimeType     String
+    width        Int?
+    height       Int?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    panoramaScenes PanoramaScene[]
+
+    @@index([projectId, roomId, type])
+    @@map("media_file")
+}
+
+model VirtualTour {
+    id          String   @id @default(uuid())
+    projectId   String
+    project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    createdById String
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    name        String
+    description String?
+    sortOrder   Int      @default(0)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    scenes PanoramaScene[]
+
+    @@map("virtual_tour")
+}
+
+model PanoramaScene {
+    id           String      @id @default(uuid())
+    tourId       String
+    tour         VirtualTour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+    mediaFileId  String
+    mediaFile    MediaFile   @relation(fields: [mediaFileId], references: [id])
+    initialPitch Float       @default(0)
+    initialYaw   Float       @default(0)
+    initialZoom  Float       @default(100)
+    hotspots     Json        @default("[]")
+    sortOrder    Int         @default(0)
+    createdAt    DateTime    @default(now())
+    updatedAt    DateTime    @updatedAt
+
+    @@index([tourId, sortOrder])
+    @@map("panorama_scene")
+}
+
+model ProjectMember {
+    id           String              @id @default(uuid())
+    projectId    String
+    project      Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    userId       String?
+    user         User?               @relation(fields: [userId], references: [id])
+    invitedEmail String
+    role         ProjectMemberRole
+    status       ProjectMemberStatus @default(PENDING)
+    createdAt    DateTime            @default(now())
+    updatedAt    DateTime            @updatedAt
+
+    @@index([projectId, status])
+    @@index([userId])
+    @@map("project_member")
+}
+
+model AnalyticsEvent {
+    id        String             @id @default(uuid())
+    projectId String
+    project   Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    eventType AnalyticsEventType
+    metadata  Json?
+    createdAt DateTime           @default(now())
+
+    @@index([projectId, eventType, createdAt])
+    @@map("analytics_event")
 }

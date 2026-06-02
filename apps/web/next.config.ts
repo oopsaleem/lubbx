@@ -5,10 +5,16 @@ import nextIntlPlugin from "next-intl/plugin";
 const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+	output: "standalone",
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	transpilePackages: ["@repo/api", "@repo/auth", "@repo/database", "@better-auth/passkey"],
+	transpilePackages: [
+		"@repo/api",
+		"@repo/auth",
+		"@repo/database",
+		"@better-auth/passkey",
+	],
 	images: {
 		remotePatterns: [
 			{

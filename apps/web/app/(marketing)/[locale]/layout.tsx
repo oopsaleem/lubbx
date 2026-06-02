@@ -26,8 +26,6 @@ export default async function MarketingLayout({
 
 	setRequestLocale(locale);
 
-
-
 	if (!locales.includes(locale as any)) {
 		notFound();
 	}

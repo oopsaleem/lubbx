@@ -19,10 +19,7 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
-import {
-	SidebarMenuButton,
-	useSidebar,
-} from "@ui/components/sidebar";
+import { SidebarMenuButton, useSidebar } from "@ui/components/sidebar";
 import {
 	BookIcon,
 	ChevronsUpDown,
@@ -35,10 +32,7 @@ import {
 	SunIcon,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import {
-	type Theme,
-	useTheme,
-} from "@shared/components/ThemeProvider";
+import { type Theme, useTheme } from "@shared/components/ThemeProvider";
 import Link from "next/link";
 import { memo, useCallback, useState } from "react";
 
@@ -171,11 +165,17 @@ export const UserMenu = memo(function UserMenu({
 					<DropdownMenuSeparator />
 
 					<DropdownMenuGroup>
-						<DropdownMenuItem render={<Link href="/app/settings/general" />}>
+						<DropdownMenuItem
+							render={<Link href="/app/settings/general" />}
+						>
 							<SettingsIcon className="ms-0 me-2 size-4" />
 							{t("app.userMenu.accountSettings")}
 						</DropdownMenuItem>
-						<DropdownMenuItem render={<a href="https://supastarter.dev/docs/nextjs" />}>
+						<DropdownMenuItem
+							render={
+								<a href="https://supastarter.dev/docs/nextjs" />
+							}
+						>
 							<BookIcon className="ms-0 me-2 size-4" />
 							{t("app.userMenu.documentation")}
 						</DropdownMenuItem>
@@ -251,20 +251,24 @@ export const UserMenu = memo(function UserMenu({
 
 				<DropdownMenuSeparator />
 
-			<DropdownMenuItem render={<Link href="/app/settings/general" />}>
-				<SettingsIcon className="me-2 size-4" />
-				{t("app.userMenu.accountSettings")}
-			</DropdownMenuItem>
+				<DropdownMenuItem
+					render={<Link href="/app/settings/general" />}
+				>
+					<SettingsIcon className="me-2 size-4" />
+					{t("app.userMenu.accountSettings")}
+				</DropdownMenuItem>
 
-			<DropdownMenuItem render={<a href="https://supastarter.dev/docs/nextjs" />}>
-				<BookIcon className="me-2 size-4" />
-				{t("app.userMenu.documentation")}
-			</DropdownMenuItem>
+				<DropdownMenuItem
+					render={<a href="https://supastarter.dev/docs/nextjs" />}
+				>
+					<BookIcon className="me-2 size-4" />
+					{t("app.userMenu.documentation")}
+				</DropdownMenuItem>
 
-			<DropdownMenuItem render={<Link href="/" />}>
-				<HomeIcon className="me-2 size-4" />
-				{t("app.userMenu.home")}
-			</DropdownMenuItem>
+				<DropdownMenuItem render={<Link href="/" />}>
+					<HomeIcon className="me-2 size-4" />
+					{t("app.userMenu.home")}
+				</DropdownMenuItem>
 
 				<DropdownMenuItem onClick={onLogout}>
 					<LogOutIcon className="me-2 size-4" />

@@ -13,10 +13,16 @@ import { adminRouter } from "./routes/admin/router";
 import { aiRouter } from "./routes/ai";
 import { authRouter } from "./routes/auth";
 import { contactRouter } from "./routes/contact/router";
+import { analyticsRouter, publicAnalyticsRouter } from "./routes/analytics";
 import { healthRouter } from "./routes/health";
+import { mediaRouter } from "./routes/media";
+import { projectMembersRouter } from "./routes/project-members";
 import { newsletterRouter } from "./routes/newsletter";
 import { organizationsRouter } from "./routes/organizations/router";
 import { paymentsRouter } from "./routes/payments/router";
+import { projectsRouter } from "./routes/projects";
+import { publicRouter } from "./routes/public";
+import { toursRouter } from "./routes/tours";
 import { uploadsRouter } from "./routes/uploads";
 import { webhooksRouter } from "./routes/webhooks";
 
@@ -30,12 +36,19 @@ const appRouter = app
 	.route("/", webhooksRouter)
 	.route("/", aiRouter)
 	.route("/", uploadsRouter)
+	.route("/", mediaRouter)
+	.route("/", toursRouter)
 	.route("/", paymentsRouter)
 	.route("/", contactRouter)
 	.route("/", newsletterRouter)
 	.route("/", organizationsRouter)
+	.route("/", projectsRouter)
 	.route("/", adminRouter)
-	.route("/", healthRouter);
+	.route("/", healthRouter)
+	.route("/", projectMembersRouter)
+	.route("/", analyticsRouter)
+	.route("/", publicAnalyticsRouter)
+	.route("/", publicRouter);
 
 app.get(
 	"/app-openapi",

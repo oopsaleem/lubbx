@@ -7,7 +7,5 @@ export function DirectionProviderWrapper({
 	children,
 	direction,
 }: PropsWithChildren<{ direction: "ltr" | "rtl" }>) {
-	return (
-		<DirectionProvider dir={direction}>{children}</DirectionProvider>
-	);
+	return <DirectionProvider dir={direction}>{children}</DirectionProvider>;
 }

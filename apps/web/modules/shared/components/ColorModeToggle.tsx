@@ -9,10 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from "@ui/components/dropdown-menu";
 import { HardDriveIcon, MoonIcon, SunIcon } from "lucide-react";
-import {
-	type Theme,
-	useTheme,
-} from "@shared/components/ThemeProvider";
+import { type Theme, useTheme } from "@shared/components/ThemeProvider";
 import { useState } from "react";
 import { useIsClient } from "usehooks-ts";
 

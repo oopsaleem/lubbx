@@ -199,6 +199,43 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
+			schema: {
+				organization: {
+					additionalFields: {
+						storageLimitBytes: {
+							type: "number",
+							required: true,
+							defaultValue: 3221225472,
+							input: false,
+							bigint: true,
+						},
+						storageUsedBytes: {
+							type: "number",
+							required: true,
+							defaultValue: 0,
+							input: false,
+							bigint: true,
+						},
+						plan: {
+							type: "string",
+							required: true,
+							defaultValue: "FREE",
+							input: false,
+						},
+						billingPeriod: {
+							type: "string",
+							required: true,
+							defaultValue: "MONTHLY",
+							input: false,
+						},
+						stripeCustomerId: {
+							type: "string",
+							required: false,
+							input: false,
+						},
+					},
+				},
+			},
 			sendInvitationEmail: async (
 				{ email, id, organization },
 				request,

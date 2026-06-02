@@ -52,10 +52,7 @@ export default async function proxy(req: NextRequest) {
 			);
 		}
 
-		if (
-			!locale ||
-			(user.locale && locale !== user.locale)
-		) {
+		if (!locale || (user.locale && locale !== user.locale)) {
 			locale = user.locale ?? appConfig.i18n.defaultLocale;
 			response.cookies.set(appConfig.i18n.localeCookieName, locale);
 		}

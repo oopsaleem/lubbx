@@ -226,6 +226,10 @@ export const webhookHandler: WebhookHandler = async (req) => {
 
 				break;
 			}
+			case "v1.billing.meter.error_report_triggered" as Stripe.Event.Type: {
+				logger.error({ event }, "Meter event error reported by Stripe");
+				break;
+			}
 
 			default:
 				return new Response("Unhandled event type.", {

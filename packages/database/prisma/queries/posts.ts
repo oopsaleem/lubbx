@@ -64,24 +64,24 @@ export async function createPost({
 }
 
 export async function updatePost({
-		id,
-		title,
-		content,
-	}: {
-		id: string;
-		title: string;
-		content: Post["content"];
-	}) {
-		return await db.post.update({
-			where: {
-				id,
-			},
-			data: {
-				title,
-				content,
-			},
-		});
-	}
+	id,
+	title,
+	content,
+}: {
+	id: string;
+	title: string;
+	content: Post["content"];
+}) {
+	return await db.post.update({
+		where: {
+			id,
+		},
+		data: {
+			title,
+			content,
+		},
+	});
+}
 
 export async function deletePost(id: string) {
 	return await db.post.delete({

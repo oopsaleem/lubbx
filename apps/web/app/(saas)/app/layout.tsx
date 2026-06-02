@@ -19,8 +19,12 @@ export default async function Layout({ children }: PropsWithChildren) {
 
 	const [session, orgList, purchases] = await Promise.all([
 		getSession(),
-		config.organizations.enable ? getOrganizationList() : Promise.resolve(undefined),
-		config.users.enableBilling ? getPurchases() : Promise.resolve(undefined),
+		config.organizations.enable
+			? getOrganizationList()
+			: Promise.resolve(undefined),
+		config.users.enableBilling
+			? getPurchases()
+			: Promise.resolve(undefined),
 	]);
 
 	await queryClient.prefetchQuery({

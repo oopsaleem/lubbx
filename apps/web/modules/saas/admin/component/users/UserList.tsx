@@ -206,7 +206,10 @@ export function UserList() {
 						<div className="flex flex-row justify-end gap-2">
 							<DropdownMenu>
 								<DropdownMenuTrigger
-									className={buttonVariants({ size: "icon", variant: "ghost" })}
+									className={buttonVariants({
+										size: "icon",
+										variant: "ghost",
+									})}
 								>
 									<MoreVerticalIcon className="size-4" />
 								</DropdownMenuTrigger>

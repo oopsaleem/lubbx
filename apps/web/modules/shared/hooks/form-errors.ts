@@ -62,7 +62,20 @@ export function useFormErrors() {
 
 	type TranslationKey = Parameters<typeof t>[0];
 
-	const zodErrorMap = (issue: { code: string; received?: string; expected?: string; keys?: string[]; options?: string[]; validation?: string | { startsWith?: string; endsWith?: string }; type?: string; minimum?: number | bigint; maximum?: number | bigint; exact?: boolean; inclusive?: boolean; params?: Record<string, unknown> }): string | undefined => {
+	const zodErrorMap = (issue: {
+		code: string;
+		received?: string;
+		expected?: string;
+		keys?: string[];
+		options?: string[];
+		validation?: string | { startsWith?: string; endsWith?: string };
+		type?: string;
+		minimum?: number | bigint;
+		maximum?: number | bigint;
+		exact?: boolean;
+		inclusive?: boolean;
+		params?: Record<string, unknown>;
+	}): string | undefined => {
 		let message = "";
 
 		switch (issue.code) {

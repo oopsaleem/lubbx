@@ -42,39 +42,44 @@ export const PricingTable = memo(function PricingTable({
 
 	const createCheckoutLinkMutation = useCreateCheckoutLinkMutation();
 
-	const onSelectPlan = useCallback(async (planId: PlanId, productId?: string) => {
-		if (!(userId || organizationId)) {
-			router.push("/auth/signup");
-		}
+	const onSelectPlan = useCallback(
+		async (planId: PlanId, productId?: string) => {
+			if (!(userId || organizationId)) {
+				router.push("/auth/signup");
+			}
 
-		const plan = plans[planId];
-		const price = plan.prices?.find(
-			(price) => price.productId === productId,
-		);
+			const plan = plans[planId];
+			const price = plan.prices?.find(
+				(price) => price.productId === productId,
+			);
 
-		if (!price) {
-			return;
-		}
+			if (!price) {
+				return;
+			}
 
-		setLoading(planId);
+			setLoading(planId);
 
-		try {
-			const { checkoutLink } =
-				await createCheckoutLinkMutation.mutateAsync({
-					type:
-						price.type === "one-time" ? "one-time" : "subscription",
-					productId: price.productId,
-					organizationId,
-					redirectUrl: window.location.href,
-				});
+			try {
+				const { checkoutLink } =
+					await createCheckoutLinkMutation.mutateAsync({
+						type:
+							price.type === "one-time"
+								? "one-time"
+								: "subscription",
+						productId: price.productId,
+						organizationId,
+						redirectUrl: window.location.href,
+					});
 
-			window.location.href = checkoutLink;
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setLoading(false);
-		}
-	}, [userId, organizationId, createCheckoutLinkMutation, router]);
+				window.location.href = checkoutLink;
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		},
+		[userId, organizationId, createCheckoutLinkMutation, router],
+	);
 
 	const filteredPlans = useMemo(
 		() =>

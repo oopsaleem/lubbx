@@ -9,10 +9,7 @@ import { GeistSans } from "geist/font/sans";
 import { Noto_Sans_Arabic } from "next/font/google";
 import { DirectionProviderWrapper } from "@shared/components/DirectionProviderWrapper";
 import { Provider as JotaiProvider } from "jotai";
-import {
-	ThemeProvider,
-	ThemeScript,
-} from "@shared/components/ThemeProvider";
+import { ThemeProvider } from "@shared/components/ThemeProvider";
 import { cookies } from "next/headers";
 import NextTopLoader from "nextjs-toploader";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -42,6 +39,14 @@ export async function Document({
 				direction === "rtl" && notoSansArabic.variable,
 			)}
 		>
+			<head>
+				<script
+					id="theme-init"
+					dangerouslySetInnerHTML={{
+						__html: `(function(){try{var t=localStorage.getItem("theme")||"system";var e=t==="system"?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":t;document.documentElement.classList.remove("light","dark");document.documentElement.classList.add(e)}catch(e){}})()`,
+					}}
+				/>
+			</head>
 			<body
 				suppressHydrationWarning
 				className={cn(
@@ -53,7 +58,6 @@ export async function Document({
 						<ConsentProvider
 							initialConsent={consentCookie?.value === "true"}
 						>
-							<ThemeScript />
 							<NextTopLoader color="var(--color-primary)" />
 							<ThemeProvider
 								defaultTheme={config.ui.defaultTheme}
@@ -61,7 +65,13 @@ export async function Document({
 								<ApiClientProvider>
 									<JotaiProvider>
 										{children}
-										<Toaster position={direction === "rtl" ? "top-left" : "top-right"} />
+										<Toaster
+											position={
+												direction === "rtl"
+													? "top-left"
+													: "top-right"
+											}
+										/>
 									</JotaiProvider>
 								</ApiClientProvider>
 							</ThemeProvider>
