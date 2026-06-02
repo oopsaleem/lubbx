@@ -12,7 +12,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@repo/tsconfig": "workspace:*",
-		"@types/node": "22.14.1",
+		"@types/node": "25.9.1",
 		"dotenv-cli": "^8.0.0",
 		"drizzle-kit": "^0.31.0",
 		"prisma": "^6.6.0",
