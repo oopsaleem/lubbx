@@ -49,4 +49,6 @@ dist/
 # other 
 .react-email/
 .content-collections/
+ecosystem.config.js
+start.sh
 wael.md
