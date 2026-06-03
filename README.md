@@ -35,3 +35,16 @@ pm2 reload lubbx-web
 
 pm2 logs lubbx-web --lines 50
 ```
+
+
+hard reset the files
+```sh
+# 1. Delete the old running instance
+pm2 delete lubbx-web
+
+# 2. Start it fresh with the new configuration
+pm2 start ecosystem.config.js
+
+# 3. Save the new state so it survives reboots
+pm2 save
+```
