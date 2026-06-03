@@ -8,21 +8,13 @@ import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { useSignedUploadUrlMutation } from "@saas/shared/lib/api";
 import { Spinner } from "@shared/components/Spinner";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
+import { CropImageDialog } from "../../settings/components/CropImageDialog";
 import { OrganizationLogo } from "./OrganizationLogo";
-
-const CropImageDialog = dynamic(
-	() =>
-		import("../../settings/components/CropImageDialog").then(
-			(mod) => mod.CropImageDialog,
-		),
-	{ ssr: false },
-);
 
 export function OrganizationLogoForm() {
 	const t = useTranslations();
