@@ -6,6 +6,9 @@ const withNextIntl = nextIntlPlugin("./modules/i18n/request.ts");
 
 const nextConfig: NextConfig = {
 	output: "standalone",
+	env: {
+		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+	},
 	typescript: {
 		ignoreBuildErrors: true,
 	},

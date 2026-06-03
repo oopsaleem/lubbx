@@ -22,3 +22,16 @@ pnpm --filter @repo/database push
 
 ```
 
+
+on prod env
+```sh
+pnpm install && pnpm build
+
+pnpm --filter @repo/database generate
+pnpm --filter @repo/database migrate
+pnpm --filter @repo/database push
+
+pm2 reload lubbx-web
+
+pm2 logs lubbx-web --lines 50
+```
