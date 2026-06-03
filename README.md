@@ -1,11 +1,11 @@
-# supastarter for Next.js
+# lubbx for Next.js
 
-supastarter is the ultimate starter kit for production-ready, scalable SaaS applications.
+lubbx is the ultimate starter kit for production-ready, scalable SaaS applications.
 
 ## Helpful links
 
-- [📘 Documentation](https://supastarter.dev/docs/nextjs)
-- [🚀 Demo](https://demo.supastarter.dev)
+- [📘 Documentation](https://lubbx.dev/docs/nextjs)
+- [🚀 Demo](https://demo.lubbx.dev)
 
 ```sh
 pnpm dlx shadcn@latest add sidebar -c apps/web

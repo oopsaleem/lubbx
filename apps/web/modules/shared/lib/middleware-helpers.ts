@@ -1,12 +1,26 @@
 import type { Organization, Session } from "@repo/auth";
-import { apiClient } from "@shared/lib/api-client";
+import type { AppRouter } from "@repo/api";
+import { hc } from "hono/client";
 import type { NextRequest } from "next/server";
+
+const internalOrigin =
+	process.env.NODE_ENV === "development"
+		? undefined
+		: "http://localhost:3000";
+
+function createInternalApiClient(
+	fallbackOrigin: string,
+) {
+	return hc<AppRouter>(internalOrigin ?? fallbackOrigin, {
+		init: { credentials: "include" },
+	}).api;
+}
 
 export const getSession = async (req: NextRequest): Promise<Session | null> => {
 	const response = await fetch(
 		new URL(
 			"/api/auth/get-session?disableCookieCache=true",
-			req.nextUrl.origin,
+			internalOrigin ?? req.nextUrl.origin,
 		),
 		{
 			headers: {
@@ -32,7 +46,10 @@ export const getOrganizationsForSession = async (
 	req: NextRequest,
 ): Promise<Organization[]> => {
 	const response = await fetch(
-		new URL("/api/auth/organization/list", req.nextUrl.origin),
+		new URL(
+			"/api/auth/organization/list",
+			internalOrigin ?? req.nextUrl.origin,
+		),
 		{
 			headers: {
 				cookie: req.headers.get("cookie") || "",
@@ -51,7 +68,8 @@ export const getPurchasesForSession = async (
 	req: NextRequest,
 	organizationId?: string,
 ) => {
-	const response = await apiClient.payments.purchases.$get(
+	const internalClient = createInternalApiClient(req.nextUrl.origin);
+	const response = await internalClient.payments.purchases.$get(
 		{
 			query: {
 				organizationId,

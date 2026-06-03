@@ -1,8 +1,9 @@
 {
-	"name": "supastarter-nextjs",
+	"name": "lubbx",
 	"private": true,
 	"scripts": {
 		"build": "dotenv -c -- turbo build",
+		"build:prod": "dotenv -e .env.production -- turbo build",
 		"dev": "dotenv -c -- turbo dev --concurrency 15",
 		"start": "dotenv -c -- turbo start",
 		"lint": "biome lint .",

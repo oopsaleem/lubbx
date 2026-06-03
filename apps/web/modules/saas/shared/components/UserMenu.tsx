@@ -173,7 +173,7 @@ export const UserMenu = memo(function UserMenu({
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							render={
-								<a href="https://supastarter.dev/docs/nextjs" />
+								<a href="https://lubbx.dev/docs/nextjs" />
 							}
 						>
 							<BookIcon className="ms-0 me-2 size-4" />
@@ -259,7 +259,7 @@ export const UserMenu = memo(function UserMenu({
 				</DropdownMenuItem>
 
 				<DropdownMenuItem
-					render={<a href="https://supastarter.dev/docs/nextjs" />}
+					render={<a href="https://lubbx.dev/docs/nextjs" />}
 				>
 					<BookIcon className="me-2 size-4" />
 					{t("app.userMenu.documentation")}

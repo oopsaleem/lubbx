@@ -1,6 +1,5 @@
 import { config } from "@repo/config";
 import { getSignedUrl } from "@repo/storage";
-import { NextResponse } from "next/server";
 
 export const GET = async (
 	_req: Request,
@@ -14,18 +13,30 @@ export const GET = async (
 		return new Response("Invalid path", { status: 400 });
 	}
 
-	if (bucket === config.storage.bucketNames.avatars) {
-		const signedUrl = await getSignedUrl(filePath, {
-			bucket,
-			expiresIn: 60 * 60,
-		});
+	const allowedBuckets = Object.values(config.storage.bucketNames);
+	if (!allowedBuckets.includes(bucket)) {
+		return new Response("Not found", { status: 404 });
+	}
 
-		return NextResponse.redirect(signedUrl, {
-			headers: { "Cache-Control": "max-age=3600" },
+	const signedUrl = await getSignedUrl(filePath, {
+		bucket,
+		expiresIn: 60 * 60,
+	});
+
+	const upstream = await fetch(signedUrl);
+
+	if (!upstream.ok) {
+		return new Response("Upstream error", {
+			status: upstream.status,
 		});
 	}
 
-	return new Response("Not found", {
-		status: 404,
+	return new Response(upstream.body, {
+		headers: {
+			"Cache-Control": "max-age=3600",
+			"Content-Type":
+				upstream.headers.get("Content-Type") ??
+				"application/octet-stream",
+		},
 	});
 };

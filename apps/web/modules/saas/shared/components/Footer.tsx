@@ -9,7 +9,7 @@ export function Footer() {
 			)}
 		>
 			<span>
-				<a href="https://supastarter.dev">Built with supastarter</a>
+				<a href="https://lubbx.dev">Built with lubbx</a>
 			</span>
 			<span className="opacity-50"> | </span>
 			<LocaleLink href="/legal/privacy-policy">Privacy policy</LocaleLink>
