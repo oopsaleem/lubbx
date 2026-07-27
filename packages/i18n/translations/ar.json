@@ -98,8 +98,8 @@
 			},
 			"search": "البحث عن اسم أو بريد إلكتروني...",
 			"title": "إدارة المستخدمين",
-			"assignAdminRole": "تعيين صلاحية مدير",
-			"removeAdminRole": "إزالة صلاحية مدير"
+			"assignAdminRole": "تعيين كمدير",
+			"removeAdminRole": "إزالة الادراة"
 		},
 		"description": "إدارة تطبيقك."
 	},
