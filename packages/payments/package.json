@@ -10,7 +10,7 @@
 		"ufo": "^1.6.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.5.8",
 		"@repo/tsconfig": "workspace:*",
 		"@types/node": "^22.14.1"
 	},
